@@ -81,7 +81,7 @@ module GoogleGeneratorExt
   #
   #  # The two elements
   #  <input type="text" name="location[latitude]" value="" id="location_latitude">
-  #  <input type="text" name="location[latitude]" value="" id="location_longitude">
+  #  <input type="text" name="location[longitude]" value="" id="location_longitude">
   #
   #  # The code 
   #  marker = map.add_marker ...
