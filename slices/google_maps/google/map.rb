@@ -88,7 +88,7 @@ module Google # :nodoc:
   #
   #  map.add_line :between_markers => markers, :colour => 'red', :thickness => 10  
   class Map < MapObject
-    attr_reader :zoom, :type, :bounds
+    attr_reader :zoom, :type, :track_bounds
 
     # ==== Options: 
     # * +center+ - Optional. Centers the map at this location defaulted to <tt>:best_fit</tt>, see center= for valid options.
@@ -183,8 +183,8 @@ module Google # :nodoc:
     #
     #  map.auto_center!
     def auto_center!
-      self << "if(!#{self.bounds}.isEmpty()){
-                 #{self}.setCenter(#{self.bounds.center});
+      self << "if(!#{self.track_bounds}.isEmpty()){
+                 #{self}.setCenter(#{self.track_bounds.center});
               }"
     end
 
@@ -221,7 +221,7 @@ module Google # :nodoc:
     #
     #  map.auto_zoom!
     def auto_zoom!
-      self << "#{self}.setZoom(#{self}.getBoundsZoomLevel(#{self.bounds}));"
+      self << "#{self}.setZoom(#{self}.getBoundsZoomLevel(#{self.track_bounds}));"
     end
     
     # Automatically zooms the map to the appropriate level and centers the map to the appropriate location based on all overlays added to the map.
@@ -316,7 +316,7 @@ module Google # :nodoc:
       self.add_overlay marker
       marker.added_to_map self
 
-      self.bounds.extend marker.location
+      self.track_bounds.extend marker.location
 
       marker      
     end
@@ -365,7 +365,7 @@ module Google # :nodoc:
       self << "map_lines.push(#{line});"      
       
       unless line.encoded?
-        self.bounds.extend *line.vertices 
+        self.track_bounds.extend *line.vertices 
       end
 
       line
@@ -394,7 +394,7 @@ module Google # :nodoc:
       polygon.added_to_map self
       
       unless polygon.encoded?
-        self.bounds.extend polygon.vertices
+        self.track_bounds.extend polygon.vertices
       end
       
       polygon
@@ -414,7 +414,7 @@ module Google # :nodoc:
 
       self.add_overlay ground_overlay
 
-      self.bounds.extend ground_overlay.bounds
+      self.track_bounds.extend ground_overlay.bounds
 
       ground_overlay
     end
@@ -564,19 +564,23 @@ module Google # :nodoc:
       {:latitude => -33.947, :longitude => 18.462}
     end
     
+    def bounds
+      Google::Bounds.existing :var => "#{self}.getBounds()"
+    end
+    
     protected
-      attr_writer :bounds
+      attr_writer :track_bounds
       
       def enable_keyboard_navigation! # :nodoc:
         self << "new GKeyboardHandler(#{self})"  
       end
 
       def track_bounds! # :nodoc:
-        self.bounds = if self.create_var?
-                        Google::Bounds.new(:var => :track_bounds)
-                      else
-                        Google::Bounds.existing(:var => :track_bounds)
-                      end
+        self.track_bounds = if self.create_var?
+                              Google::Bounds.new(:var => :track_bounds)
+                            else
+                              Google::Bounds.existing(:var => :track_bounds)
+                            end
       end
 
       def track_last_mouse_location! # :nodoc:

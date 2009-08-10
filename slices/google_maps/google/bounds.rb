@@ -3,9 +3,7 @@ module Google
   # Represents a rectangle in geographical coordinates, including one that crosses the 180 degrees meridian.
   # See googles online[http://code.google.com/apis/maps/documentation/reference.html#GLatLngBounds] docs for details.
   class Bounds < MapObject
-    attributes :south_west_point => [:reader, {:protected => :writer}],
-               :north_east_point => [:reader , {:protected => :writer}]  
-    
+
     # ==== Options:
     # * +south_west_point+ - Optional. The south west point of the rectangle.
     # * +north_east_point+ - Optional. The north east point of the rectangle.
@@ -18,7 +16,11 @@ module Google
       self.north_east_point = Google::OptionsHelper.to_location(options[:north_east_point])
 
       if create_var?
-        points = [self.south_west_point, self.north_east_point].compact
+        points = if options[:south_west_point].not_nil? || options[:north_east_point].not_nil?
+                   [self.south_west_point, self.north_east_point].compact
+                 else
+                   []
+                 end
         self << "#{self.var} = new GLatLngBounds(#{points.join(', ')});"
       end
     end
@@ -39,6 +41,25 @@ module Google
     def center
       "#{self}.getCenter()"
     end
+    
+    def south_west_point
+      if @south_west_point.not_nil?
+        @south_west_point
+      else
+        Google::OptionsHelper.to_location("#{self}.getSouthWest()")
+      end
+    end
+    
+    def north_east_point
+      if @north_east_point.not_nil?
+        @north_east_point
+      else
+        Google::OptionsHelper.to_location("#{self}.getNorthEast()")
+      end      
+    end
+
+    protected
+      attr_writer :south_west_point, :north_east_point
 
   end
 
