@@ -1,12 +1,23 @@
-== eschaton => google maps on rails for humans
+== eschaton => google maps on rails
 
-Helps with writing google map mashups in Rails bringing together the Bodacity(measure of bodaciousness) of 
-Google Maps and Rails. If you have an issue please feed-back on Github issues[http://github.com/yawningman/eschaton/issues]
+Helps with writing google map mashups in Rails, helping you put the music on the turntable so that your dog can eat beats.
+Makes GUI mapping code look like Cherry Blossoms and Snow.
 
-<b>If you find the plugin useful and wish to donate something, please donate the equivalent in money or your time to your local charities, plant
-a tree that is indigenous to your area or lend your support to people who truly need it.</b>
+You can read the docs[http://rdoc.info/projects/yawningman/eschaton], our blog[http://yawningman.github.com/eschaton] for updates or 
+if you have an issue shout it out here[http://github.com/yawningman/eschaton/issues].
 
-Enough talk, lets code!
+== Get going...
+
+Generate a map, look at the files the generator created and play a bit.
+
+  $ script/generate map
+  
+Put some test code in your <b><i>app/helpers/map_helper.rb</i></b> and *_play_*!
+Visit the map at http://localhost:3000/map or wherever your server runs.
+
+== Enough talk, lets code, here be samples.
+
+Eschaton code can be placed in a view helper, contained within the run_map_script methods' block and it will happily return javascript to you.
 
   map = Google::Map.new(:center => {:latitude => -33.947, :longitude => 18.462},
                         :controls => [:large_map_3D, :map_type])
@@ -91,21 +102,8 @@ Both Hashes and Arrays can represent a Location, so use which ever form you pref
 
   {:latitude => -33.947, :longitude => 18.462} == [-33.947, 18.462]
 
-Checkout the online[http://rdoc.info/projects/yawningman/eschaton] docs for more general samples.
+Checkout the online[http://rdoc.info/projects/yawningman/eschaton] docs for more on each mapping objects possibilities.
 
 == Get it...
 
   $ script/plugin install git://github.com/yawningman/eschaton.git
-
-== Get going...
-
-Generate a map, look at the files the generator created and play a bit.
-
-  $ script/generate map
-
-Visit the map at http://localhost:3000/map or wherever your server runs.
-
-Generate and review the docs, put some test code in the <b><i>app/helpers/map_helper.rb</i></b> and *_play_*!
-  $ cd vendor/plugins/eschaton/
-  $ rake rdoc
-  $ rake open_doc

@@ -1,6 +1,6 @@
 module Eschaton
   
-  class ScriptExpander
+  class ScriptExpander # :nodoc:
 
     def initialize
       @generator = Eschaton.javascript_generator

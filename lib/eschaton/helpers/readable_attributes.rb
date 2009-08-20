@@ -1,7 +1,7 @@
 module Eschaton
   
   # Helps define attributes with different visibility in one place
-  module ReadableAttributes
+  module ReadableAttributes # :nodoc:
   
     #  attributes :name => :reader
     #  attributes :project => :accessor

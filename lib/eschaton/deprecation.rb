@@ -1,6 +1,6 @@
 module Eschaton
 
-  class Deprecation
+  class Deprecation # :nodoc:
 
     def self.enabled?
       @@enabled ||= true

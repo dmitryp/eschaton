@@ -15,7 +15,7 @@ module Eschaton
   # 
   #    # ...work with prepared options here
   #  end  
-  class PreparedOptions
+  class PreparedOptions # :nodoc:
 
     def initialize(options = {})
       self.options = options.clone
