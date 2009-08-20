@@ -7,7 +7,7 @@ module MapHelper
                             :zoom => 12)
 
       map.click do |script, location|
-        map.open_info_window(:location => location, :text => 'hello cape town!')
+        map.open_info_window(:location => location, :html => 'hello cape town!')
       end
     end
   end

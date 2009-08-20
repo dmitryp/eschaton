@@ -10,23 +10,23 @@ class PaneTest < Test::Unit::TestCase
       
       assert_eschaton_output 'pane = new GooglePane({cssClass: "pane", id: "pane", position: new GControlPosition(G_ANCHOR_TOP_LEFT, new GSize(10, 10)), text: "Poly Jean Harvey is indeed a unique women"});
                              map.addControl(pane);' do
-                              map.add_control Google::Pane.new(:text => 'Poly Jean Harvey is indeed a unique women')
+                              map.add_control Google::Pane.new(:html => 'Poly Jean Harvey is indeed a unique women')
                             end
 
       assert_eschaton_output 'pane = new GooglePane({cssClass: "pane", id: "pane", position: new GControlPosition(G_ANCHOR_TOP_RIGHT, new GSize(10, 10)), text: "Poly Jean Harvey is indeed a unique women"});
                              map.addControl(pane);' do
-                              map.add_control Google::Pane.new(:text => 'Poly Jean Harvey is indeed a unique women', :anchor => :top_right)
+                              map.add_control Google::Pane.new(:html => 'Poly Jean Harvey is indeed a unique women', :anchor => :top_right)
                             end
                             
       assert_eschaton_output 'pane = new GooglePane({cssClass: "pane", id: "pane", position: new GControlPosition(G_ANCHOR_TOP_RIGHT, new GSize(10, 30)), text: "Poly Jean Harvey is indeed a unique women"});
                              map.addControl(pane);' do
-                              map.add_control Google::Pane.new(:text => 'Poly Jean Harvey is indeed a unique women', :anchor => :top_right,
+                              map.add_control Google::Pane.new(:html => 'Poly Jean Harvey is indeed a unique women', :anchor => :top_right,
                                                                :offset => [10, 30])
                             end
                             
       assert_eschaton_output 'pane = new GooglePane({cssClass: "green", id: "pane", position: new GControlPosition(G_ANCHOR_TOP_LEFT, new GSize(10, 10)), text: "Poly Jean Harvey is indeed a unique women"});
                              map.addControl(pane);' do
-                              map.add_control Google::Pane.new(:text => 'Poly Jean Harvey is indeed a unique women', :css_class => :green)
+                              map.add_control Google::Pane.new(:html => 'Poly Jean Harvey is indeed a unique women', :css_class => :green)
                             end
                             
       assert_eschaton_output 'pane = new GooglePane({cssClass: "green", id: "pane", position: new GControlPosition(G_ANCHOR_TOP_LEFT, new GSize(10, 10)), text: "test output for render"});
@@ -41,22 +41,22 @@ class PaneTest < Test::Unit::TestCase
       output = 'my_pane = new GooglePane({cssClass: "pane", id: "my_pane", position: new GControlPosition(G_ANCHOR_TOP_LEFT, new GSize(10, 10)), text: "Poly Jean Harvey is indeed a unique women"});'
      
       assert_eschaton_output output do
-                              Google::Pane.new(:var => :my_pane, :text => 'Poly Jean Harvey is indeed a unique women')
+                              Google::Pane.new(:var => :my_pane, :html => 'Poly Jean Harvey is indeed a unique women')
                             end
 
       assert_eschaton_output output do
-                              Google::Pane.new(:var => 'my_pane', :text => 'Poly Jean Harvey is indeed a unique women')
+                              Google::Pane.new(:var => 'my_pane', :html => 'Poly Jean Harvey is indeed a unique women')
                             end
     end
   end
   
   def test_replace_html
     with_eschaton do
-      pane = Google::Pane.new(:text => 'Poly Jean Harvey is indeed a unique women')
+      pane = Google::Pane.new(:html => 'Poly Jean Harvey is indeed a unique women')
 
       assert_eschaton_output 'Element.update("pane", "This is new html");',
                             with_eschaton  {
-                              pane.replace_html :text => "This is new html" 
+                              pane.replace_html :html => "This is new html" 
                             }
 
       assert_eschaton_output 'Element.update("pane", "This is new html");',

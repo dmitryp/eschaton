@@ -31,7 +31,7 @@ module Google
 
         :javascript
       else
-        options[:text]
+        options[:text] || options[:html]
       end
     end
     

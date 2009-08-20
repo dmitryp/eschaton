@@ -69,7 +69,7 @@ module GoogleViewExt
   # Works in much the same as link_to_function but allows for mapping script to be written within the script block
   #
   #  link_to_map_script("Show info") do |script|
-  #    script.map.open_info_window :text => 'I am showing some info'
+  #    script.map.open_info_window :html => 'I am showing some info'
   #  end
   def link_to_map_script(name, *args, &block)
     link_to_function name, *args do |script|

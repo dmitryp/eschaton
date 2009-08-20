@@ -118,7 +118,7 @@ class MarkerTest < Test::Unit::TestCase
                              end
 
       assert_eschaton_output 'marker.openInfoWindow("<div id=\'info_window_content\'>" + "Testing text!" + "</div>");' do
-                               marker.open_info_window :text => "Testing text!"
+                               marker.open_info_window :html => "Testing text!"
                              end
     end
   end
@@ -138,7 +138,7 @@ class MarkerTest < Test::Unit::TestCase
                              end
 
       assert_eschaton_output 'marker.bindInfoWindowHtml("<div id=\'info_window_content\'>" + "Testing text!" + "</div>");' do
-                               marker.cache_info_window :text => "Testing text!"
+                               marker.cache_info_window :html => "Testing text!"
                              end
     end
   end  
@@ -174,7 +174,7 @@ class MarkerTest < Test::Unit::TestCase
 
       # Info window convention
       assert_eschaton_output :marker_click_info_window do
-                              marker.click :text => "This is a info window!"
+                              marker.click :html => "This is a info window!"
                             end
     end    
   end

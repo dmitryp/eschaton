@@ -6,7 +6,7 @@ module Google
     
     # ==== Options:
     #
-    # * +text+ - Optional
+    # * +html+ - Optional
     # * +partial+ - Optional
     #
     # * +css_class+, Optional, defaulted to 'pane'.

@@ -32,7 +32,7 @@ module Google # :nodoc:
   #  # When the map is clicked, add a marker and open an info window at that location   
   #  map.click do |script, location|
   #    map.add_marker :location => location
-  #    map.open_info_window :location => location, :text => 'Awesome, you added a marker!'
+  #    map.open_info_window :location => location, :html => 'Awesome, you added a marker!'
   #  end
   #
   # === Adding markers using add_marker:
@@ -50,10 +50,10 @@ module Google # :nodoc:
   #
   #  # At a specific location
   #  map.open_info_window :location => {:latitude => -34, :longitude => 18.5},
-  #                       :text => 'Hello there...'
+  #                       :html => 'Hello there...'
   # 
   #  # In the center of the map
-  #  map.open_info_window :location => :center, :text => 'Hello there...'
+  #  map.open_info_window :location => :center, :html => 'Hello there...'
   #  
   #  # Now using partial
   #  map.open_info_window :location => :center, :partial => 'spot_information',
@@ -250,7 +250,7 @@ module Google # :nodoc:
     #
     # ==== Examples:
     #  map.add_control :small_zoom
-    #  map.add_control Google::Pane.new(:text => 'This is a pane')
+    #  map.add_control Google::Pane.new(:html => 'This is a pane')
     #  map.add_control :small_zoom, :position => {:anchor => :top_right}
     #  map.add_control :map_type, :position => {:anchor => :top_left}
     #  map.add_control :map_type, :position => {:anchor => :top_left, :offset => [10, 10]}
@@ -268,7 +268,7 @@ module Google # :nodoc:
     # ==== Examples:
     #  map.controls = :small_zoom
     #  map.controls = :small_zoom, :map_type
-    #  map.controls = :small_zoom, Google::Pane.new(:text => 'This is a pane')    
+    #  map.controls = :small_zoom, Google::Pane.new(:html => 'This is a pane')    
     def controls=(*controls)
       controls.flatten.each do |control|
         self.add_control control
@@ -463,11 +463,11 @@ module Google # :nodoc:
     #  # When the map is clicked, add a marker and open an info window at that location   
     #  map.click do |script, location|
     #    map.add_marker :location => location
-    #    map.open_info_window :location => location, :text => 'Awesome, you added a marker!'
+    #    map.open_info_window :location => location, :html => 'Awesome, you added a marker!'
     #  end
     #
     #  # Using the +info_window_options+ convenience
-    #  map.click :text => 'Awesome, an info window popped up!'
+    #  map.click :html => 'Awesome, an info window popped up!'
     def click(info_window_options = nil)
       if info_window_options
         self.click do |script, location|
@@ -493,7 +493,7 @@ module Google # :nodoc:
       self.listen_to :event => :mousemove, :with => :location, &block
     end
 
-    # Opens an info window on the map at the given +location+ using either +url+, +partial+ or +text+ options as content.
+    # Opens an info window on the map at the given +location+ using either +url+, +partial+ or +html+ options as content.
     #
     # ==== Options:
     # * +location+ - Optional. A Location, whatever Location#new supports or :center which indicates where the info window 
@@ -503,16 +503,16 @@ module Google # :nodoc:
     #   +location+ should be sent through with the +url+, defaulted to +true+. Use <tt>params[:location]</tt> or <tt>params[:location][:latitude]</tt> and <tt>params[:location][:longitude]</tt> in your action.
     # * +partial+ - Optional. Supports the same form as rails +render+ for partials, content of the rendered partial will be 
     #   placed inside the info window.
-    # * +text+ - Optional. The html content that will be placed inside the info window.
+    # * +html+ - Optional. The html content that will be placed inside the info window.
     # 
     # ==== Examples:
     #
     #  # At a specific location
     #  map.open_info_window :location => {:latitude => -34, :longitude => 18.5},
-    #                       :text => 'Hello there...'
+    #                       :html => 'Hello there...'
     # 
     #  # In the center of the map
-    #  map.open_info_window :location => :center, :text => 'Hello there...'
+    #  map.open_info_window :location => :center, :html => 'Hello there...'
     #  
     #  # Now using partial
     #  map.open_info_window :location => :center, :partial => 'spot_information',

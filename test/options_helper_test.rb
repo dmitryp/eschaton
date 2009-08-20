@@ -98,6 +98,7 @@ class OptionsHelperTest < Test::Unit::TestCase
   
   def test_to_content
     assert_equal 'the mystic', Google::OptionsHelper.to_content(:text => 'the mystic')
+    assert_equal '<p>the mystic</p>', Google::OptionsHelper.to_content(:html => '<p>the mystic</p>')    
     assert_equal 'test output for render', Google::OptionsHelper.to_content(:partial => 'testing')
     
     with_eschaton do |script|  

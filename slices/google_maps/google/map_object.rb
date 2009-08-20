@@ -19,7 +19,7 @@ module Google
     #  Examples:
     #
     #   marker.listen_to :event => :click do
-    #     marker.open_info_window :text => "Hello my pretty!"
+    #     marker.open_info_window :html => "Hello my pretty!"
     #   end
     #
     #   marker.listen_to :event => :click do |script|

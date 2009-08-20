@@ -101,7 +101,7 @@ class MapTest < Test::Unit::TestCase
                               end
 
         assert_eschaton_output 'map.openInfoWindow(new GLatLng(-33.947, 18.462), "<div id=\'info_window_content\'>" + "Testing text!" + "</div>");' do
-                                map.open_info_window :location => {:latitude => -33.947, :longitude => 18.462}, :text => "Testing text!"
+                                map.open_info_window :location => {:latitude => -33.947, :longitude => 18.462}, :html => "Testing text!"
                               end
       end
     end    
@@ -113,7 +113,7 @@ class MapTest < Test::Unit::TestCase
         map = self.default_test_map    
       
         assert_eschaton_output 'map.openInfoWindow(map.getInfoWindow().getPoint(), "<div id=\'info_window_content\'>" + "Testing text!" + "</div>");' do
-                                 map.update_info_window :text => "Testing text!"
+                                 map.update_info_window :html => "Testing text!"
                                end
       end
     end
@@ -140,7 +140,7 @@ class MapTest < Test::Unit::TestCase
 
         # Info window convenience
         assert_eschaton_output :map_click_info_window do
-                                map.click :text => "This is a info window!"
+                                map.click :html => "This is a info window!"
                               end
       end
     end    

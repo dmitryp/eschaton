@@ -4,10 +4,10 @@ module Google
   class Tooltip < MapObject
     attr_reader :show, :on
 
-    # Either +text+ or +partial+ is used as the html for the tooltip.
+    # Either +html+ or +partial+ option is used as the html for the tooltip.
     #
     # ==== Options:
-    # * +text+ - Optional. The text to display in the tooltip.
+    # * +html+ - Optional. The text to display in the tooltip.
     # * +partial+ - Optional. Supports the same form as rails +render+ for partials, content of the rendered partial will be
     #   displayed in the tooltip.
     # * +show+ - Optional. If set to +always+ the tooltip will always be visible. If set to +on_mouse_hover+ the 
@@ -35,10 +35,10 @@ module Google
       end
     end
 
-    # Updates the tooltip with the given +options+. Either +text+ or +partial+ is used.
+    # Updates the tooltip with the given +options+. Either +html+ or +partial+ option is used.
     #
     # ==== Options:
-    # * +text+ - Optional. The text to display in the tooltip.
+    # * +html+ - Optional. The text to display in the tooltip.
     # * +partial+ - Optional. Supports the same form as rails +render+ for partials, content of the rendered partial will be
     #   displayed in the tooltip.    
     def update(options)
