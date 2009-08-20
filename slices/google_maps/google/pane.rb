@@ -34,10 +34,10 @@ module Google
     # Replaces the html of the pane. Works in the same way as JavascriptGenerator#replace_html
     #
     #  pane.replace_html "This is new html"
-    #  pane.replace_html :text => "This is new html"    
+    #  pane.replace_html :html => "This is new html"    
     #  pane.replace_html :partial => 'new_html'
     def replace_html(options)
-      text = options.extract(:text) if options.is_a?(Hash)
+      text = options.extract(:text) || options.extract(:html) if options.is_a?(Hash)
 
       self.script.replace_html self.var, text || options
     end

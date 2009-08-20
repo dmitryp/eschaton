@@ -120,6 +120,20 @@ class MarkerTest < Test::Unit::TestCase
       assert_eschaton_output 'marker.openInfoWindow("<div id=\'info_window_content\'>" + "Testing text!" + "</div>");' do
                                marker.open_info_window :html => "Testing text!"
                              end
+                             
+      assert_eschaton_output 'tabs = [];
+                              tabs.push(new GInfoWindowTab("first", "First tab!"));
+                              marker.openInfoWindowTabs(tabs);' do
+                                marker.open_info_window :tabs => [{:label => "first", :html => "First tab!"}]
+                              end                            
+
+       assert_eschaton_output 'tabs = [];
+                               tabs.push(new GInfoWindowTab("first", "First tab!"));
+                               tabs.push(new GInfoWindowTab("second tab", "test output for render"));                                
+                               marker.openInfoWindowTabs(tabs);' do
+                                 marker.open_info_window :tabs => [{:label => "first", :html => "First tab!"},
+                                                                   {:label => "second tab", :partial => 'create'}]
+                               end                             
     end
   end
   
