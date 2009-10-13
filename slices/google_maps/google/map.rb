@@ -289,6 +289,10 @@ module Google # :nodoc:
     def add_pane(options)
       self.add_control Google::Pane.new(options)
     end
+   
+   def add_marker_clusterer(clusterer)
+     clusterer.added_to_map self
+   end
     
     # Replaces an existing marker on the map.
     def replace_marker(marker_or_options)
