@@ -67,12 +67,9 @@ end
 
 def update_javascript
   project_dir = RAILS_ROOT + '/public/javascripts/'
-  scripts = Dir['generators/map/templates/*.js']
 
-  FileUtils.cp scripts, project_dir
+  FileUtils.cp ['generators/map/templates/eschaton.js'], project_dir
 
   puts 'Updated javascripts:'
-  scripts.each do |script|
-    puts "  /public/javascripts/#{File.basename(script)}"
-  end  
+  puts "  /public/javascripts/eschaton.js"
 end
