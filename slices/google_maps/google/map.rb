@@ -291,12 +291,13 @@ module Google # :nodoc:
     def add_pane(options)
       self.add_control Google::Pane.new(options)
     end
-   
-   def add_marker_clusterer(clusterer)
-     clusterer.added_to_map self
+
+   # Creates a MarkerClusterer with the given +options+, see Google::MarkerClusterer.new for valid +options+.
+   def add_marker_clusterer(options = {})
+     Google::MarkerClusterer.new options
    end
-   
-   # Creates a MarkerManager with the given +options+ and returns it.
+
+   # Creates a MarkerManager with the given +options+, see Google::MarkerManager.new for valid +options+.
    def add_marker_manager(options = {})
      Google::MarkerManager.new options
    end

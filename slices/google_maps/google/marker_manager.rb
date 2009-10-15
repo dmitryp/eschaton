@@ -7,8 +7,33 @@ module Google
   # Also effective for grouping markers in order to show, hide or toggle the groups visibility.
   #
   # If a method or event is not documented here please see the online[http://gmaps-utility-library-dev.googlecode.com/svn/tags/markermanager/1.1/docs/reference.html] docs for details
+  # 
+  # ==== Examples:
+  #
+  #  marker_manager = map.add_marker_manager
+  #
+  #  marker_manager.add_marker :location => {:latitude => -33.947, :longitude => 18.462}
+  #  marker_manager.add_marker :location => {:latitude => -33.979, :longitude => 18.465}
+  #  marker_manager.add_marker :location => {:latitude => -33.999, :longitude => 18.469}
+  #
+  # ==== Example with options:
+  #
+  #  marker_manager = map.add_marker_manager :border_padding => 100, :maximum_zoom => 20, :track_markers => true
+  #
+  #  marker_manager.add_marker :location => {:latitude => -33.947, :longitude => 18.462}
+  #  marker_manager.add_marker :location => {:latitude => -33.979, :longitude => 18.465}
+  #  marker_manager.add_marker :location => {:latitude => -33.999, :longitude => 18.469}
+  #
+  # ==== Toggle Example:
+  #
+  #  # You could toggle the visiblit when the map is clicked  
+  #  map.clicked do
+  #    marker_manager.toggle
+  #  end
   class MarkerManager < MapObject
     
+    # Use Map#add_marker_manager to create a new MarkerManager.
+    #
     # ==== Options:
     # * +border_padding+ Optional. Specifies, in pixels, the extra padding outside the map's current viewport monitored by a manager. Markers that fall within this padding are added to the map, even if they are not fully visible.
     # * +maximum_zoom+  Optional. Sets the maximum zoom level monitored by the marker manager. This value is also used when markers are added to the manager using add_marker without the optional +maximum_zoom+ parameter. Defaulted to the maximum map zoom level.

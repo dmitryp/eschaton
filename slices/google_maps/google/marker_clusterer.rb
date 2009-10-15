@@ -6,38 +6,33 @@ module Google
   #
   # ==== Examples
   #  
-  #  clusterer = Google::MarkerClusterer.new
+  #  clusterer = map.add_marker_clusterer
   #
   #  clusterer.add_marker :location => {:latitude => -33.947, :longitude => 18.462}
   #  clusterer.add_marker :location => {:latitude => -33.979, :longitude => 18.465}
   #  clusterer.add_marker :location => {:latitude => -33.999, :longitude => 18.469}      
   #
-  #  map.add_marker_clusterer clusterer
+  # ==== Example with grid_size and max_zoom options
   #
-  #  # With grid_size and max_zoom options
-  #
-  #  clusterer = Google::MarkerClusterer.new :grid_size => 80,
-  #                                          :max_zoom => 12
+  #  clusterer = add_marker_clusterer :grid_size => 80,
+  #                                   :max_zoom => 12
   #
   #  clusterer.add_marker :location => {:latitude => -33.947, :longitude => 18.462}
   #  clusterer.add_marker :location => {:latitude => -33.979, :longitude => 18.465}
   #  clusterer.add_marker :location => {:latitude => -33.999, :longitude => 18.469}
   #
-  #  map.add_marker_clusterer clusterer
+  # ==== Example with style options
   #
-  #  # With style options for small and larger cluster
-  #
-  #  clusterer = Google::MarkerClusterer.new :styles => [{:height => 10, :width => 10, :url => 'small.png'}, 
-  #                                                      {:height => 20, :width => 20, :url => 'bigger.png', :text_colour => :blue}]
+  #  clusterer = map.add_marker_clusterer :styles => [{:height => 10, :width => 10, :url => 'small.png'}, 
+  #                                                   {:height => 20, :width => 20, :url => 'bigger.png', :text_colour => :blue}]
   #
   #  clusterer.add_marker :location => {:latitude => -33.947, :longitude => 18.462}
   #  clusterer.add_marker :location => {:latitude => -33.979, :longitude => 18.465}
   #  clusterer.add_marker :location => {:latitude => -33.999, :longitude => 18.469}
-  #
-  #  map.add_marker_clusterer clusterer  
   class MarkerClusterer < MapObject
-     
 
+    # Use Map#add_marker_clusterer to create a new MarkerClusterer.
+    #
     # ==== Options:
     #
     # * +grid_size+ - Optional. The grid size of a cluster in pixel, each cluster will be a square. If you want the algorithm to run faster, you can set this value larger. The default value is 60
@@ -52,10 +47,10 @@ module Google
     def initialize(options = {})
       super
 
-      script << "var #{self.marker_array_var} = new Array();"
+      self.prepare_options options
 
-      self.remaining_options = options
-      self.prepare_remaining_options
+      script << "var #{self.marker_array_var} = new Array();"
+      Google::Scripts.end_of_map_script << "#{self.var} = new MarkerClusterer(#{Google.current_map}, #{self.marker_array_var}, #{options.to_google_options(:dont_convert => 'styles')});"
     end
     
     # Adds a marker to the clusterer, +marker_or_options+ can be a Marker or whatever Marker#new supports.
@@ -68,14 +63,8 @@ module Google
 
       self.track_marker(marker)
     end
-        
-    def added_to_map(map) # :nodoc:
-      script << "#{self.var} = new MarkerClusterer(#{map}, #{self.marker_array_var}, #{self.remaining_options.to_google_options(:dont_convert => 'styles')});"
-    end    
 
     protected
-      attr_accessor :remaining_options
-
       def track_marker(marker) # :nodoc:
         script << "#{self.marker_array_var}.push(#{marker});"
       end
@@ -84,9 +73,9 @@ module Google
         "#{self.var}_markers"
       end
       
-      def prepare_remaining_options # :nodoc:      
-        if self.remaining_options[:styles]
-          javascript_styles = self.remaining_options[:styles].collect do |style|    
+      def prepare_options(options) # :nodoc:      
+        if options[:styles]
+          javascript_styles = options[:styles].collect do |style|    
                                 javascript = style.to_google_options
 
                                 # Hack due to crap naming conventions of this library
@@ -96,7 +85,7 @@ module Google
                                 javascript
                               end
 
-          self.remaining_options[:styles] = "[#{javascript_styles.join(',')}]"
+          options[:styles] = "[#{javascript_styles.join(',')}]"
         end        
       end
       
