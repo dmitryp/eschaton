@@ -14,8 +14,8 @@ module Google
   #
   # ==== Example with grid_size and max_zoom options
   #
-  #  clusterer = add_marker_clusterer :grid_size => 80,
-  #                                   :max_zoom => 12
+  #  clusterer = map.add_marker_clusterer :grid_size => 80,
+  #                                       :max_zoom => 12
   #
   #  clusterer.add_marker :location => {:latitude => -33.947, :longitude => 18.462}
   #  clusterer.add_marker :location => {:latitude => -33.979, :longitude => 18.465}
