@@ -53,7 +53,7 @@ class MarkerClustererTest < Test::Unit::TestCase
       assert_eschaton_output 'var cluster_markers = new Array();
                               marker_1 = new GMarker(new GLatLng(-33.947, 18.462), {draggable: false});
                               cluster_markers.push(marker_1);
-                              cluster = new MarkerClusterer(map, cluster_markers, {styles: [{height: 10, url: "small.png"},{height: 20, optTextColor: blue, url: "bigger.png"}]});' do
+                              cluster = new MarkerClusterer(map, cluster_markers, {styles: [{height: 10, url: "small.png"},{height: 20, opt_textColor: blue, url: "bigger.png"}]});' do
                               clusterer = Google::MarkerClusterer.new :var => :cluster, 
                                                                       :styles => [{:height => 10, :url => 'small.png'}, 
                                                                                   {:height => 20, :url => 'bigger.png', :text_colour => :blue}]
@@ -72,7 +72,7 @@ class MarkerClustererTest < Test::Unit::TestCase
       assert_eschaton_output 'var cluster_markers = new Array();
                               marker_1 = new GMarker(new GLatLng(-33.947, 18.462), {draggable: false});
                               cluster_markers.push(marker_1);
-                              cluster = new MarkerClusterer(map, cluster_markers, {styles: [{optAnchor: [1, 2], optTextColor: 10}]});' do
+                              cluster = new MarkerClusterer(map, cluster_markers, {styles: [{opt_anchor: [1, 2], opt_textColor: 10}]});' do
                               clusterer = Google::MarkerClusterer.new :var => :cluster, 
                                                                       :styles => [{:text_colour => 10, :anchor => [1, 2]}]
 

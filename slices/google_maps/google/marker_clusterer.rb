@@ -1,7 +1,8 @@
 module Google
 
-  # Creates and manages per-zoom-level clusters for large amounts of markers (hundreds or thousands).
-  # For a list of available methods read more[http://gmaps-utility-library-dev.googlecode.com/svn/tags/markerclusterer/1.0/docs/reference.html] online. 
+  # Creates and manages per-zoom-level clusters for large amounts(hundreds or thousands) of markers.
+  #
+  # If a method or event is not documented here please see the online[http://gmaps-utility-library-dev.googlecode.com/svn/tags/markerclusterer/1.0/docs/reference.html] docs for details  
   #
   # ==== Examples
   #  
@@ -36,7 +37,8 @@ module Google
   #  map.add_marker_clusterer clusterer  
   class MarkerClusterer < MapObject
      
-    # For a list of valid options see the online docs[http://gmaps-utility-library-dev.googlecode.com/svn/tags/markerclusterer/1.0/docs/reference.html#MarkerClustererOptions]
+
+    # ==== Options:
     #
     # * +grid_size+ - Optional. The grid size of a cluster in pixel, each cluster will be a square. If you want the algorithm to run faster, you can set this value larger. The default value is 60
     # * +max_zoom+ - Optional. The max zoom level monitored by a marker cluster. If not given, the marker cluster assumes the maximum map zoom level. When max_zoom is reached or exceeded all markers will be shown without cluster.
@@ -55,7 +57,12 @@ module Google
       self.remaining_options = options
       self.prepare_remaining_options
     end
-
+    
+    # Adds a marker to the clusterer, +marker_or_options+ can be a Marker or whatever Marker#new supports.
+    #
+    # ==== Examples:
+    #
+    #  clusterer.add_marker :location => {:latitude => -33.947, :longitude => 18.462}
     def add_marker(marker_or_options = {})
       marker = Google::OptionsHelper.to_marker(marker_or_options)
 
@@ -69,15 +76,15 @@ module Google
     protected
       attr_accessor :remaining_options
 
-      def track_marker(marker)
+      def track_marker(marker) # :nodoc:
         script << "#{self.marker_array_var}.push(#{marker});"
       end
 
-      def marker_array_var
+      def marker_array_var # :nodoc:
         "#{self.var}_markers"
       end
       
-      def prepare_remaining_options        
+      def prepare_remaining_options # :nodoc:      
         if self.remaining_options[:styles]
           javascript_styles = self.remaining_options[:styles].collect do |style|    
                                 javascript = style.to_google_options
