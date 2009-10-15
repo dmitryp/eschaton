@@ -116,7 +116,9 @@ module Google # :nodoc:
       super
 
       options.assert_valid_keys :center, :controls, :zoom, :type, :keyboard_navigation
-
+      
+      Google.current_map = self
+      
       self.track_bounds!
 
       if self.create_var?
@@ -292,6 +294,10 @@ module Google # :nodoc:
    
    def add_marker_clusterer(clusterer)
      clusterer.added_to_map self
+   end
+   
+   def add_marker_manager(manager)
+     manager.added_to_map self
    end
     
     # Replaces an existing marker on the map.

@@ -61,4 +61,10 @@ class Array # :nodoc:
     self.collect(&:to_js).join(', ')
   end
 
+  def to_compact_js_arguments
+    self.compact!
+    
+    self.to_js_arguments
+  end
+
 end
