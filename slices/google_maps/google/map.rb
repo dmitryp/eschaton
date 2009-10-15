@@ -296,8 +296,9 @@ module Google # :nodoc:
      clusterer.added_to_map self
    end
    
-   def add_marker_manager(manager)
-     manager.added_to_map self
+   # Creates a MarkerManager with the given +options+ and returns it.
+   def add_marker_manager(options = {})
+     Google::MarkerManager.new options
    end
     
     # Replaces an existing marker on the map.

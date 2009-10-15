@@ -165,6 +165,22 @@ class MapTest < Test::Unit::TestCase
     end    
   end
 
+  def test_add_marker_manager
+    with_eschaton do |script|
+      script.google_map_script do
+        map = self.default_test_map
+      
+        assert_eschaton_output 'manager = new MarkerManager(map, {});' do
+                                map.add_marker_manager :var => :manager
+                              end
+                              
+        assert_eschaton_output 'manager = new MarkerManager(map, {borderPadding: 100, maxZoom: 22});' do
+                                map.add_marker_manager :var => :manager, :border_padding => 100, :maximum_zoom => 22
+                              end                              
+      end
+    end    
+  end
+
   def test_add_marker_output
     with_eschaton do |script|
       script.google_map_script do
