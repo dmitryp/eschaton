@@ -139,11 +139,11 @@ Let the code speak:
   map.zoom = 11   # => 'setZoom(11)'
   map.set_zoom(1) # => 'setZoom(11)'
   
-  marker.update_with_hash({:name => 'yawningman', :project => 'eschaton}) # => map.updateWithHash({"name": "yawningman", "project": "eschaton"});
+  marker.update_with_hash({:name => 'yawningman', :project => 'eschaton'}) # => map.updateWithHash({"name": "yawningman", "project": "eschaton"});
 
-  map.update_with_array(["yawningman", "eschaton", 33]) # => map.updateWithArray(["yawningman", "eschaton", 33]);
+  map.update_with_array(['yawningman', 'eschaton', 33]) # => map.updateWithArray(["yawningman", "eschaton", 33]);
 
-  map.update_with_string("yawningman") # => map.updateWithString("yawningman");
+  map.update_with_string('yawningman') # => map.updateWithString("yawningman");
   
   map.enable_google_bar  #=> 'map.enableGoogleBar();'
   map.enable_google_bar! #=> 'map.enableGoogleBar();'  
