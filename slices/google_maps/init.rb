@@ -1,1 +1,1 @@
-Eschaton.dependencies.require 'google/google'
+Eschaton.dependencies.require "#{File.dirname(__FILE__)}/google/google"
