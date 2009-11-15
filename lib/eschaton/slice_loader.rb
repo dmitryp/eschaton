@@ -22,6 +22,8 @@ module Eschaton
       end
     
       def self.mixin_slice_extentions(location)
+        location = File.expand_path(location)
+
         eschaton_log_info "loading slice '#{File.basename(location)}'"
        
         Eschaton.dependencies.load_paths << location
