@@ -2,11 +2,6 @@
 
 Helps with writing google map mashups in Rails by providing a language that is as natural as possible.
 
-You can read the docs[http://rdoc.info/projects/yawningman/eschaton], our blog[http://yawningman.github.com/eschaton] for updates or 
-if you have an issue please let us know here[http://github.com/yawningman/eschaton/issues].
-
-Please also read the FAQ below.
-
 == Get it and Get going...
 
 Install the plugin:
@@ -20,7 +15,7 @@ Generate a map, look at the files the generator created and play a bit:
 Put some test code in your <b><i>app/helpers/map_helper.rb</i></b> and *_play_*!
 Visit the map at http://localhost:3000/map or wherever your server runs.
 
-== Enough talk, lets code, here be samples.
+== Enough talk, lets code.
 
 Eschaton code can be placed in a view helper, contained within the run_map_script methods' block and it will happily return javascript to you.
 
@@ -109,7 +104,6 @@ Both Hashes and Arrays can represent a Location, so use which ever form you pref
 
 Checkout the online[http://rdoc.info/projects/yawningman/eschaton] docs for more on each mapping objects possibilities.
 
-
 == FAQ
 
 
@@ -134,7 +128,7 @@ If you think a particular method is being translated incorrectly, let us know[ht
 
 ==== How exactly does eschaton translate method calls from Ruby to Javascript?
   
-Let the code speak:
+Like this:
 
   map.zoom = 11   # => 'setZoom(11)'
   map.set_zoom(1) # => 'setZoom(11)'
