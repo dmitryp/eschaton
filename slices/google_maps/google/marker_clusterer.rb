@@ -62,6 +62,8 @@ module Google
       marker = Google::OptionsHelper.to_marker(marker_or_options)
 
       self.track_marker(marker)
+      
+      marker
     end
 
     protected
