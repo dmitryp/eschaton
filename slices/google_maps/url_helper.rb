@@ -53,6 +53,10 @@ module Google
         {:latitude => location.latitude, :longitude => location.longitude}
       end
     end
+    
+    def self.encode(javascript)
+      "##{javascript}"
+    end
 
   end
   

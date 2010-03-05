@@ -10,6 +10,16 @@ class UrlHelperTest < Test::Unit::TestCase
                                  {:latitude=>"-33.93", :longitude=>"18.44"}]
   end
 
+  def test_encode
+    with_eschaton do |script|
+      polygon = Google::Polygon.new :var => :the_polygon, :vertices => @decoded_polygon_vertices
+
+      assert_equal '#location', Google::UrlHelper.encode(:location)
+      assert_equal '#the_polygon', Google::UrlHelper.encode(polygon)
+      assert_equal '#1 + 1', Google::UrlHelper.encode('1 + 1')
+    end    
+  end
+
   def test_encode_polygon
     with_eschaton do |script|
       polygon = Google::Polygon.new :vertices => @decoded_polygon_vertices

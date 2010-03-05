@@ -15,6 +15,10 @@ class String # :nodoc:
   def strip_each_line!
     self.gsub!(/^\s+|\s+$/, '')
   end
+  
+  def interpolated_javscript
+    "#[#{self}]"
+  end
 
   # Escapes +self+ and returns the escaped string.
   def escape
