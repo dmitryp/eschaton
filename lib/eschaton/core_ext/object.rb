@@ -36,8 +36,8 @@ class Object # :nodoc:
     RAILS_DEFAULT_LOGGER.info("eschaton: #{message}") if RAILS_DEFAULT_LOGGER
   end
   
-  def interpolated_javscript
-    self.to_js.interpolated_javscript
+  def interpolated_javascript
+    self.to_js.interpolated_javascript
   end
 
 end

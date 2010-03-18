@@ -16,7 +16,7 @@ class String # :nodoc:
     self.gsub!(/^\s+|\s+$/, '')
   end
   
-  def interpolated_javscript
+  def interpolated_javascript
     "#[#{self}]"
   end
 

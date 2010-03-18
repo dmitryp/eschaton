@@ -30,11 +30,11 @@ class GoogleCoreExtTest < Test::Unit::TestCase
     assert_equal project_value, options[:project]
   end
   
-  def test_interpolated_javscript
-    assert_equal "#[$('form')]", "$('form')".interpolated_javscript
-    assert_equal "#[location]", :location.interpolated_javscript
-    assert_equal "#[2]", 2.interpolated_javscript 
-    assert_equal '#[[1, 2, 3]]', [1, 2, 3].interpolated_javscript
+  def test_interpolated_javascript
+    assert_equal "#[$('form')]", "$('form')".interpolated_javascript
+    assert_equal "#[location]", :location.interpolated_javascript
+    assert_equal "#[2]", 2.interpolated_javascript 
+    assert_equal '#[[1, 2, 3]]', [1, 2, 3].interpolated_javascript
   end
 
 end
