@@ -1,4 +1,4 @@
-= eschaton => the underground plugin for google maps on rails 
+= eschaton => groundwork for google maps on rails 
 
 Helps with writing google map mashups in Rails by providing a language that is as natural as possible.
 
@@ -143,3 +143,7 @@ Like this:
   map.enable_google_bar! #=> 'map.enableGoogleBar();'  
 
 and so forth and so on
+
+==== Please fork
+
+Forking of eschaton is encouraged, so it can be more distributed. If you are keen on the plugin, create a fork for yourself today and help distribute code!
