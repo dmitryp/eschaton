@@ -1,4 +1,4 @@
-= eschaton => groundwork for google maps on rails 
+= eschaton => Minimizes "Kak praat" for google maps on rails
 
 Helps with writing google map mashups in Rails by providing a language that is as natural as possible.
 
