@@ -1,6 +1,4 @@
 require File.dirname(__FILE__) + '/test_helper'
-
-Test::Unit::TestCase.output_fixture_base = File.dirname(__FILE__)
     
 class MapTest < Test::Unit::TestCase
   

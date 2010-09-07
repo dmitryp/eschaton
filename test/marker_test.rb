@@ -1,7 +1,5 @@
 require File.dirname(__FILE__) + '/test_helper'
 
-Test::Unit::TestCase.output_fixture_base = File.dirname(__FILE__)
-
 class MarkerTest < Test::Unit::TestCase
 
   def default_marker
@@ -203,7 +201,7 @@ class MarkerTest < Test::Unit::TestCase
       marker = self.default_marker
 
       assert_eschaton_output "GEvent.trigger(marker, 'click');" do
-                               marker.open_cached_info_window
+                               marker.open_cached_info_window!
                              end
     end    
     
