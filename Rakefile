@@ -5,7 +5,7 @@ require 'rake/rdoctask'
 require 'code_statistics'
   
 # Load up the entire host rails enviroment
-require File.dirname(__FILE__) + '/../../../config/environment'
+#require File.dirname(__FILE__) + '/../../../config/environment'
 
 desc 'Default: run eschaton tests.'
 task :default => :test

@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/test_helper'
 
-class GoogleCoreExtTest < Test::Unit::TestCase
+class CoreExtTest < Test::Unit::TestCase
   
   def test_to_google_options
    assert_equal '{bounceGravity: 12, draggable: true, title: "My title!"}',
@@ -34,7 +34,7 @@ class GoogleCoreExtTest < Test::Unit::TestCase
     assert_equal "#[$('form')]", "$('form')".interpolated_javascript
     assert_equal "#[location]", :location.interpolated_javascript
     assert_equal "#[2]", 2.interpolated_javascript 
-    assert_equal '#[[1, 2, 3]]', [1, 2, 3].interpolated_javascript
+    assert_equal '#[[1,2,3]]', [1, 2, 3].interpolated_javascript
   end
 
 end

@@ -98,7 +98,7 @@ class MarkerClustererTest < Test::Unit::TestCase
                               map.setCenter(track_bounds.getCenter());
                               }
                               map.setZoom(map.getBoundsZoomLevel(track_bounds));
-                              cluster = new MarkerClusterer(map, cluster_markers, {styles: [{opt_anchor: [1, 2], opt_textColor: 10}]});', Google::Scripts.end_of_map_script.to_s      
+                              cluster = new MarkerClusterer(map, cluster_markers, {styles: [{opt_anchor: [1,2], opt_textColor: 10}]});', Google::Scripts.end_of_map_script.to_s      
       
     end
   end
