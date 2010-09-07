@@ -49,6 +49,9 @@ module Google
   #
   #  marker.open_info_window :html => 'Hello there...'
   #
+  #  # Passing info window options
+  #  marker.open_info_window :html => 'Hello there...', :options => {:max_width => 400, :no_close_on_click => true}
+  #
   #  # Using partials
   #  marker.open_info_window :partial => 'spot_information'
   #
@@ -139,10 +142,14 @@ module Google
     #   * +label+ - Required. The label for the tab, this will be displayed on the tab.
     #   * +html+ - Optional. The html content that will be placed inside the info window.    
     #   * +partial+ - Supports the same form as rails +render+ for partials, content of the rendered partial will be placed inside the tab.
+    # * +options+ - Optional. The options for the info window, see {online docs}[http://code.google.com/apis/maps/documentation/javascript/v2/reference.html#GInfoWindowOptions] for supported options.
     #
     # ==== Examples:
     #
     #  marker.open_info_window :html => 'Hello there...'
+    #
+    #  # Passing info window options
+    #  marker.open_info_window :html => 'Hello there...', :options => {:max_width => 400, :no_close_on_click => true}
     #
     #  # Using partials
     #  marker.open_info_window :partial => 'spot_information'
@@ -179,6 +186,7 @@ module Google
       info_window.cache_on_marker options
     end
 
+    # Opens the cached info window that was previously setup with cache_info_window.
     def open_cached_info_window
       self << "GEvent.trigger(#{self}, 'click');"
     end

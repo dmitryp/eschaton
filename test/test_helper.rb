@@ -100,6 +100,7 @@ class EschatonMockView
     
   def url_for(options)
     options.merge!(:only_path => true)
+
     ActionController::UrlRewriter.new(ActionController::TestRequest.new, nil).rewrite(options)
   end
   

@@ -15,7 +15,7 @@ module Google
       InfoWindow.new(:for => map_object)
     end
 
-    def open_on_map(options)     
+    def open_on_map(options) 
       options.default! :location => :center, :include_location => true, :options => {}
 
       location = Google::OptionsHelper.to_location(options[:location])
@@ -75,7 +75,7 @@ module Google
         "\"<div id='info_window_content'>\" + #{content.to_js} + \"</div>\""
       end
 
-      def open_info_window_on_map(options)        
+      def open_info_window_on_map(options)
         if options[:tabs]
           open_tabbed_info_window_on_map options
         else
@@ -84,7 +84,7 @@ module Google
         end
       end
 
-      def open_info_window_on_marker(options)        
+      def open_info_window_on_marker(options)
         if options[:tabs]
           open_tabbed_info_window_on_marker options          
         else

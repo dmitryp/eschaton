@@ -55,6 +55,11 @@ module Google # :nodoc:
   #  # In the center of the map
   #  map.open_info_window :location => :center, :html => 'Hello there...'
   #  
+  #  # Passing info window options
+  #  map.open_info_window :location => {:latitude => -34, :longitude => 18.5},
+  #                       :html => 'Hello there...', 
+  #                       :options => {:max_width => 400, :no_close_on_click => true}
+  #
   #  # Now using partial
   #  map.open_info_window :location => :center, :partial => 'spot_information',
   #
@@ -531,6 +536,7 @@ module Google # :nodoc:
     #   * +label+ - Required. The label for the tab, this will be displayed on the tab.
     #   * +html+ - Optional. The html content that will be placed inside the info window.    
     #   * +partial+ - Supports the same form as rails +render+ for partials, content of the rendered partial will be placed inside the tab.
+    # * +options+ - Optional. The options for the info window, see {online docs}[http://code.google.com/apis/maps/documentation/javascript/v2/reference.html#GInfoWindowOptions] for supported options.
     #
     # ==== Examples:
     #
@@ -538,9 +544,14 @@ module Google # :nodoc:
     #  map.open_info_window :location => {:latitude => -34, :longitude => 18.5},
     #                       :html => 'Hello there...'
     # 
+    #  # Passing info window options
+    #  map.open_info_window :location => {:latitude => -34, :longitude => 18.5},
+    #                       :html => 'Hello there...', 
+    #                       :options => {:max_width => 400, :no_close_on_click => true}
+    #
     #  # In the center of the map
     #  map.open_info_window :location => :center, :html => 'Hello there...'
-    #  
+    #    
     #  # Now using partial
     #  map.open_info_window :location => :center, :partial => 'spot_information',
     #
@@ -548,10 +559,10 @@ module Google # :nodoc:
     #
     #  # Using a url, will include the location info in the url
     #  # Use params[:location] or params[:location][:latitude] and params[:location][:longitude] in your action
-    #  map.open_info_window :locals => :center, :url => {:controller => :spot, :action => :show, :id => @spot}
+    #  map.open_info_window :location => :center, :url => {:controller => :spot, :action => :show, :id => @spot}
     #
-    #  # Don't include the location in the params
-    #  map.open_info_window :locals => :center, :url => {:controller => :spot, :action => :show, :id => @spot},
+    #  # Don't include the location in the params of the url
+    #  map.open_info_window :location => :center, :url => {:controller => :spot, :action => :show, :id => @spot},
     #                       :include_location => false
     #
     #  # Open a info window with two tabs created using the :html tab option
