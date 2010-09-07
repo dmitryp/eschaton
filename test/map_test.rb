@@ -96,21 +96,21 @@ class MapTest < Test::Unit::TestCase
                                                      :include_location => false
                               end
 
-        assert_eschaton_output 'map.openInfoWindow(new GLatLng(-33.947, 18.462), "<div id=\'info_window_content\'>" + "test output for render" + "</div>");' do
+        assert_eschaton_output 'map.openInfoWindow(new GLatLng(-33.947, 18.462), "<div id=\'info_window_content\'>" + "test output for render" + "</div>", {});' do
                                 map.open_info_window :location => {:latitude => -33.947, :longitude => 18.462}, :partial => 'create'
                               end
 
-        assert_eschaton_output 'map.openInfoWindow(new GLatLng(-33.947, 18.462), "<div id=\'info_window_content\'>" + "Testing text!" + "</div>");' do
+        assert_eschaton_output 'map.openInfoWindow(new GLatLng(-33.947, 18.462), "<div id=\'info_window_content\'>" + "Testing text!" + "</div>", {});' do
                                 map.open_info_window :location => {:latitude => -33.947, :longitude => 18.462}, :html => "Testing text!"
                               end
-                              
+
         assert_eschaton_output 'tabs = [];
                                 tabs.push(new GInfoWindowTab("first", "First tab!"));
                                 map.openInfoWindowTabs(new GLatLng(-33.947, 18.462), tabs);' do
-                                map.open_info_window :location => {:latitude => -33.947, :longitude => 18.462}, 
+                                map.open_info_window :location => {:latitude => -33.947, :longitude => 18.462},
                                                      :tabs => [{:label => "first", :html => "First tab!"}]
-                              end                            
-                              
+                              end
+
         assert_eschaton_output 'tabs = [];
                                 tabs.push(new GInfoWindowTab("first", "First tab!"));
                                 tabs.push(new GInfoWindowTab("second tab", "test output for render"));                                
@@ -118,10 +118,7 @@ class MapTest < Test::Unit::TestCase
                                 map.open_info_window :location => {:latitude => -33.947, :longitude => 18.462}, 
                                                      :tabs => [{:label => "first", :html => "First tab!"},
                                                                {:label => "second tab", :partial => 'create'}]
-                              end                             
-                              
-                              
-                              
+                              end           
       end
     end    
   end
@@ -131,7 +128,7 @@ class MapTest < Test::Unit::TestCase
       script.google_map_script do      
         map = self.default_test_map    
       
-        assert_eschaton_output 'map.openInfoWindow(map.getInfoWindow().getPoint(), "<div id=\'info_window_content\'>" + "Testing text!" + "</div>");' do
+        assert_eschaton_output 'map.openInfoWindow(map.getInfoWindow().getPoint(), "<div id=\'info_window_content\'>" + "Testing text!" + "</div>", {});' do
                                  map.update_info_window :html => "Testing text!"
                                end
       end

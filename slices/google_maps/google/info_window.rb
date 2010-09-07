@@ -13,7 +13,7 @@ module Google
     
     # TODO - The code in here sucks, sort it out
     def open(options)     
-      options.default! :location => :center, :include_location => true
+      options.default! :location => :center, :include_location => true, :options => {}
 
       location = Google::OptionsHelper.to_location(options[:location])
       location = self.object.center if location == :center      
@@ -28,7 +28,8 @@ module Google
         end        
       else
         # TODO - this method call using both :content and :tabs options is ugly, also options not being reused.
-        open_info_window_on_map :location => location, :content => OptionsHelper.to_content(options), :tabs => options[:tabs]
+        open_info_window_on_map :location => location, :content => OptionsHelper.to_content(options), :tabs => options[:tabs],
+                                :options => options[:options]
       end
     end
     
@@ -94,11 +95,15 @@ module Google
        # TODO - This method needs consolidation with open_tabbed_info_window_on_map into a single, clear method.
        #        Because this accepts both the :content and :tabs options it doesn't make clear what it does.
       def open_info_window_on_map(options)
+        options.default! :options => {}
+
+        info_window_options = options[:options]
+        
         if options[:tabs]
           open_tabbed_info_window_on_map options
         else
           content = window_content options[:content]
-          self << "#{self.var}.openInfoWindow(#{options[:location]}, #{content});"        
+          self << "#{self.var}.openInfoWindow(#{options[:location]}, #{content}, #{prepare_info_window_options(info_window_options)});"        
         end
       end
 
@@ -125,6 +130,12 @@ module Google
         self.script.get(:url => options[:url]) do |data|
           yield data
         end
+      end
+      
+      def prepare_info_window_options(info_window_options)        
+        info_window_options.to_google_options :dont_convert => [:offset, :pixel_offset], 
+                                              :rename => {:dont_close_when_map_clicked => :no_close_on_click,
+                                                          :offset => :pixel_offset}
       end
 
   end
