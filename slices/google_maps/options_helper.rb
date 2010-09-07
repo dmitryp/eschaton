@@ -206,7 +206,9 @@ module Google
     #  OptionsHelper.to_google_size([10, 10])   #=> "new GSize(10, 10)"
     #  OptionsHelper.to_google_size([100, 50])  #=> "new GSize(100, 50)"
     #  OptionsHelper.to_google_size([200, 150]) #=> "new GSize(200, 150)"
-    def self.to_google_size(array)
+    def self.to_google_size(*array)
+      array = array.flatten
+
       "new GSize(#{array.first}, #{array.second})"
     end
 

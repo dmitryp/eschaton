@@ -190,6 +190,8 @@ class OptionsHelperTest < Test::Unit::TestCase
   end
 
   def test_array_to_google_size
+    assert_equal "new GSize(10, 10)", Google::OptionsHelper.to_google_size(10, 10)
+    
     assert_equal "new GSize(10, 10)", Google::OptionsHelper.to_google_size([10, 10])
     assert_equal "new GSize(100, 50)", Google::OptionsHelper.to_google_size([100, 50])
     assert_equal "new GSize(200, 150)", Google::OptionsHelper.to_google_size([200, 150])    
