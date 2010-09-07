@@ -17,10 +17,6 @@ module Google
                     api_keys = YAML.load_file(config_file)
 
                     api_keys[domain_name] || api_keys[RAILS_ENV]
-                  elsif defined?(GOOGLE_MAPS_API_KEY)
-                    Eschaton::Deprecation.warning(:message => "GOOGLE_MAPS_API_KEY constant will be removed soon. Please create the 'config/eschaton_google_api_keys.yml' file with your keys",
-                                                  :include_called_from => false)
-                    GOOGLE_MAPS_API_KEY
                   else
                     'ABQIAAAActtI8WkgLZcM_n8uvnIYsBTJQa0g3IQ9GZqIMmInSLzwtGDKaBT9A95dZjICm7SeC_GoxpzGlyCdQA'
                   end
