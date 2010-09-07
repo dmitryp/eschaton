@@ -106,7 +106,7 @@ class MapTest < Test::Unit::TestCase
 
         assert_eschaton_output 'tabs = [];
                                 tabs.push(new GInfoWindowTab("first", "First tab!"));
-                                map.openInfoWindowTabs(new GLatLng(-33.947, 18.462), tabs);' do
+                                map.openInfoWindowTabs(new GLatLng(-33.947, 18.462), tabs, {});' do
                                 map.open_info_window :location => {:latitude => -33.947, :longitude => 18.462},
                                                      :tabs => [{:label => "first", :html => "First tab!"}]
                               end
@@ -114,7 +114,7 @@ class MapTest < Test::Unit::TestCase
         assert_eschaton_output 'tabs = [];
                                 tabs.push(new GInfoWindowTab("first", "First tab!"));
                                 tabs.push(new GInfoWindowTab("second tab", "test output for render"));                                
-                                map.openInfoWindowTabs(new GLatLng(-33.947, 18.462), tabs);' do
+                                map.openInfoWindowTabs(new GLatLng(-33.947, 18.462), tabs, {});' do
                                 map.open_info_window :location => {:latitude => -33.947, :longitude => 18.462}, 
                                                      :tabs => [{:label => "first", :html => "First tab!"},
                                                                {:label => "second tab", :partial => 'create'}]

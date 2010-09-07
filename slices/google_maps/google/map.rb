@@ -565,7 +565,7 @@ module Google # :nodoc:
     #                                 {:label => 'Account Info', :partial => 'account/info'}]
     def open_info_window(options)
       info_window = InfoWindow.new(:for => self)
-      info_window.open options
+      info_window.open_on_map options
     end
     
     # This event is fired after an info window has been opened on the map.

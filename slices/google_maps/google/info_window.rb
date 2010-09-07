@@ -12,11 +12,12 @@ module Google
     end
     
     # TODO - The code in here sucks, sort it out
-    def open(options)     
+    def open_on_map(options)     
       options.default! :location => :center, :include_location => true, :options => {}
 
       location = Google::OptionsHelper.to_location(options[:location])
-      location = self.object.center if location == :center      
+      location = self.object.center if location == :center
+      info_window_options = options[:options]
 
       if options[:url]
         options[:location] = location
@@ -24,12 +25,13 @@ module Google
         # TODO - the way the jquery get forces use to duplicate code sucks, make OptionsHelper.to_content support URLS
         get(options) do |data|
           # TODO - this method call using both :content and :tabs options is ugly, also options not being reused.          
-          open_info_window_on_map :location => location, :content => data, :tabs => options[:tabs]
+          open_info_window_on_map :location => location, :content => data, :tabs => options[:tabs],
+                                  :options => info_window_options
         end        
       else
         # TODO - this method call using both :content and :tabs options is ugly, also options not being reused.
-        open_info_window_on_map :location => location, :content => OptionsHelper.to_content(options), :tabs => options[:tabs],
-                                :options => options[:options]
+        open_info_window_on_map :location => location, :content => OptionsHelper.to_content(options), 
+                                :tabs => options[:tabs], :options => info_window_options
       end
     end
     
@@ -37,18 +39,21 @@ module Google
     def open_on_marker(options)
       options.default! :include_location => true, :options => {}
 
+      info_window_options = options[:options]
+
       if options[:url]
         options[:location] = self.object.location
-        
+
         # TODO - the way the jquery get forces use to duplicate code sucks, make OptionsHelper.to_content support URLS
         get(options) do |data|
           # TODO - this method call using both :content and :tabs options is ugly, also options not being reused.                    
-          open_info_window_on_marker :content => data, :tabs => options[:tabs]
+          open_info_window_on_marker :content => data, :tabs => options[:tabs], 
+                                     :options => info_window_options
         end
       else
         # TODO - this method call using both :content and :tabs options is ugly, also options not being reused.         
         open_info_window_on_marker :content => OptionsHelper.to_content(options), :tabs => options[:tabs], 
-                                   :options => options[:options]
+                                   :options => info_window_options
       end
     end
     
@@ -75,13 +80,14 @@ module Google
       # TODO - This needs to be consolidated with open_info_window_on_map into a single, clear method
       def open_tabbed_info_window_on_map(options)
         create_info_window_tab_array options[:tabs]
-        self << "#{self.var}.openInfoWindowTabs(#{options[:location]}, tabs);"      
+
+        self << "#{self.var}.openInfoWindowTabs(#{options[:location]}, tabs, #{prepare_info_window_options(options[:options])});"      
       end
 
       # TODO - This needs to be consolidated with open_info_window_on_marker into a single, clear method
       def open_tabbed_info_window_on_marker(options)
         create_info_window_tab_array options[:tabs]
-        self << "#{self.var}.openInfoWindowTabs(tabs);"      
+        self << "#{self.var}.openInfoWindowTabs(tabs, #{prepare_info_window_options(options[:options])});"      
       end
 
       def create_info_window_tab_array(tabs)
@@ -95,30 +101,22 @@ module Google
 
        # TODO - This method needs consolidation with open_tabbed_info_window_on_map into a single, clear method.
        #        Because this accepts both the :content and :tabs options it doesn't make clear what it does.
-      def open_info_window_on_map(options)
-        options.default! :options => {}
-
-        info_window_options = options[:options]
-        
+      def open_info_window_on_map(options)        
         if options[:tabs]
           open_tabbed_info_window_on_map options
         else
           content = window_content options[:content]
-          self << "#{self.var}.openInfoWindow(#{options[:location]}, #{content}, #{prepare_info_window_options(info_window_options)});"        
+          self << "#{self.var}.openInfoWindow(#{options[:location]}, #{content}, #{prepare_info_window_options(options[:options])});"        
         end
       end
 
       # TODO - The code in here sucks, sort it out
-      def open_info_window_on_marker(options)
-        options.default! :options => {}
-
-        info_window_options = options[:options]
-        
+      def open_info_window_on_marker(options)        
         if options[:tabs]
           open_tabbed_info_window_on_marker options          
         else
           content = window_content options[:content]
-          self << "#{self.var}.openInfoWindow(#{content}, #{prepare_info_window_options(info_window_options)});"
+          self << "#{self.var}.openInfoWindow(#{content}, #{prepare_info_window_options(options[:options])});"
         end
       end
 
