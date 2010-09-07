@@ -72,7 +72,7 @@ module Google
         self.encoded = options.extract(:encoded)
 
         if self.encoded?
-          self.encoded = self.encoded.arify
+          self.encoded = self.encoded.to_array
         else
           self.vertices = Google::OptionsHelper.to_vertices(options.extract(:vertices))
         end

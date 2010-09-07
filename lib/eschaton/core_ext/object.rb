@@ -1,6 +1,6 @@
 class Object # :nodoc:
     
-  def arify
+  def to_array
     if self.is_a?(Array)
       self
     else

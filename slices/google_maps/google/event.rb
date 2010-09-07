@@ -18,7 +18,7 @@ module Google
       options.default! :with => []
       options.assert_valid_keys :with, :yield_order
 
-      with_arguments = options[:with].arify
+      with_arguments = options[:with].to_array
       js_arguments = with_arguments.join(', ')
 
       yield_args = if options[:yield_order]
@@ -33,7 +33,7 @@ module Google
       self << "function #{wrap_method}{"
       self << "return GEvent.addListener(#{self.on}, \"#{self.event}\", function(#{js_arguments}) {"
 
-      yield *(self.script.arify + yield_args)
+      yield *(self.script.to_array + yield_args)
 
       self <<  "});"
       self << "}"

@@ -7,8 +7,8 @@ class Hash # :nodoc:
   def to_google_options(options = {})
     options.default! :dont_convert => [], :quote => [], :rename => {}
     
-    dont_convert = (options[:dont_convert]).arify.collect(&:to_s)
-    quote = (options[:quote]).arify.collect(&:to_s)
+    dont_convert = (options[:dont_convert]).to_array.collect(&:to_s)
+    quote = (options[:quote]).to_array.collect(&:to_s)
     renamed_options = options[:rename].stringify_keys
     string_keys = self.stringify_keys
     

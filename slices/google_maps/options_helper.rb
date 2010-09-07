@@ -16,7 +16,7 @@ module Google
       if vertices.is_a?(Symbol) || vertices.is_a?(String)
         vertices
       else
-        vertices.arify.collect do |vertex|
+        vertices.to_array.collect do |vertex|
           Google::OptionsHelper.to_location(vertex)
         end
       end      

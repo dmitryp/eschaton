@@ -80,7 +80,7 @@ module Google
             end
           end
 
-          self.vertices = options.extract(:vertices).arify.collect do |vertex| 
+          self.vertices = options.extract(:vertices).to_array.collect do |vertex| 
                                                                      Google::OptionsHelper.to_location(vertex)
                                                                    end
         end

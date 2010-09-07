@@ -27,7 +27,7 @@ module Google
     
     # Extends the bounds with the given +locations+. Which can be Location or Bounds.
     def extend(*locations)
-      locations.arify.each do |location|
+      locations.to_array.each do |location|
         if location.is_a?(Google::Bounds)
           self << "#{self}.extend(#{location.south_west_point});"
           self << "#{self}.extend(#{location.north_east_point});"
