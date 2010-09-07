@@ -2,16 +2,8 @@ require File.dirname(__FILE__) + '/test_helper'
 
 class Store
   extend Eschaton::ScriptStore
-  
-  define :before_map_script
-  
-  #def self.before_map_script
-  #  @@before_map_script ||= ScriptExpander.new
-  #end
 
-  #def self.clear_before_map_script
-  #  @@before_map_script = nil
-  #end
+  define :before_map_script
   
 end
 
