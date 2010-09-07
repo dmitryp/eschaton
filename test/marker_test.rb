@@ -183,16 +183,16 @@ class MarkerTest < Test::Unit::TestCase
       marker = self.default_marker
 
       assert_eschaton_output "jQuery.get('/location/show/1?location%5Blatitude%5D=' + marker.getLatLng().lat() + '&location%5Blongitude%5D=' + marker.getLatLng().lng() + '', function(data) {
-                               marker.bindInfoWindowHtml(\"<div id='info_window_content'>\" + data + \"</div>\");
+                               marker.bindInfoWindowHtml(\"<div id='info_window_content'>\" + data + \"</div>\", {});
                              });" do
                               marker.cache_info_window :url => {:controller => :location, :action => :show, :id => 1}
                             end
 
-      assert_eschaton_output 'marker.bindInfoWindowHtml("<div id=\'info_window_content\'>" + "test output for render" + "</div>");' do
+      assert_eschaton_output 'marker.bindInfoWindowHtml("<div id=\'info_window_content\'>" + "test output for render" + "</div>", {});' do
                                marker.cache_info_window :partial => 'create'
                              end
 
-      assert_eschaton_output 'marker.bindInfoWindowHtml("<div id=\'info_window_content\'>" + "Testing text!" + "</div>");' do
+      assert_eschaton_output 'marker.bindInfoWindowHtml("<div id=\'info_window_content\'>" + "Testing text!" + "</div>", {});' do
                                marker.cache_info_window :html => "Testing text!"
                              end
     end

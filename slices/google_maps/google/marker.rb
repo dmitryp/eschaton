@@ -160,7 +160,7 @@ module Google
     #  marker.open_info_window :tabs => [{:label => 'Your info', :html => 'This is an info tab!'},
     #                                    {:label => 'Account Info', :partial => 'account/info'}]
     def open_info_window(options)
-      info_window = InfoWindow.new(:for => self)
+      info_window = InfoWindow.for(self)
       info_window.open_on_marker options
     end
     
@@ -175,7 +175,7 @@ module Google
     # Supports all the same options as open_info_window. The info window is then cached so that every time the marker is 'clicked'
     # it will open up the cached info window. The cached info window can also be opened using open_cached_info_window.
     def cache_info_window(options)
-      info_window = InfoWindow.new(:for => self)
+      info_window = InfoWindow.for(self)
       info_window.cache_on_marker options
     end
 
