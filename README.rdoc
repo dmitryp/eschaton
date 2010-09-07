@@ -102,7 +102,7 @@ Both Hashes and Arrays can represent a Location, so use which ever form you pref
 
   {:latitude => -33.947, :longitude => 18.462} == [-33.947, 18.462]
 
-Checkout the online[http://rdoc.info/projects/yawningman/eschaton] docs for more on each mapping objects possibilities.
+Checkout the online[http://rdoc.info/github/yawningman/eschaton/master/file/README.rdoc] docs for more on each mapping objects possibilities.
 
 == FAQ
 
