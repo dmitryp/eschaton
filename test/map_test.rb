@@ -143,22 +143,22 @@ class MapTest < Test::Unit::TestCase
       end            
       
       # :no_close_on_click
-      assert_eschaton_output :no_close_on_click_info_window_option  do  
+      assert_eschaton_output :no_close_on_click_info_window_option_on_map  do  
         map.open_info_window :html => 'The sound of animals fighting', :options => {:no_close_on_click => true}
       end  
       
       # :no_close_on_clicks alias :dont_close_when_map_clicked
-      assert_eschaton_output :no_close_on_click_info_window_option do  
+      assert_eschaton_output :no_close_on_click_info_window_option_on_map do  
         map.open_info_window :html => 'The sound of animals fighting', :options => {:dont_close_when_map_clicked => true}
       end
       
       # :pixel_offset
-      assert_eschaton_output :pixel_offset_info_window_option do
+      assert_eschaton_output :pixel_offset_info_window_option_on_map do
         map.open_info_window :html => 'The sound of animals fighting', :options => {:pixel_offset => Google::OptionsHelper.to_google_size(50, 50)}
       end   
 
       # :pixel_offset alias :offset
-      assert_eschaton_output :pixel_offset_info_window_option do
+      assert_eschaton_output :pixel_offset_info_window_option_on_map do
         map.open_info_window :html => 'The sound of animals fighting', :options => {:offset => Google::OptionsHelper.to_google_size([50, 50])}
       end            
     end

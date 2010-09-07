@@ -1,0 +1,1 @@
+marker.openInfoWindow("<div id='info_window_content'>" + "The sound of animals fighting" + "</div>", {pixelOffset: new GSize(50, 50)});

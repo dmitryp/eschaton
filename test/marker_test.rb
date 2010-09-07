@@ -108,16 +108,16 @@ class MarkerTest < Test::Unit::TestCase
       marker = self.default_marker
 
       assert_eschaton_output "jQuery.get('/location/show/1?location%5Blatitude%5D=' + marker.getLatLng().lat() + '&location%5Blongitude%5D=' + marker.getLatLng().lng() + '', function(data) {
-                               marker.openInfoWindow(\"<div id='info_window_content'>\" + data + \"</div>\");
+                               marker.openInfoWindow(\"<div id='info_window_content'>\" + data + \"</div>\", {});
                              });" do
                               marker.open_info_window :url => {:controller => :location, :action => :show, :id => 1}
                             end
 
-      assert_eschaton_output 'marker.openInfoWindow("<div id=\'info_window_content\'>" + "test output for render" + "</div>");' do
+      assert_eschaton_output 'marker.openInfoWindow("<div id=\'info_window_content\'>" + "test output for render" + "</div>", {});' do
                                marker.open_info_window :partial => 'create'
                              end
 
-      assert_eschaton_output 'marker.openInfoWindow("<div id=\'info_window_content\'>" + "Testing text!" + "</div>");' do
+      assert_eschaton_output 'marker.openInfoWindow("<div id=\'info_window_content\'>" + "Testing text!" + "</div>", {});' do
                                marker.open_info_window :html => "Testing text!"
                              end
                              
@@ -137,6 +137,47 @@ class MarkerTest < Test::Unit::TestCase
     end
   end
   
+  def test_open_info_window_with_options
+    with_eschaton do |script|
+      marker = self.default_marker
+
+      # No options
+      assert_eschaton_output 'marker.openInfoWindow("<div id=\'info_window_content\'>" + "The sound of animals fighting" + "</div>", {});' do  
+        marker.open_info_window :html => 'The sound of animals fighting'
+      end
+
+      # Single option
+      assert_eschaton_output 'marker.openInfoWindow("<div id=\'info_window_content\'>" + "The sound of animals fighting" + "</div>", {maxWidth: 400});' do  
+        marker.open_info_window :html => 'The sound of animals fighting', :options => {:max_width => 400}
+      end
+
+      # Multiple options
+      assert_eschaton_output 'marker.openInfoWindow("<div id=\'info_window_content\'>" + "The sound of animals fighting" + "</div>", {maxWidth: 400, noCloseOnClick: true});' do  
+        marker.open_info_window :html => 'The sound of animals fighting', :options => {:max_width => 400, :no_close_on_click => true}
+      end            
+
+      # :no_close_on_click
+      assert_eschaton_output :no_close_on_click_info_window_option_on_marker  do  
+        marker.open_info_window :html => 'The sound of animals fighting', :options => {:no_close_on_click => true}
+      end  
+
+      # :no_close_on_clicks alias :dont_close_when_marker_clicked
+      assert_eschaton_output :no_close_on_click_info_window_option_on_marker do  
+        marker.open_info_window :html => 'The sound of animals fighting', :options => {:dont_close_when_map_clicked => true}
+      end
+
+      # :pixel_offset
+      assert_eschaton_output :pixel_offset_info_window_option_on_marker do
+        marker.open_info_window :html => 'The sound of animals fighting', :options => {:pixel_offset => Google::OptionsHelper.to_google_size(50, 50)}
+      end   
+
+      # :pixel_offset alias :offset
+      assert_eschaton_output :pixel_offset_info_window_option_on_marker do
+        marker.open_info_window :html => 'The sound of animals fighting', :options => {:offset => Google::OptionsHelper.to_google_size([50, 50])}
+      end            
+    end
+  end  
+    
   def test_marker_cache_info_window
     with_eschaton do |script|
       marker = self.default_marker
@@ -168,7 +209,6 @@ class MarkerTest < Test::Unit::TestCase
     
   end
   
-
   def test_click
     with_eschaton do |script|
       marker = self.default_marker

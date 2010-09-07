@@ -1,12 +1,12 @@
 module Google
    
   class InfoWindow < MapObject
-    attr_reader :object
+    attr_accessor :object
 
     def initialize(options = {})
       # TODO - Find a better name than "object", maybe "anchored_to"
-      @object = options.extract(:object)
-      options[:var] = @object.var
+      self.object = options.extract(:for)
+      options[:var] = self.object.var
 
       super
     end
@@ -35,7 +35,7 @@ module Google
     
     # TODO - The code in here sucks, sort it out    
     def open_on_marker(options)
-      options.default! :include_location => true
+      options.default! :include_location => true, :options => {}
 
       if options[:url]
         options[:location] = self.object.location
@@ -47,7 +47,8 @@ module Google
         end
       else
         # TODO - this method call using both :content and :tabs options is ugly, also options not being reused.         
-        open_info_window_on_marker :content => OptionsHelper.to_content(options), :tabs => options[:tabs]
+        open_info_window_on_marker :content => OptionsHelper.to_content(options), :tabs => options[:tabs], 
+                                   :options => options[:options]
       end
     end
     
@@ -109,11 +110,15 @@ module Google
 
       # TODO - The code in here sucks, sort it out
       def open_info_window_on_marker(options)
+        options.default! :options => {}
+
+        info_window_options = options[:options]
+        
         if options[:tabs]
           open_tabbed_info_window_on_marker options          
         else
           content = window_content options[:content]
-          self << "#{self.var}.openInfoWindow(#{content});"
+          self << "#{self.var}.openInfoWindow(#{content}, #{prepare_info_window_options(info_window_options)});"
         end
       end
 

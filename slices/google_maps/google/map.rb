@@ -564,7 +564,7 @@ module Google # :nodoc:
     #                       :tabs => [{:label => 'Your info', :html => 'This is an info tab!'},
     #                                 {:label => 'Account Info', :partial => 'account/info'}]
     def open_info_window(options)
-      info_window = InfoWindow.new(:object => self)
+      info_window = InfoWindow.new(:for => self)
       info_window.open options
     end
     
