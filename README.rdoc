@@ -50,8 +50,13 @@ Eschaton code can be placed in a view helper, contained within the run_map_scrip
   map.add_line :between_markers => markers, :tooltip => {:text => "Short Hike I do everyday with my dog"}
 
 ...
-  
-  # Draw a polygon, yellow with a green border ..
+
+  map = Google::Map.new(:center => [-34.2023, 18.3794],
+                        :controls => [:small_map, :map_type],
+                        :type => :satellite,
+                        :zoom => 18)
+
+  # Draw a polygon, yellow with a green border ...
   map.add_polygon :vertices => [[-34.2023, 18.3794], [-34.2029, 18.3797], [-34.2022, 18.3811]], 
                   :fill_colour => 'yellow', :border_colour => 'green'  
 
