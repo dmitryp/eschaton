@@ -1,6 +1,6 @@
 # Load up the entire host rails enviroment
 require File.dirname(__FILE__) + '/../../../../config/environment'
-require 'test_help'
+require 'test/unit'
 
 class Test::Unit::TestCase
   cattr_accessor :output_fixture_base

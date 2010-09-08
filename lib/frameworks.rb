@@ -3,17 +3,21 @@ module Eschaton
   class Frameworks
     
     def self.detect_and_load!
+      self.load_for_framework self.framework_path
+    end
+    
+    def self.framework_path
       if self.running_in_rails_three?
-        self.load_for_framework 'rails_three'
+        'rails_three'
       elsif self.running_in_rails_two?
-        self.load_for_framework 'rails_two'
-      else        
-        puts 'plain old ruby'
+        'rails_two'
+      elsif self.running_in_ruby?
+        'ruby'
       end
     end
 
     def self.load_for_framework(framework)
-      require "#{File.dirname(__FILE__)}/frameworks/#{framework}"
+      require "#{File.dirname(__FILE__)}/frameworks/#{self.framework_path}/init"
     end
 
     def self.running_in_rails?
@@ -36,6 +40,10 @@ module Eschaton
 
     def self.running_in_rails_two?
       self.running_in_rails? && self.rails_major_version == 2
+    end
+    
+    def self.running_in_ruby?
+      !self.running_in_rails_two? && !self.running_in_rails_three?
     end
 
   end

@@ -7,6 +7,7 @@ Dir["#{File.dirname(__FILE__)}/eschaton/**/*.rb"].each do |file|
   Eschaton.dependencies.require file
 end
 
-Eschaton::SliceLoader.load!
 Eschaton::Frameworks.detect_and_load!
+Eschaton::SliceLoader.load!
+
 

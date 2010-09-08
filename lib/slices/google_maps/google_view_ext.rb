@@ -27,8 +27,10 @@ module GoogleViewExt
     jquery_script = self.include_jquery_javascript if options[:include_jquery] == true
     google_script = "<script src=\"http://maps.google.com/maps?file=api&amp;v=2&amp;key=#{options[:key]}\" type=\"text/javascript\"></script>"
 
-    collect google_script, jquery_script,
-            javascript_include_tag('eschaton')
+    script = collect(google_script, jquery_script,
+                     javascript_include_tag('eschaton'))
+                     
+    script.html_safe
   end
     
   # Creates a google map div with the given +options+, this is used in the view to display the map.

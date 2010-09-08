@@ -1,6 +1,6 @@
 # Provides access to global objects of interest.
 module Eschaton # :nodoc:
-
+  
   def self.current_view=(view)
     @@current_view = view
   end
