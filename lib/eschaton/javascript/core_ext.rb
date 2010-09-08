@@ -8,7 +8,7 @@ class Hash # :nodoc:
 
     "{#{args.join(', ')}}"
   end
-  
+
 end
 
 class String # :nodoc:

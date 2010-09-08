@@ -1,6 +1,6 @@
 module Eschaton
   
-  # Represents a javascript object on which you can call methods and assign fields.
+  # Represents a javascript object on which you can call methods.
   #
   # Any method called on this object will translate the methods into a javascript compatable 
   # camelCase method which is called on the +var+. Calls are stacked and javascript is returned by calling to_s.
@@ -19,10 +19,6 @@ module Eschaton
       @script = options.extract(:script)
     end
 
-    # Used to work on an existing javascript variable by setting the +create_var+ option to +false+.
-    # It is recommended that an existing JavascriptGenerator be supplied as the +script+ option.
-    #
-    # Supports the same options as new.
     def self.existing(options)
       options[:create_var] = false
 
@@ -54,7 +50,6 @@ module Eschaton
       javascript
     end
 
-    # Returns the name of +var+
     def to_s
       self.var.to_s
     end
@@ -63,14 +58,11 @@ module Eschaton
     alias to_json to_s
 
     protected
-      # Returns either the Eschaton#global_script(if one is set) or this objects script generator.
       def script
         @script || Eschaton.global_script
       end
 
     private
-      # Sets the name of the local variable that respresents this object.
-      # If :random is supplied as +name+, a random name is assigned to avoid conflicts.
       def var=(name)
         @var = if name == :random
                  "_#{rand(2000)}"
