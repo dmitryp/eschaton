@@ -73,11 +73,6 @@ class Test::Unit::TestCase
     assert_equal(message, exception.message) unless exception.nil? || message.blank?
   end
 
-  # Used to run something once
-  def self.setup_once
-    yield
-  end
-
   def get_exception
     begin                    
       yield
@@ -95,29 +90,6 @@ class Test::Unit::TestCase
     assert_equal true, value, "Expected '#{value}' to be true"
   end
 
-end
-
-class EschatonMockView
-  if Eschaton::Frameworks.running_in_rails_three?
-    include ActionDispatch::Routing::UrlFor
-    include Rails.application.routes.url_helpers
-  elsif Eschaton::Frameworks.running_in_rails_two?
-    include ActionController::UrlWriter
-  end
-
-  default_url_options[:only_path] = true
-
-  def render(options)
-    if options.is_a?(String)
-      options
-    else
-      "test output for render"
-    end
-  end
-
-  # For mocking purposes
-  def method_missing(method_id, *args)
-  end
 end
 
 Eschaton.current_view = EschatonMockView.new
