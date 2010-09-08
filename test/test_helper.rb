@@ -81,10 +81,10 @@ class Test::Unit::TestCase
   def get_exception
     begin                    
       yield
-    rescue => ex
+    rescue => exception
     end
 
-    ex
+    exception
   end
 
   def assert_false(value)
@@ -98,32 +98,14 @@ class Test::Unit::TestCase
 end
 
 class EschatonMockView
-    
-  def url_for(options)
-    controller = options.extract(:controller)
-    action = options.extract(:action)
-    id = CGI.escape(options.extract(:id).to_s) if options.has_option?(:id)
-    querystring_parts = []
-
-    options.sorted do |key, value|
-      if value.is_a?(String)
-        querystring_parts << "#{key}=#{CGI.escape(value.to_s)}"
-      elsif value.is_a?(Hash)
-        value.sorted do |sub_key, sub_value|
-          querystring_parts << "#{key}#{CGI.escape("[#{sub_key}]")}=#{CGI.escape(sub_value.to_s)}"
-        end
-      end
-    end
-
-    url = [controller, action, id].compact.join('/')
-    querystring = querystring_parts.join('&')
-    
-    if querystring.not_blank?
-      "/#{url}?#{querystring}"
-    else
-      "/#{url}"
-    end
+  if Eschaton::Frameworks.running_in_rails_three?
+    include ActionDispatch::Routing::UrlFor
+    include Rails.application.routes.url_helpers
+  elsif Eschaton::Frameworks.running_in_rails_two?
+    include ActionController::UrlWriter
   end
+
+  default_url_options[:only_path] = true
 
   def render(options)
     if options.is_a?(String)

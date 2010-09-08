@@ -105,7 +105,7 @@ class MarkerTest < Test::Unit::TestCase
     with_eschaton do |script|
       marker = self.default_marker
 
-      assert_eschaton_output "jQuery.get('/location/show/1?location%5Blatitude%5D=' + marker.getLatLng().lat() + '&location%5Blongitude%5D=' + marker.getLatLng().lng() + '', function(data) {
+      assert_eschaton_output "jQuery.get('/location/show/1?location[latitude]=' + marker.getLatLng().lat() + '&location[longitude]=' + marker.getLatLng().lng() + '', function(data) {
                                marker.openInfoWindow(\"<div id='info_window_content'>\" + data + \"</div>\", {});
                              });" do
                               marker.open_info_window :url => {:controller => :location, :action => :show, :id => 1}
@@ -180,7 +180,7 @@ class MarkerTest < Test::Unit::TestCase
     with_eschaton do |script|
       marker = self.default_marker
 
-      assert_eschaton_output "jQuery.get('/location/show/1?location%5Blatitude%5D=' + marker.getLatLng().lat() + '&location%5Blongitude%5D=' + marker.getLatLng().lng() + '', function(data) {
+      assert_eschaton_output "jQuery.get('/location/show/1?location[latitude]=' + marker.getLatLng().lat() + '&location[longitude]=' + marker.getLatLng().lng() + '', function(data) {
                                marker.bindInfoWindowHtml(\"<div id='info_window_content'>\" + data + \"</div>\", {});
                              });" do
                               marker.cache_info_window :url => {:controller => :location, :action => :show, :id => 1}
