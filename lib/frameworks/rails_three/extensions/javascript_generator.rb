@@ -20,7 +20,7 @@ module ActionView # :nodoc:
                 self << "$('#{id}').update(#{data});"
               end
             else
-              call 'Element.update', id, render(options)
+              call 'Element.update', id, Eschaton.current_view.render(options)
             end
           end          
           

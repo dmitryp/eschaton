@@ -108,9 +108,9 @@ class EschatonTest < Test::Unit::TestCase
                  Eschaton.url_for_javascript(:controller => :marker, :action => :create, :latitude => '#location.lat()', 
                                              :longitude => '#location.lng()')
     
-   assert_equal "'/marker/create/' + marker.id + '?name=My+Marker&title=' + maker.title + ''",
+   assert_equal "'/marker/create/' + marker.id + '?name=My+Marker&title=' + marker.title + ''",
                 Eschaton.url_for_javascript(:controller => :marker, :action => :create, :id => '#marker.id', 
-                                            :title => '#maker.title', :name => 'My Marker')
+                                            :title => '#marker.title', :name => 'My Marker')
   end
   
 end

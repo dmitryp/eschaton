@@ -1,6 +1,7 @@
 # Load up the entire host rails enviroment
 require File.dirname(__FILE__) + '/../../../../config/environment'
-require 'test/unit'
+
+Eschaton::Frameworks.detect_and_require_files_for_tests!
 
 class Test::Unit::TestCase
   cattr_accessor :output_fixture_base
@@ -99,13 +100,37 @@ end
 class EschatonMockView
     
   def url_for(options)
-    options.merge!(:only_path => true)
+    controller = options.extract(:controller)
+    action = options.extract(:action)
+    id = CGI.escape(options.extract(:id).to_s) if options.has_option?(:id)
+    querystring_parts = []
 
-    ActionController::UrlRewriter.new(ActionController::TestRequest.new, nil).rewrite(options)
+    options.sorted do |key, value|
+      if value.is_a?(String)
+        querystring_parts << "#{key}=#{CGI.escape(value.to_s)}"
+      elsif value.is_a?(Hash)
+        value.sorted do |sub_key, sub_value|
+          querystring_parts << "#{key}#{CGI.escape("[#{sub_key}]")}=#{CGI.escape(sub_value.to_s)}"
+        end
+      end
+    end
+
+    url = [controller, action, id].compact.join('/')
+    querystring = querystring_parts.join('&')
+    
+    if querystring.not_blank?
+      "/#{url}?#{querystring}"
+    else
+      "/#{url}"
+    end
   end
-  
+
   def render(options)
-    "test output for render"
+    if options.is_a?(String)
+      options
+    else
+      "test output for render"
+    end
   end
 
   # For mocking purposes

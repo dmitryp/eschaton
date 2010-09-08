@@ -2,22 +2,26 @@ module Eschaton
   
   class Frameworks
     
-    def self.detect_and_load!
-      self.load_for_framework self.framework_path
-    end
-    
-    def self.framework_path
-      if self.running_in_rails_three?
-        'rails_three'
-      elsif self.running_in_rails_two?
-        'rails_two'
-      elsif self.running_in_ruby?
-        'ruby'
-      end
+    def self.detect_and_require_files!
+      Eschaton.require_file "#{framework_path}/init"
     end
 
-    def self.load_for_framework(framework)
-      require "#{File.dirname(__FILE__)}/frameworks/#{self.framework_path}/init"
+    def self.detect_and_require_files_for_tests!
+      Rails.env = "test"
+      
+      Eschaton.require_file "#{self.framework_path}/testing"
+    end
+
+    def self.framework_path
+      version = if self.running_in_rails_three?
+                  'rails_three'
+                elsif self.running_in_rails_two?
+                  'rails_two'
+                elsif self.running_in_ruby?
+                  'ruby'
+                end
+
+      "#{File.dirname(__FILE__)}/frameworks/#{version}"                
     end
 
     def self.running_in_rails?

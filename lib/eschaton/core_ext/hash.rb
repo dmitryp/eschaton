@@ -18,4 +18,11 @@ class Hash # :nodoc:
     method_options
   end
 
+  def sorted
+    string_keys = self.stringify_keys
+    string_keys.keys.sort.each do |key|
+      yield key, string_keys[key]
+    end
+  end
+
 end
