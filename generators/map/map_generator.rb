@@ -25,7 +25,7 @@ class MapGenerator < Rails::Generator::Base
       m.file "shadow.png", "public/images/shadow.png"
 
       # Eschaton slice
-      slice_name = File.basename(RAILS_ROOT).singularize.downcase
+      slice_name = File.basename(Rails.root).singularize.downcase
       @slice_class = slice_name.classify
       slice_dir = "lib/eschaton_slices/#{slice_name}"
 

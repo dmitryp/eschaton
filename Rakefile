@@ -45,7 +45,7 @@ task :update_javascript do
 end
 
 def update_javascript
-  project_dir = RAILS_ROOT + '/public/javascripts/'
+  project_dir = Rails.root + '/public/javascripts/'
 
   FileUtils.cp ['generators/map/templates/eschaton.js'], project_dir
 

@@ -2,45 +2,75 @@ module Eschaton
   
   class SliceLoader # :nodoc:
   
-    # Loads all slices found using slice_locations and extends relevant objects.
-    def self.load
-      self.slice_locations.each do |slice_location|
-        mixin_slice_extentions slice_location
+    # Loads all slices found using slice_paths and extends relevant objects.
+    def self.load!
+      self.slice_paths.each do |slice_path|
+        if Eschaton::Frameworks.running_in_rails_three?
+          mixin_slice_extentions_for_rails_three slice_path
+        elsif Eschaton::Frameworks.running_in_rails_two?
+          mixin_slice_extentions_for_rails_two slice_path
+        end
       end
     end
 
     private  
-      # Returns all the locations in which eschaton slices are located.
-      def self.slice_locations
-        locations = []
-        locations << "#{File.dirname(__FILE__)}/../../slices"
-        locations << "#{RAILS_ROOT}/lib/eschaton_slices"
 
-        locations.collect{|location|
-          Dir["#{location}/*"]
+      def self.plugin_slice_path
+        File.expand_path("#{File.dirname(__FILE__)}/../slices")
+      end
+
+      def self.application_slice_path
+        "#{Rails.root}/lib/eschaton_slices"
+      end
+
+      def self.slice_paths
+        paths = [self.plugin_slice_path, self.application_slice_path]
+
+        paths.collect{|path|
+          Dir["#{path}/*"]
         }.flatten
       end
-    
-      def self.mixin_slice_extentions(location)
-        location = File.expand_path(location)
 
-        eschaton_log_info "loading slice '#{File.basename(location)}'"
+      def self.mixin_slice_extentions_for_rails_three(path)
+        path = File.expand_path(path)
+
+        Eschaton.log_info "loading slice '#{File.basename(path)}'"
+
+        Eschaton.require_files :in => path
+
+        # Generator extentions
+        mixin_extentions :path => path, :pattern => /([a-z_\d]*_generator_ext).rb/,
+                         :extend => ActionView::Helpers::PrototypeHelper::JavaScriptGenerator
+
+        # View extentions
+        mixin_extentions :path => path, :pattern => /([a-z_\d]*_view_ext).rb/,
+                         :extend => ActionView::Base
+
+        # Controller extentions
+        mixin_extentions :path => path, :pattern => /([a-z_\d]*_controller_ext).rb/,
+                         :extend => ActionController::Base                       
+      end
+    
+      def self.mixin_slice_extentions_for_rails_two(path)
+        path = File.expand_path(path)
+
+        Eschaton.log_info "loading slice '#{File.basename(path)}'"
        
-        Eschaton.dependencies.load_paths << location
-        Dir["#{location}/*.rb"].each do |file|
+        Eschaton.dependencies.load_paths << path
+        Dir["#{path}/*.rb"].each do |file|
           Eschaton.dependencies.require file
         end
 
         # Generator extentions
-        mixin_extentions :path => location, :pattern => /([a-z_\d]*_generator_ext).rb/,
+        mixin_extentions :path => path, :pattern => /([a-z_\d]*_generator_ext).rb/,
                          :extend => ActionView::Helpers::PrototypeHelper::JavaScriptGenerator
 
         # View extentions
-        mixin_extentions :path => location, :pattern => /([a-z_\d]*_view_ext).rb/,
+        mixin_extentions :path => path, :pattern => /([a-z_\d]*_view_ext).rb/,
                          :extend => ActionView::Base
 
         # Controller extentions
-        mixin_extentions :path => location, :pattern => /([a-z_\d]*_controller_ext).rb/,
+        mixin_extentions :path => path, :pattern => /([a-z_\d]*_controller_ext).rb/,
                          :extend => ActionController::Base                       
       end
 

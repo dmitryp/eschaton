@@ -11,7 +11,7 @@ module Google
     def self.get(options = {})
       unless self.key
         domain_name = options[:domain]
-        config_file = options[:config_file] || "#{RAILS_ROOT}/config/eschaton_google_api_keys.yml"
+        config_file = options[:config_file] || "#{Rails.root}/config/eschaton_google_api_keys.yml"
 
         self.key = if File.exists?(config_file)
                     api_keys = YAML.load_file(config_file)
@@ -21,7 +21,7 @@ module Google
                     'ABQIAAAActtI8WkgLZcM_n8uvnIYsBTJQa0g3IQ9GZqIMmInSLzwtGDKaBT9A95dZjICm7SeC_GoxpzGlyCdQA'
                   end
 
-        eschaton_log_info "Using google api => #{self.key}"                  
+        Eschaton.log_info "Using google api => #{self.key}"                  
       end
       
       self.key

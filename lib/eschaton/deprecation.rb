@@ -33,7 +33,7 @@ module Eschaton
                              call =~ framework_call_pattarn
                            end
 
-        applcation_calls[1].gsub(RAILS_ROOT, '')
+        applcation_calls[1].gsub(Rails.root, '')
       end
   
   end

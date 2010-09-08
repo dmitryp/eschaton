@@ -16,6 +16,29 @@ module Eschaton # :nodoc:
       Dependencies
     end
   end
+  
+  def self.logger
+    Rails.logger
+  end
+  
+  def self.log_info(message)
+    self.logger.info("eschaton: #{message}")
+  end  
+
+  def self.require_file(file)
+    self.dependencies.require file
+  end
+
+  def self.require_files(options)
+    path = options[:in]
+    pattern = "#{options[:in]}/*.rb"
+        
+    Eschaton.dependencies.autoload_paths << path
+
+    Dir[pattern].each do |file|
+      self.require_file file
+    end
+  end
 
   # works like rails url for only with more options!!!!
   def self.url_for_javascript(options)
@@ -35,6 +58,7 @@ module Eschaton # :nodoc:
   end
 
   # Returns a JavascriptGenerator which is extended by all eschaton slices.
+  # TODO - Make this agnostic here!!!
   def self.javascript_generator
     ActionView::Helpers::PrototypeHelper::JavaScriptGenerator.new(self.current_view){}
   end
