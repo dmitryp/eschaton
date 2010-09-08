@@ -6,11 +6,11 @@ Helps with writing google map mashups in Rails by providing a language that is a
 
 Install the plugin:
 
-  $ script/plugin install git://github.com/yawningman/eschaton.git
+  $ rails plugin install git://github.com/yawningman/eschaton.git
 
 Generate a map, look at the files the generator created and play a bit:
 
-  $ script/generate map
+  $ rails generate map
   
 Put some test code in your <b><i>app/helpers/map_helper.rb</i></b> and *_play_*!
 Visit the map at http://localhost:3000/map or wherever your server runs.
