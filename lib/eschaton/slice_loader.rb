@@ -9,8 +9,7 @@ module Eschaton
       end
     end
 
-    private  
-
+    private
       def self.plugin_slice_path
         File.expand_path("#{File.dirname(__FILE__)}/../slices")
       end

@@ -1,1 +1,1 @@
-require 'eschaton'
+require 'load_eschaton'

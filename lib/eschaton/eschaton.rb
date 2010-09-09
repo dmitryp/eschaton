@@ -1,6 +1,7 @@
 # Provides access to global objects of interest.
 module Eschaton # :nodoc:
-  
+  include Eschaton::Events
+    
   def self.current_view=(view)
     @@current_view = view
   end
@@ -32,12 +33,8 @@ module Eschaton # :nodoc:
   def self.require_files(options)
     path = options[:in]
     pattern = "#{options[:in]}/*.rb"
-    
-    if Eschaton::Frameworks.running_in_rails_three?
-      Eschaton.dependencies.autoload_paths << path
-    elsif Eschaton::Frameworks.running_in_rails_two?
-      Eschaton.dependencies.load_paths << path
-    end
+
+    Eschaton.add_to_load_path path
 
     Dir[pattern].each do |file|
       self.require_file file
@@ -61,7 +58,6 @@ module Eschaton # :nodoc:
     "'#{url}'"
   end
 
-  # Returns a JavascriptGenerator which is extended by all eschaton slices.
   # TODO - Make this agnostic here!!!
   def self.javascript_generator
     ActionView::Helpers::PrototypeHelper::JavaScriptGenerator.new(self.current_view){}
