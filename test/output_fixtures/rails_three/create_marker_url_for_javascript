@@ -1,0 +1,1 @@
+'/marker/create?title=' + marker.title + '&name=My+Marker&id=' + marker.id + ''
