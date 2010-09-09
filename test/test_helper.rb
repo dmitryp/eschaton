@@ -23,7 +23,7 @@ class Test::Unit::TestCase
       fixture_file = if File.exists?(framework_specific_fixture_file)
                        framework_specific_fixture_file
                      else
-                       "#{fixture_base}/output_fixtures/#{output_to_compare}"
+                       "#{fixture_base}/output_fixtures/all_frameworks/#{output_to_compare}"
                     end
 
       File.read(fixture_file)

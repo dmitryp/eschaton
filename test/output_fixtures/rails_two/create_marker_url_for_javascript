@@ -1,1 +1,1 @@
-"'/marker/create/' + marker.id + '?name=My+Marker&title=' + marker.title + ''"
+'/marker/create/' + marker.id + '?name=My+Marker&title=' + marker.title + ''
