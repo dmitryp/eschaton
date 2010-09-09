@@ -32,8 +32,12 @@ module Eschaton # :nodoc:
   def self.require_files(options)
     path = options[:in]
     pattern = "#{options[:in]}/*.rb"
-        
-    Eschaton.dependencies.autoload_paths << path
+    
+    if Eschaton::Frameworks.running_in_rails_three?
+      Eschaton.dependencies.autoload_paths << path
+    elsif Eschaton::Frameworks.running_in_rails_two?
+      Eschaton.dependencies.load_paths << path
+    end
 
     Dir[pattern].each do |file|
       self.require_file file

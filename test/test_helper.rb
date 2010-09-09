@@ -14,13 +14,26 @@ class Test::Unit::TestCase
     assert_equal return_value.to_sym, javascript_call
   end
   
-  def assert_eschaton_output(output_to_compare, generator = nil, message = nil, &block)  
+  def output_fixture_for_framework(output_to_compare)
     if output_to_compare.is_a?(Symbol)
       fixture_base = File.dirname(__FILE__)
-      fixture_file = "#{fixture_base}/output_fixtures/#{output_to_compare}"
 
-      output_to_compare = File.read fixture_file
-    end
+      framework_specific_fixture_file = "#{fixture_base}/output_fixtures/#{Eschaton::Frameworks.framework_name}/#{output_to_compare}"
+
+      fixture_file = if File.exists?(framework_specific_fixture_file)
+                       framework_specific_fixture_file
+                     else
+                       "#{fixture_base}/output_fixtures/#{output_to_compare}"
+                    end
+
+      File.read(fixture_file)
+    else
+      output_to_compare
+    end    
+  end
+  
+  def assert_eschaton_output(output_to_compare, generator = nil, message = nil, &block)  
+    output_to_compare = output_fixture_for_framework(output_to_compare)
 
     output = if block_given?
                Eschaton.global_script.record_for_test(&block).generate

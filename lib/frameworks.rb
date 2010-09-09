@@ -7,20 +7,20 @@ module Eschaton
     end
 
     def self.detect_and_require_files_for_tests!
-      Rails.env = "test"
-
       Eschaton.require_file "#{self.all_frameworks_path}/testing"
       Eschaton.require_file "#{self.framework_path}/testing"
     end
+    
+    def self.framework_name
+      if self.running_in_rails_three?
+        'rails_three'
+      elsif self.running_in_rails_two?
+        'rails_two'
+      end
+    end
 
-    def self.framework_path(options = {})
-      version = if self.running_in_rails_three?
-                  'rails_three'
-                elsif self.running_in_rails_two?
-                  'rails_two'
-                end
-
-      "#{File.dirname(__FILE__)}/frameworks/#{version}"
+    def self.framework_path
+      "#{File.dirname(__FILE__)}/frameworks/#{self.framework_name}"
     end
     
     def self.all_frameworks_path
@@ -31,14 +31,8 @@ module Eschaton
       Object.const_defined?("Rails")
     end
 
-    def self.rails_version
-      major, minor, release = Rails.version.split('.')
-
-      return major.to_i, minor.to_i, release.to_i
-    end
-
     def self.rails_major_version
-      self.rails_version.first
+      Rails::VERSION::MAJOR
     end
 
     def self.running_in_rails_three?

@@ -1,6 +1,7 @@
 module Eschaton
   
-  module MockView    
+  module MockView
+    
     def self.included(base)
       base.default_url_options[:only_path] = true
     end
@@ -15,6 +16,7 @@ module Eschaton
 
     def method_missing(method_id, *args)
     end
+
   end
 
 end

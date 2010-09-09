@@ -152,3 +152,7 @@ and so forth and so on
 ==== Please fork
 
 Forking of eschaton is encouraged, so it can be more distributed. If you are keen on the plugin, create a fork for yourself today and help distribute code!
+
+==== License(or lack thereof)
+
+You can do whatever you like with the code, copy it, share it, fork it, use it, don't use it, claim it as your own! Go wild!
