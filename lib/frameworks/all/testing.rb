@@ -1,3 +1,5 @@
+Eschaton.try_and_require 'redgreen'
+
 module Eschaton
   
   module MockView

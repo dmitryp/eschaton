@@ -26,6 +26,13 @@ module Eschaton # :nodoc:
     self.logger.info("eschaton: #{message}")
   end  
 
+  def self.try_and_require(file)
+    begin
+      self.require_file file
+    rescue MissingSourceFile
+    end
+  end
+
   def self.require_file(file)
     self.dependencies.require file
   end
