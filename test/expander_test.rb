@@ -10,7 +10,7 @@ end
 class ExpanderTest < Test::Unit::TestCase
 
   def test_expander_with_scriptstore    
-    generator = Eschaton.javascript_generator
+    generator = Eschaton.script
 
     generator << "Before expander"
     generator << Store.before_map_script

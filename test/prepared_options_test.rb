@@ -64,11 +64,28 @@ class PreparedOptionsTest < Test::Unit::TestCase
     assert_true prepared_options.has_value?(:project)
   end
 
-  def test_default
+  def test_defaults
     prepared_options = {}.prepare_options do |prepared_options|
                          prepared_options.default! :name => @name_value, :project => @project_value
                        end
 
+    assert_defaults_set_on prepared_options
+
+    prepared_options = {:name => nil}.prepare_options(:defaults => {:name => @name_value, :project => @project_value})
+
+    assert prepared_options.has_option?(:name)
+    assert prepared_options.has_option?(:project)
+    assert_nil prepared_options[:name]
+    assert_equal @project_value, prepared_options[:project]
+  end
+  
+  def test_defaults_when_created
+    prepared_options = {}.prepare_options(:defaults => {:name => @name_value, :project => @project_value})
+
+    assert_defaults_set_on prepared_options
+  end
+  
+  def assert_defaults_set_on(prepared_options)
     assert prepared_options.has_option?(:name)
     assert prepared_options.has_option?(:project)
     assert prepared_options.has_value?(:name)
@@ -76,15 +93,6 @@ class PreparedOptionsTest < Test::Unit::TestCase
 
     assert_equal @name_value, prepared_options[:name]
     assert_equal @project_value, prepared_options[:project]    
-
-    prepared_options = {:name => nil}.prepare_options do |prepared_options|
-      prepared_options.default! :name => @name_value, :project => @project_value
-    end
-
-    assert prepared_options.has_option?(:name)
-    assert prepared_options.has_option?(:project)
-    assert_nil prepared_options[:name]
-    assert_equal @project_value, prepared_options[:project]
   end
 
   def test_validate_presence_of

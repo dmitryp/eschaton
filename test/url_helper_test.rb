@@ -38,7 +38,7 @@ class UrlHelperTest < Test::Unit::TestCase
   end
   
   def test_encode_location
-    google_location = Google::Location.new(:latitude=>"-33.91", :longitude=>"18.48")
+    google_location = Google::Location.new(:latitude => "-33.91", :longitude => "18.48")
 
     assert_equal ({:latitude => "-33.91", :longitude=> "18.48"}),
                  Google::UrlHelper.encode_location(google_location)

@@ -10,13 +10,13 @@ module Google
 
     def self.get(options = {})
       unless self.key
-        domain_name = options[:domain]
         config_file = options[:config_file] || "#{Rails.root}/config/eschaton_google_api_keys.yml"
 
         self.key = if File.exists?(config_file)
                     api_keys = YAML.load_file(config_file)
 
-                    api_keys[domain_name] || api_keys[RAILS_ENV]
+                    domain_name_or_environment = options[:domain] || Rails.env
+                    api_keys[domain_name_or_environment]
                   else
                     'ABQIAAAActtI8WkgLZcM_n8uvnIYsBTJQa0g3IQ9GZqIMmInSLzwtGDKaBT9A95dZjICm7SeC_GoxpzGlyCdQA'
                   end

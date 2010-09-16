@@ -48,7 +48,6 @@ module Eschaton # :nodoc:
     end
   end
 
-  # works like rails url for only with more options!!!!
   def self.url_for_javascript(options)
     url = self.current_view.url_for(options)
 
@@ -65,12 +64,11 @@ module Eschaton # :nodoc:
     "'#{url}'"
   end
 
-  # TODO - Make this agnostic here!!!
-  def self.javascript_generator
-    ActionView::Helpers::PrototypeHelper::JavaScriptGenerator.new(self.current_view){}
+  def self.script
+    Eschaton::Script.new
   end
 
-  def self.with_global_script(script = Eschaton.javascript_generator, options = {})
+  def self.with_global_script(script = Eschaton.script, options = {})
     options.default! :reset_after => false
 
     previous_script = unless options[:reset_after]
@@ -84,6 +82,10 @@ module Eschaton # :nodoc:
     self.global_script = previous_script
 
     script
+  end
+  
+  def self.script_from(&block)
+    self.with_global_script &block
   end
 
   def self.global_script=(script)

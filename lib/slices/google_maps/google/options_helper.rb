@@ -24,7 +24,9 @@ module Google
     
     # TODO - Support URLS here
     def self.to_content(options) # :nodoc:
-      if options[:partial]
+      if options.is_a?(String)
+        options
+      elsif options[:partial]
         Eschaton.current_view.render options
       elsif options[:javascript]
         Eschaton.global_script << "var javascript = #{options[:javascript]};"

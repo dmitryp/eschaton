@@ -10,9 +10,11 @@ class Hash # :nodoc:
   end
 
   # Prepares a Hash as MethodOptions. See MethodOptions for details
-  def prepare_options
-    method_options = Eschaton::PreparedOptions.new(self)
+  def prepare_options(options = {})
+    merged_options = self.merge(options)
 
+    method_options = Eschaton::PreparedOptions.new(merged_options)
+  
     yield method_options if block_given?
 
     method_options

@@ -72,7 +72,7 @@ class JavascriptObjectTest < Test::Unit::TestCase
   end
     
   def test_script
-    script = Eschaton.javascript_generator
+    script = Eschaton.script
     object = Eschaton::JavascriptObject.existing(:var => 'map', :script => script)
     
     assert script, object.script

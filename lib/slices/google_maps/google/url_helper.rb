@@ -47,7 +47,7 @@ module Google
 
     # Encodes the given +location+
     def self.encode_location(location)      
-      if location.is_a?(Symbol) || location.is_a?(String)
+      hash = if location.is_a?(Symbol) || location.is_a?(String)
         {:latitude => "##{location}.lat()", :longitude => "##{location}.lng()"}
       else
         {:latitude => location.latitude, :longitude => location.longitude}

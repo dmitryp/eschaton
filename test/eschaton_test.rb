@@ -35,7 +35,7 @@ class EschatonTest < Test::Unit::TestCase
   def test_get_global_script
     assert_nil Eschaton.global_script
 
-    global_script = Eschaton.javascript_generator
+    global_script = Eschaton.script
     Eschaton.global_script = global_script
 
     assert_equal global_script, Eschaton.global_script
@@ -60,7 +60,7 @@ class EschatonTest < Test::Unit::TestCase
   end
   
   def test_global_script_with_script
-     generator = Eschaton.javascript_generator
+     generator = Eschaton.script
 
      assert_nil Eschaton.global_script
           
@@ -89,20 +89,11 @@ class EschatonTest < Test::Unit::TestCase
                  "From hash #[hash.field_one] and #[hash.field_two]".interpolate_javascript_vars
   end
 
-  def test_javascript_generator
-    generator = Eschaton.javascript_generator
-
-    assert_equal ActionView::Helpers::PrototypeHelper::JavaScriptGenerator, generator.class
-    assert generator.repond_to?(:generate)
-    assert generator.class.respond_to?(:extend_with_slice)
-    assert generator.repond_to?(:comment)
-  end
-    
   def test_url_for
     assert_equal "'/posts/create'", Eschaton.url_for_javascript(:controller => :posts, :action => :create)
     assert_equal "'/posts/update/1'", Eschaton.url_for_javascript(:controller => :posts, :action => :update, :id => 1)
     
-    assert_equal "'/marker/create?latitude=' + location.lat() + '&longitude=' + location.lng() + ''",
+    assert_equal "'/marker/create?longitude=' + location.lng() + '&latitude=' + location.lat() + ''",
                  Eschaton.url_for_javascript(:controller => :marker, :action => :create, :latitude => '#location.lat()', 
                                              :longitude => '#location.lng()')
     

@@ -83,29 +83,31 @@ class MapTest < Test::Unit::TestCase
                                                      :url => {:controller => :location, :action => :create}
                               end
 
+        location = {:latitude => -33.947, :longitude => 18.462}
+
         assert_eschaton_output :map_open_info_window_url_location do
-                                map.open_info_window :location => {:latitude => -33.947, :longitude => 18.462}, 
+                                map.open_info_window :location => location, 
                                                      :url => {:controller => :location, :action => :create}
                               end
 
         assert_eschaton_output :map_open_info_window_url_no_location do
-                                map.open_info_window :location => {:latitude => -33.947, :longitude => 18.462}, 
+                                map.open_info_window :location => location, 
                                                      :url => {:controller => :location, :action => :show, :id => 1},
                                                      :include_location => false
                               end
 
         assert_eschaton_output 'map.openInfoWindow(new GLatLng(-33.947, 18.462), "<div id=\'info_window_content\'>" + "test output for render" + "</div>", {});' do
-                                map.open_info_window :location => {:latitude => -33.947, :longitude => 18.462}, :partial => 'create'
+                                map.open_info_window :location => location, :partial => 'create'
                               end
 
         assert_eschaton_output 'map.openInfoWindow(new GLatLng(-33.947, 18.462), "<div id=\'info_window_content\'>" + "Testing text!" + "</div>", {});' do
-                                map.open_info_window :location => {:latitude => -33.947, :longitude => 18.462}, :html => "Testing text!"
+                                map.open_info_window :location => location, :html => "Testing text!"
                               end
 
         assert_eschaton_output 'tabs = [];
                                 tabs.push(new GInfoWindowTab("first", "First tab!"));
                                 map.openInfoWindowTabs(new GLatLng(-33.947, 18.462), tabs, {});' do
-                                map.open_info_window :location => {:latitude => -33.947, :longitude => 18.462},
+                                map.open_info_window :location => location,
                                                      :tabs => [{:label => "first", :html => "First tab!"}]
                               end
 
@@ -113,7 +115,7 @@ class MapTest < Test::Unit::TestCase
                                 tabs.push(new GInfoWindowTab("first", "First tab!"));
                                 tabs.push(new GInfoWindowTab("second tab", "test output for render"));                                
                                 map.openInfoWindowTabs(new GLatLng(-33.947, 18.462), tabs, {});' do
-                                map.open_info_window :location => {:latitude => -33.947, :longitude => 18.462}, 
+                                map.open_info_window :location => location, 
                                                      :tabs => [{:label => "first", :html => "First tab!"},
                                                                {:label => "second tab", :partial => 'create'}]
                               end           
@@ -223,17 +225,17 @@ class MapTest < Test::Unit::TestCase
         map = self.default_test_map
       
         assert_eschaton_output "marker = new GMarker(new GLatLng(-33.947, 18.462), {draggable: false});
-                               map.addOverlay(marker);
-                               track_bounds.extend(marker.getLatLng());" do
+                                map.addOverlay(marker);
+                                track_bounds.extend(marker.getLatLng());" do
                                 map.add_marker :var => :marker, :location => {:latitude => -33.947, :longitude => 18.462}
                               end
 
         assert_eschaton_output "marker_1 = new GMarker(new GLatLng(-33.947, 18.462), {draggable: false});
-                              map.addOverlay(marker_1);
-                              track_bounds.extend(marker_1.getLatLng());
-                              marker_2 = new GMarker(new GLatLng(-34.947, 19.462), {draggable: false});
-                              map.addOverlay(marker_2);
-                              track_bounds.extend(marker_2.getLatLng());" do
+                                map.addOverlay(marker_1);
+                                track_bounds.extend(marker_1.getLatLng());
+                                marker_2 = new GMarker(new GLatLng(-34.947, 19.462), {draggable: false});
+                                map.addOverlay(marker_2);
+                                track_bounds.extend(marker_2.getLatLng());" do
                                 map.add_markers({:var => :marker_1, :location => {:latitude => -33.947, :longitude => 18.462}},
                                                 {:var => :marker_2, :location => {:latitude => -34.947, :longitude => 19.462}})
                               end

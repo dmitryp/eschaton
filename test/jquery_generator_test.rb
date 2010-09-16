@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/test_helper'
 class JQueryGeneratorTest < Test::Unit::TestCase
 
   def test_post
-    gen = Eschaton.javascript_generator
+    gen = Eschaton.script
     
     gen.post(:url => {:controller => :marker, :action => :update, :id => 1}, 
              :params => {:name => 'guilio', :age => 27}) do |data|

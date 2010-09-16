@@ -102,6 +102,10 @@ class Test::Unit::TestCase
   def assert_true(value)
     assert_equal true, value, "Expected '#{value}' to be true"
   end
+  
+  def assert_is_a(type_of_class, object)
+    assert_true object.is_a?(type_of_class)
+  end
 
 end
 

@@ -19,6 +19,11 @@ module Eschaton
 
     def initialize(options = {})
       self.options = options.clone
+      
+      self.has_option?(:defaults) do |defaults|
+        self.defaults = defaults
+      end
+
       self.options.symbolize_keys!
     end
     
@@ -30,19 +35,9 @@ module Eschaton
     #
     # If multiple options are passed in, a hash of those options is returned.
     #  prepared_options[:name, :project] #=> {:name => "yawningman", :project => "eschaton"}
-    def [](*options)
-      if options.size == 1
-        self.options[options.first]
-      else
-        hash = {}
-
-        options.each do |option|
-          hash[option] = self[option]
-        end
-
-        hash.symbolize_keys
-      end
-    end
+    #def [](*options)
+    
+    #end
 
     # Assigns an option a value.
     #
@@ -58,8 +53,14 @@ module Eschaton
     #
     #  prepared_options.has_option?(:name) #=> true
     #  prepared_options.has_option?(:project) #=> false
-    def has_option?(option)
-      self.options.has_key?(option)
+    def has_option?(option, &block)
+      has_key = self.options.has_key?(option)
+
+      if has_key && block_given?
+        yield_the_value_of_option option, &block
+      end
+
+      has_key
     end
 
     # Returns a value indicating if the +option+ has a value.
@@ -80,8 +81,10 @@ module Eschaton
     #   prepared_options[:zoom_level] #=> 10
     #   prepared_options[:project] #=> "eschaton"
     def default!(defaults)
-      options.replace(defaults.merge(options))
+      self.options.replace(defaults.merge(self.options))
     end
+
+    alias defaults= default!
 
     # Validates that the given +options+ are present and do not have blank values.
     # If the validation fails, a ArgumentError will be raised indicating what required options 
@@ -105,6 +108,22 @@ module Eschaton
         raise ArgumentError, "The following options require values: #{missing_options.join(', ')}"
       end
     end
+        
+    def value_for(*options)
+      if options.size == 1
+        self.options[options.first]
+      else
+        hash = {}
+
+        options.each do |option|
+          hash[option] = self[option]
+        end
+
+        hash.symbolize_keys
+      end      
+    end
+
+    alias [] value_for
 
     # Yields the value for the given +option+ and updates the option to whatver the block returns.
     #
@@ -129,8 +148,22 @@ module Eschaton
       output
     end
     
+    def method_missing(method_name, *options, &block)
+      option = method_name.without_the_question_mark
+
+      if self.has_option?(option)
+        self.value_for option
+      else
+        raise NoMethodError, option
+      end
+    end
+    
     protected
       attr_accessor :options
+      
+      def yield_the_value_of_option(option)
+        yield self.value_for(option)
+      end
   end  
 
 end

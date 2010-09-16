@@ -42,7 +42,7 @@ module ActionView # :nodoc:
         #
         #  script << "// This is after recording"
         def record_for_test(&block)
-          recorder = Eschaton.javascript_generator
+          recorder = Eschaton.script
 
           @recorder = recorder
           yield self

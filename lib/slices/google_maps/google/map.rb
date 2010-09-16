@@ -277,6 +277,8 @@ module Google # :nodoc:
       arguments = [control, position].compact
 
       script << "#{self.var}.addControl(#{arguments.join(', ')});"
+
+      control
     end
 
     # Adds a control or controls to the map, see OptionsHelper.to_google_control for how +controls+ will be translated.

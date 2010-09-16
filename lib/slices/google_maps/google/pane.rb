@@ -37,9 +37,7 @@ module Google
     #  pane.replace_html :html => "This is new html"    
     #  pane.replace_html :partial => 'new_html'
     def replace_html(options)
-      text = options.extract(:text) || options.extract(:html) if options.is_a?(Hash)
-
-      self.script.replace_html self.var, text || options
+      self.script.replace_html self.var, options
     end
 
   end

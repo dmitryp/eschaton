@@ -13,11 +13,23 @@ module KernelViewExt
       Eschaton.with_global_script script, &block
     end
   end
+  
+  def in_script_tag(options = {}, &block)
+    options = options.prepare_options(:defaults => {:when_document_ready => false}) 
 
-  def run_javascript(&block)
-    update_page_tag do |script|
-      Eschaton.with_global_script script, &block
+    Eschaton.with_global_script do |script|
+      script << '<script type="text/javascript">'
+      
+      if options.when_document_ready?
+        script.when_document_ready(&block)
+      else  
+        script << Eschaton.script_from(&block)
+      end
+
+      script << '</script>'
     end
   end
+
+  alias run_javascript in_script_tag
 
 end

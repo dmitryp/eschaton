@@ -74,5 +74,18 @@ module JqueryGeneratorExt
     self.post options
   end
   
+  def replace_html(id, *options_for_render)
+    options = *options_for_render
+    if options.is_a?(Hash) && url = options.extract(:url)
+      self.get(url) do |data|
+        self << "$('#{id}').update(#{data});"
+      end
+    else
+      html = Google::OptionsHelper.to_content(options)
+
+      self << "jQuery('##{id}').html('#{html}');"
+    end
+  end  
+  
 
 end

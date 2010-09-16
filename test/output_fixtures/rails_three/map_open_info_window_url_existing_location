@@ -1,3 +1,3 @@
-jQuery.get('/location/create?location[latitude]=' + existing_location.lat() + '&location[longitude]=' + existing_location.lng() + '', function(data) {
+jQuery.get('/location/create?location[longitude]=' + existing_location.lng() + '&location[latitude]=' + existing_location.lat() + '', function(data) {
   map.openInfoWindow(existing_location, "<div id='info_window_content'>" + data + "</div>", {});
 });

@@ -3,7 +3,7 @@ module Eschaton
   class ScriptExpander # :nodoc:
 
     def initialize
-      @generator = Eschaton.javascript_generator
+      @generator = Eschaton.script
     end
 
     def to_s

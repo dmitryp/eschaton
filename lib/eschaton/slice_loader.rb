@@ -35,7 +35,7 @@ module Eschaton
 
         # Generator extentions
         mixin_extentions :path => path, :pattern => /([a-z_\d]*_generator_ext).rb/,
-                         :extend => ActionView::Helpers::PrototypeHelper::JavaScriptGenerator
+                         :extend => Eschaton::Script #ActionView::Helpers::PrototypeHelper::JavaScriptGenerator
 
         # View extentions
         mixin_extentions :path => path, :pattern => /([a-z_\d]*_view_ext).rb/,

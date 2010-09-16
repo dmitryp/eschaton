@@ -14,7 +14,7 @@ module GoogleGeneratorExt
   # and when the document is ready.
   def google_map_script
     self.with_mapping_scripts do
-      self.when_document_ready do      
+      self.when_document_ready do   
         self << "window.onunload = GUnload;"
         self << "if (GBrowserIsCompatible()) {"
 

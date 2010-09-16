@@ -33,7 +33,7 @@ class GoogleGeneratorExtTest < Test::Unit::TestCase
   end
   
   def test_mapping_scripts
-    generator = Eschaton.javascript_generator
+    generator = Eschaton.script
 
     generator.google_map_script do
 

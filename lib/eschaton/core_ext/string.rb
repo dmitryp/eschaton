@@ -16,5 +16,7 @@ class String # :nodoc:
   def escape
     CGI.escape self
   end
-
+  
+  alias without_the_question_mark chop
+  
 end

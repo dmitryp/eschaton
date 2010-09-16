@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/test_helper'
 class OptionsHelperTest < Test::Unit::TestCase
 
   def setup
-    Eschaton.global_script = Eschaton.javascript_generator
+    Eschaton.global_script = Eschaton.script
   end
 
   def test_to_google_position

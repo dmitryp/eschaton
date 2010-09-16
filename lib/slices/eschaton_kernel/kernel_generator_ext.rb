@@ -45,28 +45,4 @@ module KernelGeneratorExt
     self << other_generator.generate(options)
   end
 
-  # Returns script that has been generated and allows for addtional +options+ regarding generation than the default +to_s+ method.
-  #
-  # ==== Options:
-  # * +error_wrapping+ - Optional. Indicates if the script should be wrapped in try..catch blocks, defaulted to +false+.
-  # * +strip_each_line+ - Optional. Indicates if leading and trailing whitespace should be stripped from each line, defaulted to +true+.
-  # * +inline+ - Optional. Indicates if new lines should be stripped from the generated script, defaulted to +false+.
-  def generate(options = {})
-    options.default! :error_wrapping => false, :strip_each_line => true, :inline => false
-    options.assert_valid_keys :error_wrapping, :strip_each_line, :inline,
-    
-    reset_rjs_debug = ActionView::Base.debug_rjs
-    
-    ActionView::Base.debug_rjs = options[:error_wrapping]
-    
-    output = self.to_s
-
-    output.strip_each_line! if options[:strip_each_line]
-    output.gsub!("\n", ' ') if options[:inline]
-
-    ActionView::Base.debug_rjs = reset_rjs_debug
-    
-    output
-  end  
-  
 end
