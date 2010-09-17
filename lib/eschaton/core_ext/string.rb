@@ -16,7 +16,11 @@ class String # :nodoc:
   def escape
     CGI.escape self
   end
-  
+ 
+  def ends_with?(word)
+    (self =~ /#{word}$/).not_nil?
+  end
+   
   def without_question_mark_or_exclamation_mark
     if self =~ /\?|\!$/
       self.chop
@@ -24,5 +28,7 @@ class String # :nodoc:
       self
     end
   end
-  
+
+  alias without_last_character chop
+
 end

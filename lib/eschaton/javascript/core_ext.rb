@@ -41,10 +41,10 @@ class Object # :nodoc:
   #  'set_zoom' #=> 'setZoom'
   #  'open_info_window' #=> 'openInfoWindow'
   def to_js_method
-    method_name = self.to_s
-    method_name = "set_#{method_name.chop}" if method_name =~ /=$/
-    method_name.chop! if method_name =~ /!$/
-    
+    method_name = self.to_s.without_question_mark_or_exclamation_mark
+
+    method_name = "set_#{method_name.without_last_character}" if method_name.ends_with?('=')
+
     method_name.camelize.gsub(/\b\w/){$&.downcase}
   end
   

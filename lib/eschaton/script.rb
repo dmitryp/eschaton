@@ -79,6 +79,18 @@ module Eschaton
         output
       end
     end
+    
+    def translate_to_javascript_method_call(method_name, *options)
+      method_name = method_name.to_s
+
+      if method_name =~ /\?$/
+        "#{method_name.to_js_method}(#{options.to_js_arguments})".to_sym
+      else
+        self << "#{method_name.to_js_method}(#{options.to_js_arguments});"
+      end
+    end
+    
+    alias method_missing translate_to_javascript_method_call
 
     def to_s
       self.generate

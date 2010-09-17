@@ -24,7 +24,7 @@ module Eschaton
     # http://api.jquery.com/bind/
     def listen_to(options, &block)
       event = options[:event].to_jquery_event
-      function = Eschaton.function(&block)
+      function = self.script.function(&block)
       
       self << "#{self.element}.bind('#{event}', #{function});"
     end

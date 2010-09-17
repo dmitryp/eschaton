@@ -134,7 +134,9 @@ module Google
       def prepare_info_window_options(info_window_options)
         info_window_options.to_google_options :dont_convert => [:offset, :pixel_offset],
                                               :rename => {:dont_close_when_map_clicked => :no_close_on_click,
-                                                          :offset => :pixel_offset}
+                                                          :offset => :pixel_offset,
+                                                          :when_closed => :on_close_fn,
+                                                          :when_opened => :on_open_fn}
       end
 
   end

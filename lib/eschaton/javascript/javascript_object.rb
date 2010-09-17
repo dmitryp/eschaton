@@ -29,17 +29,17 @@ module Eschaton
       @create_var
     end
 
-    # Converts the given +method+ and +args+ to a javascript method call with arguments.  
-    def method_to_js(method, *args)
-      method_name = method.to_s 
+    def translate_to_javascript_method_call(method_name, *options)
+      method_name = method_name.to_s
+
       if method_name =~ /\?$/
-        "#{self.var}.#{method_name.chop.to_js_method}(#{args.to_js_arguments})".to_sym
+        "#{self.var}.#{method_name.to_js_method}(#{options.to_js_arguments})".to_sym
       else
-        self << "#{self.var}.#{method.to_js_method}(#{args.to_js_arguments});"
+        self << "#{self.var}.#{method_name.to_js_method}(#{options.to_js_arguments});"
       end
     end
-
-    alias method_missing method_to_js
+    
+    alias method_missing translate_to_javascript_method_call
     
     # Adds +javascript+ to the generator.
     #

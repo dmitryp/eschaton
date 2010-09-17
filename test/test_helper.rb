@@ -37,10 +37,8 @@ class Test::Unit::TestCase
 
     output = if block_given?
                Eschaton.global_script.record_for_test(&block).generate
-             elsif generator.is_a?(String)
-               generator
              else
-               generator.generate
+               generator.to_s
              end
 
     output.strip_each_line!             
