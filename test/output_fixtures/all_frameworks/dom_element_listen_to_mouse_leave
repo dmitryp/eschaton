@@ -1,0 +1,3 @@
+jQuery('#feedback').bind('mouseleave', function(){
+  alert("Your mouse left");
+});

@@ -13,7 +13,7 @@ end
 
 class String # :nodoc:
 
-  def interpolate_javascript_vars
+  def interpolate_javascript_variables
     interpolated_string = self
     interpolated_string.scan(/#\[.*?\]/).each do |javascript_variable|
       interpolation = javascript_variable.gsub(/#|\[|\]/, '')

@@ -17,6 +17,12 @@ class String # :nodoc:
     CGI.escape self
   end
   
-  alias without_the_question_mark chop
+  def without_question_mark_or_exclamation_mark
+    if self =~ /\?|\!$/
+      self.chop
+    else
+      self
+    end
+  end
   
 end

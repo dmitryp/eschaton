@@ -78,15 +78,15 @@ class EschatonTest < Test::Unit::TestCase
   end  
   
   
-  def test_interpolate_javascript_vars
+  def test_interpolate_javascript_variables
     assert_equal '"There is no interpolation in this string."', 
-                 "There is no interpolation in this string.".interpolate_javascript_vars
+                 "There is no interpolation in this string.".interpolate_javascript_variables
 
-    assert_equal '"This is my " + name + ""', "This is my #[name]".interpolate_javascript_vars
+    assert_equal '"This is my " + name + ""', "This is my #[name]".interpolate_javascript_variables
     assert_equal '"Latitude is " + location.lat() + " and Logitude is " + location.lng() + ""', 
-                 "Latitude is #[location.lat()] and Logitude is #[location.lng()]".interpolate_javascript_vars
+                 "Latitude is #[location.lat()] and Logitude is #[location.lng()]".interpolate_javascript_variables
     assert_equal '"From hash " + hash.field_one + " and " + hash.field_two + ""', 
-                 "From hash #[hash.field_one] and #[hash.field_two]".interpolate_javascript_vars
+                 "From hash #[hash.field_one] and #[hash.field_two]".interpolate_javascript_variables
   end
 
   def test_url_for

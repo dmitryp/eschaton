@@ -63,6 +63,18 @@ class PreparedOptionsTest < Test::Unit::TestCase
     assert_true prepared_options.has_value?(:name)
     assert_true prepared_options.has_value?(:project)
   end
+  
+  def test_has_option_with_block
+    prepared_options = {:name => @name_value, :project => @project_value}.prepare_options
+
+    prepared_options.has_option?(:name) do |name|
+      assert_equal @name_value, name
+    end
+    
+    prepared_options.has_option?(:project) do |project|
+      assert_equal @project_value, project
+    end
+  end
 
   def test_defaults
     prepared_options = {}.prepare_options do |prepared_options|
@@ -162,6 +174,59 @@ class PreparedOptionsTest < Test::Unit::TestCase
     
    assert_equal symbol_updated_value, prepared_options[:symbol]
    assert_equal date_updated_value, prepared_options[:date]
+  end
+
+  def test_rename
+    id = 1
+    css_class = 'blue_box'
+    title = 'hello box!'
+    
+    options = {:id => id, :class => css_class, :title => title}
+
+    prepare_options = options.prepare_options(:rename => {:id => :element_id, :class => :css_class})
+
+    assert_false prepare_options.has_option? :id
+    assert_false prepare_options.has_option? :class
+    
+    assert_true prepare_options.has_option? :title
+    assert_true prepare_options.has_option? :element_id
+    assert_true prepare_options.has_option? :css_class
+    
+    assert_equal id, prepare_options.value_for(:element_id)
+    assert_equal css_class, prepare_options.value_for(:css_class)
+    assert_equal title, prepare_options.value_for(:title)
+  end
+  
+  def test_automatically_created_getters
+    element_id = 1
+    css_class = 'blue_box'
+    title = 'hello box!'
+
+    options = {:element_id => element_id, :css_class => css_class, :title => title}
+
+    prepare_options = options.prepare_options
+
+    assert_equal element_id, prepare_options.element_id
+    assert_equal css_class, prepare_options.css_class
+    assert_equal title, prepare_options.title
+  end
+
+  def test_automatically_created_getters
+    element_id = 1
+    css_class = 'blue_box'
+    title = 'hello box!'
+
+    options = {:element_id => element_id, :css_class => css_class, :title => title,
+               :delete_element => true}
+
+    prepare_options = options.prepare_options
+
+    assert_equal element_id, prepare_options.element_id
+    assert_equal css_class, prepare_options.css_class
+    assert_equal title, prepare_options.title
+
+    assert_true prepare_options.delete_element
+    assert_true prepare_options.delete_element?
   end
 
 end

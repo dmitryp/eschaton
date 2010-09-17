@@ -1,0 +1,3 @@
+jQuery('#feedback').bind('focus', function(){
+  alert("You are focussed");
+});

@@ -85,7 +85,10 @@ module JqueryGeneratorExt
 
       self << "jQuery('##{id}').html('#{html}');"
     end
-  end  
+  end
   
+  def element(options)
+    Eschaton::DomElement.new(options)
+  end
 
 end

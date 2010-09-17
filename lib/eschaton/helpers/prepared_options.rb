@@ -24,6 +24,10 @@ module Eschaton
         self.defaults = defaults
       end
 
+      self.has_option?(:rename) do |renames|
+        self.rename! renames
+      end
+
       self.options.symbolize_keys!
     end
     
@@ -85,6 +89,18 @@ module Eschaton
     end
 
     alias defaults= default!
+    
+    def rename!(options)
+      
+      options.each do |option, renamed_to|
+        self.options[renamed_to] = self.value_for(option)
+        self.remove_option option
+      end
+    end
+    
+    def remove_option(option)
+      self.options.delete option
+    end
 
     # Validates that the given +options+ are present and do not have blank values.
     # If the validation fails, a ArgumentError will be raised indicating what required options 
@@ -149,12 +165,12 @@ module Eschaton
     end
     
     def method_missing(method_name, *options, &block)
-      option = method_name.without_the_question_mark
+      option = method_name.without_question_mark_or_exclamation_mark
 
       if self.has_option?(option)
         self.value_for option
       else
-        raise NoMethodError, option
+        raise NoMethodError, option.to_s
       end
     end
     

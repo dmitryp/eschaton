@@ -67,6 +67,10 @@ module Eschaton # :nodoc:
   def self.script
     Eschaton::Script.new
   end
+  
+  def self.function(&block)
+    Eschaton::JavascriptFunction.from_block &block
+  end
 
   def self.with_global_script(script = Eschaton.script, options = {})
     options.default! :reset_after => false

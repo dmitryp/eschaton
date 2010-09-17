@@ -1,0 +1,3 @@
+jQuery('#feedback').bind('click', function(){
+  alert("You clicked the Feedback element");
+});

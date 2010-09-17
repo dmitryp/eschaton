@@ -15,7 +15,7 @@ module Google
     #  Google::Log.write("Hello #{name}, this is ruby interpolation.")
     #
     def self.write(html)
-      Eschaton.global_script << "GLog.writeHtml(#{html.interpolate_javascript_vars});"
+      Eschaton.global_script << "GLog.writeHtml(#{html.interpolate_javascript_variables});"
     end
 
   end
