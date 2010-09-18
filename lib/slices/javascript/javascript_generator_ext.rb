@@ -8,4 +8,8 @@ module JavascriptGeneratorExt
     Eschaton::JavascriptFunction.from_block options, &block
   end
 
+  def variable(name)
+    Eschaton::JavascriptObject.existing(:var => name)
+  end
+
 end

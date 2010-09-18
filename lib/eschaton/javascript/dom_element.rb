@@ -34,7 +34,13 @@ module Eschaton
     
     protected
       def determine_element_selector(options)
-        options = options.prepare_options(:rename => {:id => :element_id})
+        options = if options.is_a?(String)
+                    {:selector => options.to_s}.prepare_options
+                  elsif options.is_a?(Symbol)
+                    {:element_id => options.to_s}.prepare_options
+                  else
+                    options.prepare_options(:rename => {:id => :element_id})
+                  end
 
         selector = if options.has_option?(:element_id)
                      "##{options.element_id}"
