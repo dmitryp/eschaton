@@ -5,6 +5,7 @@ module Eschaton
     
     def initialize(options)    
       self.determine_element_selector options
+      self.var = self.element
     end
 
     def update_html(html)
@@ -37,10 +38,10 @@ module Eschaton
 
         selector = if options.has_option?(:element_id)
                      "##{options.element_id}"
-                    elsif options.has_option?(:css)
-                      ".#{options.css}"
-                    elsif options.has_option?(:path)
-                      options.path
+                    elsif options.has_option?(:css_class)
+                      ".#{options.css_class}"
+                    elsif options.has_option?(:selector)
+                      options.selector
                     end
       
         self.element = "jQuery('#{selector}')"

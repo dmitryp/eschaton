@@ -91,10 +91,11 @@ module Eschaton
     alias defaults= default!
     
     def rename!(options)
-      
       options.each do |option, renamed_to|
-        self.options[renamed_to] = self.value_for(option)
-        self.remove_option option
+        if self.has_option?(option)
+          self.options[renamed_to] = self.value_for(option)
+          self.remove_option option
+        end
       end
     end
     

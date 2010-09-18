@@ -183,18 +183,26 @@ class PreparedOptionsTest < Test::Unit::TestCase
     
     options = {:id => id, :class => css_class, :title => title}
 
-    prepare_options = options.prepare_options(:rename => {:id => :element_id, :class => :css_class})
+    prepared_options = options.prepare_options(:rename => {:id => :element_id, :class => :css_class})
 
-    assert_false prepare_options.has_option? :id
-    assert_false prepare_options.has_option? :class
+    assert_false prepared_options.has_option? :id
+    assert_false prepared_options.has_option? :class
     
-    assert_true prepare_options.has_option? :title
-    assert_true prepare_options.has_option? :element_id
-    assert_true prepare_options.has_option? :css_class
+    assert_true prepared_options.has_option? :title
+    assert_true prepared_options.has_option? :element_id
+    assert_true prepared_options.has_option? :css_class
     
-    assert_equal id, prepare_options.value_for(:element_id)
-    assert_equal css_class, prepare_options.value_for(:css_class)
-    assert_equal title, prepare_options.value_for(:title)
+    assert_equal id, prepared_options.value_for(:element_id)
+    assert_equal css_class, prepared_options.value_for(:css_class)
+    assert_equal title, prepared_options.value_for(:title)
+  end
+  
+  def test_rename_with_non_present_option
+    prepared_options = {:object_id => 1}.prepare_options(:rename => {:class => :class_name})
+     
+    assert_true  prepared_options.has_option?(:object_id)
+    assert_false  prepared_options.has_option?(:class)    
+    assert_false prepared_options.has_option?(:class_name)
   end
   
   def test_automatically_created_getters
@@ -204,11 +212,11 @@ class PreparedOptionsTest < Test::Unit::TestCase
 
     options = {:element_id => element_id, :css_class => css_class, :title => title}
 
-    prepare_options = options.prepare_options
+    prepared_options = options.prepare_options
 
-    assert_equal element_id, prepare_options.element_id
-    assert_equal css_class, prepare_options.css_class
-    assert_equal title, prepare_options.title
+    assert_equal element_id, prepared_options.element_id
+    assert_equal css_class, prepared_options.css_class
+    assert_equal title, prepared_options.title
   end
 
   def test_automatically_created_getters
@@ -219,14 +227,14 @@ class PreparedOptionsTest < Test::Unit::TestCase
     options = {:element_id => element_id, :css_class => css_class, :title => title,
                :delete_element => true}
 
-    prepare_options = options.prepare_options
+    prepared_options = options.prepare_options
 
-    assert_equal element_id, prepare_options.element_id
-    assert_equal css_class, prepare_options.css_class
-    assert_equal title, prepare_options.title
+    assert_equal element_id, prepared_options.element_id
+    assert_equal css_class, prepared_options.css_class
+    assert_equal title, prepared_options.title
 
-    assert_true prepare_options.delete_element
-    assert_true prepare_options.delete_element?
+    assert_true prepared_options.delete_element
+    assert_true prepared_options.delete_element?
   end
 
 end

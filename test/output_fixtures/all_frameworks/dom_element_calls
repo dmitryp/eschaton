@@ -1,0 +1,5 @@
+jQuery('#one').bind('click', function(){
+  // Testing
+  jQuery('#one').show();
+  jQuery('#two').html("This is two");
+});

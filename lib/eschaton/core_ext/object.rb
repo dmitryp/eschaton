@@ -35,5 +35,5 @@ class Object # :nodoc:
   def interpolated_javascript
     self.to_js.interpolated_javascript
   end
-
+  
 end

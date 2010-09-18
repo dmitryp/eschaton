@@ -17,7 +17,7 @@ class JavascriptVariableTest < Test::Unit::TestCase
   def test_existing_variable
     with_eschaton do |script|
       assert_eschaton_output 'points.push("One");
-                             points.push("Two");'do
+                              points.push("Two");'do
                               points = Eschaton::JavascriptVariable.existing(:name => :points)
                               points.push("One")
                               points.push("Two")                              

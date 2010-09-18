@@ -4,6 +4,7 @@ module Eschaton
 
     def self.from_block(options = {}, &block)
       options = options.prepare_options
+      
       function_script = Eschaton.script
 
       if options.has_option?(:name)   
@@ -12,7 +13,7 @@ module Eschaton
         function_script << "function(){"
       end
 
-      yield function_script
+      Eschaton.with_global_script(function_script, &block)
 
       function_script << "}"
       

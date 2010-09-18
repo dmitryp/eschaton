@@ -5,6 +5,26 @@ class DomElementTest < Test::Unit::TestCase
   def setup
     @element = Eschaton::DomElement.new(:id => :feedback)
   end
+
+  def test_calls
+    with_eschaton do
+      assert_eschaton_output :dom_element_calls do |script|
+        script.element(:id => :one).when_clicked do |function_script|
+          function_script << "// Testing"
+          function_script.element(:id => :one).show!
+          function_script.element(:id => :two).replace_html "This is two"
+        end
+      end
+    end
+  end
+
+  def test_selector
+    with_eschaton do |script|
+      assert_eschaton_output "jQuery('#map_sidebar')", script.element(:id => 'map_sidebar').element
+      assert_eschaton_output "jQuery('.map_sidebar')", script.element(:css_class => 'map_sidebar').element
+      assert_eschaton_output "jQuery('div > a')", script.element(:selector => 'div > a').element
+    end    
+  end
   
   def test_replace_html
     with_eschaton do |script|
