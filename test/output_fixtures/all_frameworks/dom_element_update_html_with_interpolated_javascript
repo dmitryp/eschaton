@@ -1,0 +1,1 @@
+jQuery('#feedback').html("Latitude is " + location.lat() + " | Logitude is " + location.lng() + " ");

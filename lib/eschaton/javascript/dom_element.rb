@@ -14,6 +14,9 @@ module Eschaton
       self << "#{self.element}.html(#{html});"
     end
 
+    alias replace_html update_html
+    alias html= update_html
+
     def delete!
       self << "#{self.element}.remove();"
     end
@@ -30,7 +33,7 @@ module Eschaton
       self << "#{self.element}.bind('#{event}', #{function});"
     end
 
-    alias replace_html update_html
+    
     
     protected
       def determine_element_selector(options)
