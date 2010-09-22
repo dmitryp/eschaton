@@ -1,5 +1,26 @@
 module Eschaton
 
+  # Represents a javascript function, this can be used to write javascript functions that are either anonymous or are named.
+  # If the JavascriptFunction is anonymous it can be passed to methods that use the anonymous function.
+  #  
+  # ==== Examples
+  #
+  #  function = Eschaton.function do |function|
+  #              function.alert("Hello world!")
+  #             end
+  #
+  #  function.call!
+  #
+  # It can also be used to declare a function that can be called at a later stage:
+  #  
+  #  function = Eschaton.function(:name => :hello_world) do |function|
+  #               function.alert("Hello world!")
+  #             end
+  #
+  #  script.confirm("Call this function?") do
+  #    function.call!
+  #  end
+  #
   class JavascriptFunction < JavascriptObject
     attr_accessor :name
     
@@ -29,15 +50,15 @@ module Eschaton
     end
     
     def call!(*options)
-      if self.named?
-        Eschaton.global_script << "#{self.name.to_js_method}(#{options.to_js_arguments});"
-      else
+      if self.anonymous?
         Eschaton.global_script << "(#{self}).call(#{options.to_js_arguments});"
+      else
+        Eschaton.global_script << "#{self.name.to_js_method}(#{options.to_js_arguments});"
       end
     end
-    
-    def named?
-      self.name.not_blank?
+
+    def anonymous?
+      self.name.blank?
     end
 
     def to_s

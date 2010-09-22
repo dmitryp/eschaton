@@ -1,6 +1,6 @@
 module Eschaton
 
-  # Encapsulates a javascript variable in a Ruby variable. This can be used to work with a javascript variable within Ruby.
+  # Represents a javascript variable in a Ruby variable. This can be used to work with a javascript variable within Ruby.
   #
   # ==== Examples
   #  # Create a new variable

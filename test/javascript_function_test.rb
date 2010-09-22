@@ -8,8 +8,8 @@ class JavascriptFunctionTest < Test::Unit::TestCase
                    function.alert("hello world!")
                  end
 
-      assert_false function.named?
-      
+      assert_true function.anonymous?
+
       assert_eschaton_output 'function(){
                                 alert("hello world!");
                               }', 
@@ -25,8 +25,8 @@ class JavascriptFunctionTest < Test::Unit::TestCase
                               function = script.function(:name => :hello_world) do |function|
                                            function.alert("hello world!")
                                          end
-                                         
-                              assert_true function.named?
+
+                              assert_false function.anonymous?
                             end
     end
   end
