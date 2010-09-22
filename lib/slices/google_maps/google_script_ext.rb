@@ -1,4 +1,4 @@
-module GoogleGeneratorExt
+module GoogleScriptExt
   
   def with_mapping_scripts
     self << Google::Scripts.before_map_script

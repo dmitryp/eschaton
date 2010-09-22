@@ -1,4 +1,4 @@
-module JqueryGeneratorExt
+module JqueryScriptExt
   
   # Gives control of the $ variable back to whichever library first implemented it.
   # This helps to make sure that jQuery doesn't conflict with the $ object of other libraries

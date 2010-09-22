@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/test_helper'
 
 class ScriptTest < Test::Unit::TestCase
 
-  def test_adding_javascript    
+  def test_adding_javascript
     assert_eschaton_output 'Line One
                             Line Two' do |script|
                               script << 'Line One'
@@ -52,6 +52,14 @@ class ScriptTest < Test::Unit::TestCase
 
     assert_eschaton_output output, script.to_s
     assert_eschaton_output output, script.inspect
+  end
+
+  def test_method_missing
+    assert_eschaton_output 'hello();
+                            goodBye();' do |script|
+                                script.hello
+                                script.good_bye
+                              end
   end
 
 end

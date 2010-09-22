@@ -20,7 +20,10 @@ module Eschaton
 
       if self.enabled?
         message = "Eschaton deprecation warning: #{options[:message]}."
-        message+= "Called from #{self.get_caller(caller)}" if options[:include_called_from].true?
+        
+        if options[:include_called_from].true?
+          message += "\nCalled from #{self.get_caller(caller)}" 
+        end
 
         $stderr.puts message
       end

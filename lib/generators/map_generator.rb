@@ -32,7 +32,7 @@ class MapGenerator < Rails::Generators::Base
     self.slice_class = slice_name.classify
     slice_directory = "lib/eschaton_slices/#{slice_name}"
 
-    template "generator_ext.rb", "#{slice_directory}/#{slice_name}_generator_ext.rb" 
+    template "script_ext.rb", "#{slice_directory}/#{slice_name}_script_ext.rb" 
     template "view_ext.rb", "#{slice_directory}/#{slice_name}_view_ext.rb"
   end
 

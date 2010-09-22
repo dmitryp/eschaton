@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/test_helper'
     
-class GoogleGeneratorExtTest < Test::Unit::TestCase
+class GoogleScriptExtTest < Test::Unit::TestCase
 
   def test_global_map_var    
     with_eschaton do |script|

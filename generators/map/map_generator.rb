@@ -31,7 +31,7 @@ class MapGenerator < Rails::Generator::Base
 
       m.directory slice_dir
 
-      m.template "generator_ext.rb", "#{slice_dir}/#{slice_name}_generator_ext.rb" 
+      m.template "script_ext.rb", "#{slice_dir}/#{slice_name}_script_ext.rb" 
       m.template "view_ext.rb", "#{slice_dir}/#{slice_name}_view_ext.rb"
     end
   end

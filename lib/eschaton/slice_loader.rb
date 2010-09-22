@@ -35,7 +35,12 @@ module Eschaton
 
         # Generator extentions
         mixin_extentions :path => path, :pattern => /([a-z_\d]*_generator_ext).rb/,
-                         :extend => Eschaton::Script #ActionView::Helpers::PrototypeHelper::JavaScriptGenerator
+                         :extend => Eschaton::Script,
+                         :deprecation_warning => true
+
+        # Script extentions
+        mixin_extentions :path => path, :pattern => /([a-z_\d]*_script_ext).rb/,
+                         :extend => Eschaton::Script
 
         # View extentions
         mixin_extentions :path => path, :pattern => /([a-z_\d]*_view_ext).rb/,
@@ -47,9 +52,22 @@ module Eschaton
       end
 
       def self.mixin_extentions(options)      
-        Dir["#{options[:path]}/*.rb"].each do |file|
-          if module_name = options[:pattern].match(file)
-            options[:extend].extend_with_slice module_name[1].camelize.constantize
+        options = options.prepare_options
+        
+        Dir["#{options.path}/*.rb"].each do |file|
+          if module_name = options.pattern.match(file)
+            module_name = module_name[1].camelize
+            
+            options.has_option?(:deprecation_warning) do 
+              new_module_name = module_name.gsub('GeneratorExt', 'ScriptExt')
+              old_file_name = file.gsub(Rails.root, '')
+              new_file_name = old_file_name.gsub('generator_ext', 'script_ext')
+
+              Eschaton::Deprecation.warning :message => "Please rename the module #{module_name} to #{new_module_name} and the file #{old_file_name} to #{new_file_name}",
+                                            :include_called_from => false
+            end
+                        
+            options[:extend].extend_with_slice module_name.constantize
           end
         end
       end
