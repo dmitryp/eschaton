@@ -86,9 +86,5 @@ module JqueryScriptExt
       self << "jQuery('##{id}').html('#{html}');"
     end
   end
-  
-  def element(options)
-    Eschaton::DomElement.new(options)
-  end
 
 end

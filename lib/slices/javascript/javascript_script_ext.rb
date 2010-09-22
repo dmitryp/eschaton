@@ -70,14 +70,17 @@ module JavascriptScriptExt
 
     self << "}"
   end  
-  
-  # Returns a JavascriptFunction with the given +options+ which can be anything Eschaton::JavascriptFunction#from_block supports.  
+
   def function(options = {}, &block)
-    Eschaton::JavascriptFunction.from_block options, &block
+    Eschaton.function options, &block
   end
 
   def variable(name)
-    Eschaton::JavascriptObject.existing(:var => name)
+    Eschaton.variable :var => name
+  end
+
+  def element(options)
+    Eschaton.element options
   end
 
 end

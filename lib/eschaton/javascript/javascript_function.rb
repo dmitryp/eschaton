@@ -61,6 +61,18 @@ module Eschaton
       self.name.blank?
     end
 
+    def function(options = {}, &block)
+      Eschaton.function options, &block
+    end
+
+    def variable(name)
+      Eschaton.variable :var => name
+    end
+
+    def element(options)
+      Eschaton.element options
+    end  
+
     def to_s
       self.script.to_s
     end
