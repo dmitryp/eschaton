@@ -65,7 +65,7 @@ module Eschaton
     private
       def var=(name)
         @var = if name == :random
-                 "_#{rand(2000)}"
+                 Eschaton.random_id
                else
                  name
                end

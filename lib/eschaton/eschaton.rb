@@ -1,6 +1,10 @@
 # Provides access to global objects of interest.
 module Eschaton # :nodoc:
   include Eschaton::Events
+  
+  def self.random_id
+    "_#{rand(4000)}"
+  end  
     
   def self.current_view=(view)
     @@current_view = view
@@ -65,9 +69,27 @@ module Eschaton # :nodoc:
   end
 
   def self.script
-    Eschaton::Script.new
+    script = Eschaton::Script.new
+
+    if block_given?
+      yield script
+    end
+
+    script
+  end
+  
+  def self.element(options)
+    Eschaton::DomElement.new(options)
+  end
+  
+  def self.function(options = {}, &block)
+    Eschaton::JavascriptFunction.from_block options, &block
   end
 
+  def self.variable(name)
+    Eschaton::JavascriptObject.existing(:var => name)
+  end
+  
   def self.with_global_script(script = Eschaton.script, options = {})
     options.default! :reset_after => false
 

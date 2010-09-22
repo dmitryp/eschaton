@@ -33,8 +33,6 @@ module Eschaton
       self << "#{self.element}.bind('#{event}', #{function});"
     end
 
-    
-    
     protected
       def determine_element_selector(options)
         options = if options.is_a?(String)

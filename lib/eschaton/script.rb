@@ -73,6 +73,8 @@ module Eschaton
 
       output.strip_each_line! if options[:strip_each_line].true?
       
+      output = ' ' if output.blank? # This issue is weird, figure it out
+      
       if output.respond_to?(:html_safe)
         output.html_safe
       else

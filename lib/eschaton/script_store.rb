@@ -9,15 +9,15 @@ module Eschaton
         thread_key = self.thread_key(name)
         class_eval "
           def self.#{name}
-            expander = Thread.current['#{thread_key}'] ||= ScriptExpander.new
+            script = Thread.current['#{thread_key}'] ||= Eschaton::Script.new
             
             if block_given?
-              Eschaton.with_global_script(expander) do
-                yield expander
+              Eschaton.with_global_script(script) do
+                yield script
               end
             end
-            
-            expander
+
+            script
           end
         "
       end
