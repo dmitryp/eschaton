@@ -171,7 +171,7 @@ module Eschaton
       if self.has_option?(option)
         self.value_for option
       else
-        raise NoMethodError, option.to_s
+        self.options.send method_name, *options, &block
       end
     end
     

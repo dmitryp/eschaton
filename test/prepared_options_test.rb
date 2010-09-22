@@ -236,5 +236,12 @@ class PreparedOptionsTest < Test::Unit::TestCase
     assert_true prepared_options.delete_element
     assert_true prepared_options.delete_element?
   end
+  
+  def test_method_missing_forwards_to_internal_options_hash
+    prepared_options = {:project => 'eschaton', :user => 'yawningman'}.prepare_options
+
+    assert_equal 2, prepared_options.size
+    assert_equal 2, prepared_options.keys.size    
+  end
 
 end
