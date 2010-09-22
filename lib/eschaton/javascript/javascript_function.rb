@@ -21,34 +21,37 @@ module Eschaton
   #    function.call!
   #  end
   #
-  class JavascriptFunction < JavascriptObject
-    attr_accessor :name
+  class JavascriptFunction < Eschaton::Script
+    attr_accessor :name, :body
     
-    def initialize(options = {})      
-      self.name = options[:name]
-      
+    def initialize(options = {}, &block)      
       super
-    end
-    
-    def self.from_block(options = {}, &block)
-      options = options.prepare_options
       
-      function_script = Eschaton.script
+      options = options.prepare_options
 
-      if options.has_option?(:name)
-        Eschaton.global_script << function_script
-        function_script << "function #{options.name.to_js_method}(){"
+      self.name = options[:name]
+      self.body = Eschaton.script
+
+      if self.anonymous?
+        self << "function(){"        
       else
-        function_script << "function(){"
+        Eschaton.global_script << self
+        self << "function #{options.name.to_js_method}(){"
       end
 
-      Eschaton.with_global_script(function_script, &block)
+      self << self.body
 
-      function_script << "}"
-      
-      Eschaton::JavascriptFunction.new(:script => function_script, :name => options.value_for(:name))
+      Eschaton.with_global_script(self.body, &block)
+
+      self << "}"
+
+      redirect_output :to => self.body  
     end
-    
+        
+    def self.from_block(options = {}, &block)
+      Eschaton::JavascriptFunction.new(options, &block)
+    end
+
     def call!(*options)
       if self.anonymous?
         Eschaton.global_script << "(#{self}).call(#{options.to_js_arguments});"
@@ -60,24 +63,6 @@ module Eschaton
     def anonymous?
       self.name.blank?
     end
-
-    def function(options = {}, &block)
-      Eschaton.function options, &block
-    end
-
-    def variable(name)
-      Eschaton.variable :var => name
-    end
-
-    def element(options)
-      Eschaton.element options
-    end  
-
-    def to_s
-      self.script.to_s
-    end
-    
-    alias to_js to_s
   end
 
 end

@@ -21,7 +21,13 @@ module Google
       location = Google::OptionsHelper.to_location(options[:location])
       location = self.object.center if location == :center
       info_window_options = options[:options]
-
+       
+      if options[:focus_on].not_blank?
+        info_window_options[:when_opened] = Eschaton.function do |function|
+                                              function.element(options[:focus_on]).focus!
+                                            end
+      end
+       
       if options[:url]
         options[:location] = location
         

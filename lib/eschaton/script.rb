@@ -3,28 +3,34 @@ module Eschaton
   class Script
     attr_accessor :lines
 
-    def initialize
+    def initialize(options = {})
       self.lines = []
     end
 
     def <<(javascript)
       self.recorder << javascript if self.recording?
-      self.lines << javascript
-    
+
+      output = if self.redirect_output?
+                 self.redirected_output
+               else
+                 self.lines
+               end
+
+      output << javascript
+
       javascript
     end
     
     alias raw_javascript <<
               
-    # Allows for recording any script contained within the block passed to this method. This will return what was 
-    # recorded in the form of a JavascriptGenerator.
+    # Allows for recording any script contained within the block passed to this method.
     #
     # This is useful for testing and debugging output when generating script. 
     #
     # Example:
     #  script << "// This is before recording"
     #
-    #  # record will containin the script generated within the block
+    #  # record will contain the script generated within the block
     #  record = script.record do
     #             script << "// This is within recording"    
     #             script << "// Again, this is within a record"
@@ -76,7 +82,7 @@ module Eschaton
     end
     
     protected
-      attr_accessor :recorder
+      attr_accessor :recorder, :redirected_output
 
       def start_recording!
         recorder = Eschaton.script
@@ -94,6 +100,13 @@ module Eschaton
         self.recorder.not_nil?
       end
 
+      def redirect_output(options)
+        self.redirected_output = options[:to]
+      end
+      
+      def redirect_output?
+        self.redirected_output.not_nil?
+      end
   end
 
 end
