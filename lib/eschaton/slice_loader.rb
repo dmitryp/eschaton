@@ -33,7 +33,7 @@ module Eschaton
 
         Eschaton.require_files :in => path
 
-        # Generator extentions
+        # Generator extentions no longer supported and gives deprecation warning
         mixin_extentions :path => path, :pattern => /([a-z_\d]*_generator_ext).rb/,
                          :extend => Eschaton::Script,
                          :deprecation_warning => true
@@ -57,7 +57,7 @@ module Eschaton
         Dir["#{options.path}/*.rb"].each do |file|
           if module_name = options.pattern.match(file)
             module_name = module_name[1].camelize
-            
+
             options.has_option?(:deprecation_warning) do 
               new_module_name = module_name.gsub('GeneratorExt', 'ScriptExt')
               old_file_name = file.gsub(Rails.root, '')
