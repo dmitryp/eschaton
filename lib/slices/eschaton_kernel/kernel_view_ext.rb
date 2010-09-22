@@ -36,14 +36,13 @@ module KernelViewExt
     text = options[:text]
     element_id = Eschaton.random_id
 
-    #Eschaton.global_script do |script|
-    Google::Scripts.end_of_map_script do
-      Eschaton.element(:id => element_id).when_clicked(&block)
+    Google::Scripts.end_of_map_script do |script|
+      script.element(:id => element_id).when_clicked(&block)
     end
 
     link_tag = "<a id='#{element_id}' href='#'>#{text}</a>"
 
     link_tag.html_safe
   end
-  
+
 end

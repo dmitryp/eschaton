@@ -1,22 +1,6 @@
 require File.dirname(__FILE__) + '/test_helper'
 
 class KernelGeneratorTest < Test::Unit::TestCase
-
-  def test_record
-    script = Eschaton.script
-
-    script << "// This is before recording"
-    record = script.record_for_test do
-               script << "// This is within recording"
-             end
-
-    script << "// This is after recording"
-
-    assert_equal "// This is before recording\n" << 
-                 "// This is within recording\n" << 
-                 "// This is after recording", script.generate    
-    assert_equal "// This is within recording", record.generate
-  end
   
   def test_if_statement
     with_eschaton do |script|

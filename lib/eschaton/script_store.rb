@@ -1,22 +1,19 @@
 module Eschaton
-  
+
   module ScriptStore # :nodoc:
 
     def define(*names)
       names.each do |name|
         self.send(:cattr_writer, name)
-      
-        thread_key = self.thread_key(name)
-        class_eval "
-          def self.#{name}
-            script = Thread.current['#{thread_key}'] ||= Eschaton::Script.new
-            
-            if block_given?
-              Eschaton.with_global_script(script) do
-                yield script
-              end
-            end
 
+        thread_key = self.thread_key(name)
+        
+        class_eval "
+          def self.#{name}(&block)
+            script = Thread.current['#{thread_key}'] ||= Eschaton::Script.new
+        
+            Eschaton.with_global_script(script, &block) if block_given?
+        
             script
           end
         "

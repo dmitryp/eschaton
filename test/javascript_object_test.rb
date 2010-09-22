@@ -96,7 +96,7 @@ class JavascriptObjectTest < Test::Unit::TestCase
 
       assert return_value.is_a?(Symbol)
       assert_equal 'array.indexOf("A value")'.to_sym, return_value    
-      assert_blank script.generate      
+      assert_blank script.to_s      
     end
   end
     

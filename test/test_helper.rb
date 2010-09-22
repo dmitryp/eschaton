@@ -36,7 +36,9 @@ class Test::Unit::TestCase
     output_to_compare = output_fixture_for_framework(output_to_compare)
 
     output = if block_given?
-               Eschaton.global_script.record_for_test(&block).generate
+               script = Eschaton.global_script || Eschaton.script
+
+               script.record(&block).to_s
              else
                generator.to_s
              end

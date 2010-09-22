@@ -1,7 +1,7 @@
 module Eschaton
 
   class Script
-    attr_accessor :lines, :recorder
+    attr_accessor :lines
 
     def initialize
       self.lines = []
@@ -13,6 +13,8 @@ module Eschaton
     
       javascript
     end
+    
+    alias raw_javascript <<
               
     # Allows for recording any script contained within the block passed to this method. This will return what was 
     # recorded in the form of a JavascriptGenerator.
@@ -23,13 +25,13 @@ module Eschaton
     #  script << "// This is before recording"
     #
     #  # record will containin the script generated within the block
-    #  record = script.record_for_test do
+    #  record = script.record do
     #             script << "// This is within recording"    
     #             script << "// Again, this is within a record"
     #           end
     #
     #  script << "// This is after recording"
-    def record_for_test(&block)
+    def record(&block)
       recorder = self.start_recording!
 
       yield self
@@ -39,48 +41,23 @@ module Eschaton
       recorder
     end
 
-    def start_recording!
-      recorder = Eschaton.script
-
-      self.recorder = recorder
-            
-      recorder
-    end
-    
-    def stop_recording!
-      self.recorder = nil
-    end
-    
-    def recording?
-      self.recorder.not_nil?
-    end
-
-    # Returns script that has been generated and allows for addtional +options+ regarding generation than the default +to_s+ method.
-    #
-    # ==== Options:
-    # * +strip_each_line+ - Optional. Indicates if leading and trailing whitespace should be stripped from each line, defaulted to +true+.
-    # * +inline+ - Optional. Indicates if new lines should be stripped from the generated script, defaulted to +false+.
-    def generate(options = {})
-      options.default! :strip_each_line => true, :inline => false
-
+    def to_s
       expanded_output = self.lines.collect(&:to_s)
 
-      output = if options[:inline].false?
-                 expanded_output.join("\n")
-               else
-                 expanded_output.join
-               end
+      output = expanded_output.join("\n")
 
-      output.strip_each_line! if options[:strip_each_line].true?
-      
+      output.strip_each_line!
+
       output = ' ' if output.blank? # This issue is weird, figure it out
-      
+
       if output.respond_to?(:html_safe)
         output.html_safe
       else
         output
       end
     end
+
+    alias inspect to_s
     
     def translate_to_javascript_method_call(method_name, *options)
       method_name = method_name.to_s
@@ -94,16 +71,29 @@ module Eschaton
     
     alias method_missing translate_to_javascript_method_call
 
-    def to_s
-      self.generate
-    end
-
-    alias inspect to_s
-
     def self.extend_with_slice(extention_module)
       include extention_module
     end
     
+    protected
+      attr_accessor :recorder
+
+      def start_recording!
+        recorder = Eschaton.script
+
+        self.recorder = recorder
+            
+        recorder
+      end
+    
+      def stop_recording!
+        self.recorder = nil
+      end
+    
+      def recording?
+        self.recorder.not_nil?
+      end
+
   end
 
 end
