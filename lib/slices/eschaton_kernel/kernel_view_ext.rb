@@ -35,12 +35,9 @@ module KernelViewExt
   def link_to_eschaton_script(options, &block)
     text = options[:text]
     element_id = Eschaton.random_id
+    script = Eschaton.with_global_script(&block)
 
-    Google::Scripts.end_of_map_script do |script|
-      script.element(:id => element_id).when_clicked(&block)
-    end
-
-    link_tag = "<a id='#{element_id}' href='#'>#{text}</a>"
+    link_tag = "<a id='#{element_id}' href='#' onclick='#{script}'>#{text}</a>"
 
     link_tag.html_safe
   end

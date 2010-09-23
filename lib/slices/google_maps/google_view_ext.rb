@@ -99,6 +99,7 @@ module GoogleViewExt
   # to create a remote form tag within an info window.
   #
   # ==== Options:
+  #
   # * +include_location+ - Optional. Indicates if latitude and longitude +params+(if present) should be include in the +url+, defaulted to +true+.
   def info_window_form(options, &block) #TODO rename => info_window_form_tag
     prepare_info_window_options(options)
@@ -124,16 +125,28 @@ module GoogleViewExt
   end
   
   # A 'cancel' link that will close the currently open info window on the map.
-  # Useful when writing forms in info windows.
+  #
+  # ==== Options:
+  #
+  # * +text+ - Optional. The text of the link, defaulted to 'cancel'
   def cancel_info_window_link(options = {})
     options.default! :text => 'cancel'
+    
+    close_info_window_link options    
+  end
+  
+  # A 'close' link that will close the currently open info window on the map.
+  #
+  # ==== Options:
+  #
+  # * +text+ - Optional. The text of the link, defaulted to 'close'  
+  def close_info_window_link(options = {})
+    options.default! :text => 'close'
 
     link_to_eschaton_script options do |script|
       script.map.close_info_window
     end
   end
-  
-  alias close_info_window_link cancel_info_window_link
   
   private
     def map_size(size)
