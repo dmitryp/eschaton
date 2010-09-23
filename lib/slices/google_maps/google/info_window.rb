@@ -23,9 +23,15 @@ module Google
       info_window_options = options[:options]
        
       if options[:focus_on].not_blank?
-        info_window_options[:when_opened] = Eschaton.function do |function|
-                                              function.element(options[:focus_on]).focus!
-                                            end
+        focus_on_element_function = Eschaton.function do |function|
+                                      function.element(options[:focus_on]).focus!
+                                    end
+
+        if info_window_options[:when_opened].not_blank?
+          info_window_options[:when_opened] << focus_on_element_function
+        else
+          info_window_options[:when_opened] = focus_on_element_function
+        end
       end
        
       if options[:url]

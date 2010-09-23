@@ -47,6 +47,14 @@ module Eschaton
 
       redirect_output :to => self.body  
     end
+    
+    def before_javascript_added(javascript)
+      if javascript.is_a?(Eschaton::JavascriptFunction)
+        javascript.body
+      else
+        javascript
+      end
+    end
         
     def self.from_block(options = {}, &block)
       Eschaton::JavascriptFunction.new(options, &block)

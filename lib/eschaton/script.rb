@@ -15,7 +15,11 @@ module Eschaton
                else
                  self.lines
                end
-
+      
+      if self.respond_to?(:before_javascript_added)
+        javascript = self.before_javascript_added(javascript)
+      end
+      
       output << javascript
 
       javascript
