@@ -64,6 +64,7 @@ module Eschaton
     end
 
     alias inspect to_s
+    alias to_js to_s
     
     def translate_to_javascript_method_call(method_name, *options)
       method_name = method_name.to_s
