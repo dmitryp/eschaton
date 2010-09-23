@@ -15,25 +15,16 @@ module Google
       InfoWindow.new(:for => map_object)
     end
 
-    def open_on_map(options) 
+    def open_on_map(options)
       options.default! :location => :center, :include_location => true, :options => {}
 
       location = Google::OptionsHelper.to_location(options[:location])
       location = self.object.center if location == :center
+      
+      setup_when_opened_functions options
+      
       info_window_options = options[:options]
-       
-      if options[:focus_on].not_blank?
-        focus_on_element_function = Eschaton.function do |function|
-                                      function.element(options[:focus_on]).focus!
-                                    end
-
-        if info_window_options[:when_opened].not_blank?
-          info_window_options[:when_opened] << focus_on_element_function
-        else
-          info_window_options[:when_opened] = focus_on_element_function
-        end
-      end
-       
+ 
       if options[:url]
         options[:location] = location
         
@@ -49,6 +40,8 @@ module Google
     
     def open_on_marker(options)
       options.default! :include_location => true, :options => {}
+
+      setup_when_opened_functions options
 
       info_window_options = options[:options]
 
@@ -68,6 +61,8 @@ module Google
     def cache_on_marker(options)
       options.default! :include_location => true, :options => {}
 
+      setup_when_opened_functions options
+
       info_window_options = options[:options]
 
       if options[:url]
@@ -83,6 +78,22 @@ module Google
     end
 
     private
+      def setup_when_opened_functions(options)
+        info_window_options = options[:options]
+
+        if options[:focus_on].not_blank?
+          focus_on_element_function = Eschaton.function do |function|
+                                        function.element(options[:focus_on]).focus!
+                                      end
+
+          if info_window_options[:when_opened].not_blank?
+            info_window_options[:when_opened] << focus_on_element_function
+          else
+            info_window_options[:when_opened] = focus_on_element_function
+          end
+        end      
+      end
+    
       def window_content(content)
         "\"<div id='info_window_content'>\" + #{content.to_js} + \"</div>\""
       end
