@@ -68,6 +68,10 @@ module Google
   #  marker.open_info_window :tabs => [{:label => 'Your info', :html => 'This is an info tab!'},
   #                                    {:label => 'Account Info', :partial => 'account/info'}]
   #  
+  #
+  #  # Using the :focus_on option to focus on the 'location_name' element when the info window opens
+  #  marker.open_info_window :partial => 'location/add', :focus_on => :location_name
+  #  
   # === Using the click event:
   #  
   #  # Open a info window and circle the marker.
@@ -142,6 +146,7 @@ module Google
     #   * +label+ - Required. The label for the tab, this will be displayed on the tab.
     #   * +html+ - Optional. The html content that will be placed inside the info window.    
     #   * +partial+ - Supports the same form as rails +render+ for partials, content of the rendered partial will be placed inside the tab.
+    # * +focus_on+ - Optional. The selector of the element to focus on when the info window opens, useful for focusing on an initial form field.    
     # * +options+ - Optional. The options for the info window, see {online docs}[http://code.google.com/apis/maps/documentation/javascript/v2/reference.html#GInfoWindowOptions] for supported options.
     #
     # ==== Examples:
@@ -166,6 +171,9 @@ module Google
     #  # Open a info window with two tabs one created using the :html tab option and the other using a partial
     #  marker.open_info_window :tabs => [{:label => 'Your info', :html => 'This is an info tab!'},
     #                                    {:label => 'Account Info', :partial => 'account/info'}]
+    #
+    #  # Using the :focus_on option to focus on the 'location_name' element when the info window opens
+    #  marker.open_info_window :partial => 'location/add', :focus_on => :location_name    
     def open_info_window(options)
       info_window = InfoWindow.for(self)
       info_window.open_on_marker options
@@ -180,7 +188,7 @@ module Google
     end    
     
     # Supports all the same options as open_info_window. The info window is then cached so that every time the marker is 'clicked'
-    # it will open up the cached info window. The cached info window can also be opened using open_cached_info_window.
+    # it will open up the cached info window. The cached info window can also be opened using open_cached_info_window!.
     def cache_info_window(options)
       info_window = InfoWindow.for(self)
       info_window.cache_on_marker options

@@ -1,6 +1,6 @@
 module Google
    
-  class InfoWindow < MapObject
+  class InfoWindow < MapObject #:nodoc:
     attr_accessor :object
 
     def initialize(options = {})

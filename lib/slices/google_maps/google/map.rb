@@ -83,6 +83,9 @@ module Google # :nodoc:
   #                       :tabs => [{:label => 'Your info', :html => 'This is an info tab!'},
   #                                 {:label => 'Account Info', :partial => 'account/info'}]  
   # 
+  #  # Using the :focus_on option to focus on the 'location_name' element when the info window opens
+  #  map.open_info_window :location => :center, :partial => 'location/add', :focus_on => :location_name
+  #  
   # === Using lines with add_line
   #
   #  map.add_line :vertices => [{:latitude => -33.958, :longitude => 18.462},
@@ -538,6 +541,7 @@ module Google # :nodoc:
     #   * +label+ - Required. The label for the tab, this will be displayed on the tab.
     #   * +html+ - Optional. The html content that will be placed inside the info window.    
     #   * +partial+ - Supports the same form as rails +render+ for partials, content of the rendered partial will be placed inside the tab.
+    # * +focus_on+ - Optional. The selector of the element to focus on when the info window opens, useful for focusing on an initial form field.
     # * +options+ - Optional. The options for the info window, see {online docs}[http://code.google.com/apis/maps/documentation/javascript/v2/reference.html#GInfoWindowOptions] for supported options.
     #
     # ==== Examples:
@@ -576,6 +580,9 @@ module Google # :nodoc:
     #  map.open_info_window :location => {:latitude => -34, :longitude => 18.5},
     #                       :tabs => [{:label => 'Your info', :html => 'This is an info tab!'},
     #                                 {:label => 'Account Info', :partial => 'account/info'}]
+    #
+    #  # Using the :focus_on option to focus on the 'location_name' element when the info window opens
+    #  map.open_info_window :location => :center, :partial => 'location/add', :focus_on => :location_name
     def open_info_window(options)
       info_window = InfoWindow.for(self)
       info_window.open_on_map options
