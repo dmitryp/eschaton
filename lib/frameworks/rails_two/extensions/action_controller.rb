@@ -1,14 +1,7 @@
-module ActionController # :nodoc:
-  class Base # :nodoc:
-    before_filter :set_current_view
+ActionController::Base.class_eval do
 
-    def set_current_view
-      Eschaton.current_view = @template
-    end
-
-    def self.extend_with_slice(extention_module)
-      include extention_module
-    end
-
+  def view_for_eschaton
+    @template
   end
+
 end
