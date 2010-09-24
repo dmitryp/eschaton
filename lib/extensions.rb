@@ -6,6 +6,10 @@ module Eschaton
       self.extend_object :object => ActionController::Base, :extension_block => block
     end
     
+    def self.extend_eschaton(&block)
+      self.extend_object :object => Eschaton, :extension_block => block
+    end  
+    
     def self.extend_object(options, &block)
       object = options[:object]
       extension_block = options[:extension_block]

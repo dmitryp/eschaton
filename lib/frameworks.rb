@@ -3,9 +3,9 @@ module Eschaton
   class Frameworks
 
     def self.detect_and_require_files!
+      Eschaton.log_info "Running in framework => #{self.framework_name}."
+      
       Eschaton.require_file "#{self.framework_path}/eschaton"
-      Eschaton.require_file "#{self.framework_path}/init"
-                  
       Eschaton.require_files :in => "#{self.framework_path}/extensions"
 
       if self.running_in_rails?
