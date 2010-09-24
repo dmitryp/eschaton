@@ -5,7 +5,12 @@ module Eschaton
     def self.detect_and_require_files!
       Eschaton.require_file "#{self.framework_path}/eschaton"
       Eschaton.require_file "#{self.framework_path}/init"
+                  
       Eschaton.require_files :in => "#{self.framework_path}/extensions"
+
+      if self.running_in_rails?
+        Eschaton.require_files :in => "#{self.rails_framework_path}/extensions"
+      end
     end
 
     def self.detect_and_require_files_for_tests!
@@ -23,6 +28,10 @@ module Eschaton
 
     def self.framework_path
       "#{File.dirname(__FILE__)}/frameworks/#{self.framework_name}"
+    end
+
+    def self.rails_framework_path
+      "#{File.dirname(__FILE__)}/frameworks/rails"
     end
 
     def self.all_frameworks_path
