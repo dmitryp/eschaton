@@ -67,7 +67,7 @@ module Eschaton
                                             :include_called_from => false
             end
                         
-            options[:extend].extend_with_slice module_name.constantize
+            options[:extend].extend_with_eschaton_slice module_name.constantize
           end
         end
       end

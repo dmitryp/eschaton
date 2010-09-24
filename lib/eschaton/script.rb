@@ -81,10 +81,6 @@ module Eschaton
     end
     
     alias method_missing translate_to_javascript_method_call
-
-    def self.extend_with_slice(extention_module)
-      include extention_module
-    end
     
     protected
       attr_accessor :recorder, :redirected_output

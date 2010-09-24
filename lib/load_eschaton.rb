@@ -1,5 +1,6 @@
 require "#{File.dirname(__FILE__)}/eschaton/eschaton"
 require "#{File.dirname(__FILE__)}/frameworks"
+require "#{File.dirname(__FILE__)}/extensions"
 require "#{File.dirname(__FILE__)}/eschaton/script_store"
 require "#{File.dirname(__FILE__)}/eschaton/javascript/javascript_object"
 
