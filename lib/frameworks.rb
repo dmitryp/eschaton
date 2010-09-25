@@ -13,6 +13,24 @@ module Eschaton
       end
     end
 
+    def self.detect_and_require_slice_files!
+      Eschaton::SliceLoader.slice_paths.each do |slice_path|
+        slice_frameworks_path = "#{slice_path}/frameworks"
+        if File.exists?(slice_frameworks_path)
+          self.frameworks.each do |framework|
+            framework_directory = "#{slice_frameworks_path}/#{framework}"
+            
+            if File.exists?(framework_directory)
+              Dir["#{framework_directory}/**/*.rb"].each do |framewok_file|
+                Eschaton.require_file framewok_file
+                puts framewok_file
+              end
+            end
+          end
+        end
+      end
+    end
+
     def self.detect_and_require_files_for_tests!
       Eschaton.require_file "#{self.all_frameworks_path}/testing"
       Eschaton.require_file "#{self.framework_path}/testing"
@@ -24,6 +42,18 @@ module Eschaton
       elsif self.running_in_rails_two?
         'rails_two'
       end
+    end
+
+    def self.frameworks
+      frameworks = ['all']
+
+      frameworks << self.framework_name
+
+      if self.running_in_rails?
+        frameworks << 'rails'
+      end
+
+      frameworks
     end
 
     def self.framework_path

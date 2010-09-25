@@ -36,8 +36,4 @@ class Object # :nodoc:
     self.to_js.interpolated_javascript
   end
 
-  def self.extend_with_eschaton_slice(extention_module)
-    include extention_module
-  end
-
 end
