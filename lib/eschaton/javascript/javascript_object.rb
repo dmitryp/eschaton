@@ -6,6 +6,7 @@ module Eschaton
   # camelCase method which is called on the +var+. Calls are stacked and javascript is returned by calling to_s.
   class JavascriptObject
     attr_reader :var
+    attr_accessor :variable
 
     # ==== Options:
     # * +var+ - Optional. The name of the javascript variable, defaulted to a random name.
@@ -15,6 +16,7 @@ module Eschaton
       options.default! :var => :random, :create_var => true
     
       self.var = options.extract(:var)
+      self.variable = self.var
       @create_var = options.extract(:create_var)
       @script = options.extract(:script)
     end

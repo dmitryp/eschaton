@@ -3,22 +3,25 @@ module Eschaton
   class DomElement < JavascriptObject
     attr_accessor :id, :element
     
-    def initialize(options)    
+    def initialize(options)
       self.determine_element_selector options
-      self.var = self.element
+
+      self.variable = self.element
+      
+      super :var => self.variable 
     end
 
     def update_html(html)
       html = html.interpolate_javascript_variables
 
-      self << "#{self.element}.html(#{html});"
+      self << "#{self.variable}.html(#{html});"
     end
 
     alias replace_html update_html
     alias html= update_html
 
     def delete!
-      self << "#{self.element}.remove();"
+      self << "#{self.variable}.remove();"
     end
     
     def when_clicked(&block)
@@ -30,8 +33,20 @@ module Eschaton
       event = options[:event].to_jquery_event
       function = self.script.function(&block)
       
-      self << "#{self.element}.bind('#{event}', #{function});"
+      self << "#{self.variable}.bind('#{event}', #{function});"
     end
+    
+    def value=(value)
+      self << "#{self.variable}.val(#{value.to_js});"
+    end
+
+    alias text= value=
+
+    def value
+      "#{self.variable}.val()".to_sym
+    end
+    
+    alias text value
 
     protected
       def determine_element_selector(options)

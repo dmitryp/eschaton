@@ -83,30 +83,30 @@ class GoogleScriptExtTest < Test::Unit::TestCase
   def test_set_coordinate_elements
     with_eschaton do |script|
       
-      assert_eschaton_output "$('latitude').value = location.lat();
-                             $('longitude').value = location.lng();" do
+      assert_eschaton_output "jQuery('#latitude').val(location.lat());
+                              jQuery('#longitude').val(location.lng());" do
                               script.set_coordinate_elements :location => :location
                             end
       
       map = Google::Map.new :center => {:latitude => -35.0, :longitude => 19.0}
       
-      # Testing with map center    
-      assert_eschaton_output "$('latitude').value = map.getCenter().lat();
-                             $('longitude').value = map.getCenter().lng();" do
+      # Testing with map center
+      assert_eschaton_output "jQuery('#latitude').val(map.getCenter().lat());
+                              jQuery('#longitude').val(map.getCenter().lng());" do
                               script.set_coordinate_elements :location => map.center
                             end
 
       marker = map.add_marker(:var => :marker, :location => map.center)
       
       # Testing with a marker location
-      assert_eschaton_output "$('latitude').value = marker.getLatLng().lat();
-                             $('longitude').value = marker.getLatLng().lng();" do
+      assert_eschaton_output "jQuery('#latitude').val(marker.getLatLng().lat());
+                              jQuery('#longitude').val(marker.getLatLng().lng());" do
                               script.set_coordinate_elements :location => marker.location
                             end
 
       # With specific element names
-      assert_eschaton_output "$('location_latitude').value = location.lat();
-                             $('location_longitude').value = location.lng();" do
+      assert_eschaton_output "jQuery('#location_latitude').val(location.lat());
+                              jQuery('#location_longitude').val(location.lng());" do
                               script.set_coordinate_elements :location => :location,
                                                              :latitude_element => :location_latitude,
                                                              :longitude_element => :location_longitude

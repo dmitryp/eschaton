@@ -59,8 +59,7 @@ class DomElementTest < Test::Unit::TestCase
   end
   
   def test_listen_to
-    with_eschaton do |script|
-      
+    with_eschaton do |script|  
       assert_eschaton_output :dom_element_listen_to_focus do
                               @element.listen_to :event => :focus do |script|
                                 script.alert('You are focussed')  
@@ -72,6 +71,22 @@ class DomElementTest < Test::Unit::TestCase
                                 script.alert('Your mouse left')  
                               end
                             end
+    end    
+  end
+  
+  def test_setting_and_getting_value
+    with_eschaton do |script|
+      assert_eschaton_output "jQuery('#feedback').val(\"Hello world\");" do
+                                script.element(:feedback).value = 'Hello world'
+                              end
+      
+      assert_eschaton_output "jQuery('#marker_count').val(12);" do
+                                script.element(:marker_count).value = 12
+                              end      
+      
+      assert_eschaton_output "jQuery('#feedback').val()",
+                              script.element(:feedback).value
+      
     end    
   end
 
