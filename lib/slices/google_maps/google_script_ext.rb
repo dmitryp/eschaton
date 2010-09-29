@@ -92,10 +92,10 @@ module GoogleScriptExt
   #  end
   def set_coordinate_elements(options = {})
     options.default! :latitude_element => :latitude, :longitude_element => :longitude
-    location = options[:location]
+    location = Google::OptionsHelper.to_location(options[:location])
     
-    self << "$('#{options[:latitude_element]}').value = #{location}.lat();"
-    self << "$('#{options[:longitude_element]}').value = #{location}.lng();"
+    self << "jQuery('##{options[:latitude_element]}').val(#{location}.lat());"
+    self << "jQuery('##{options[:longitude_element]}').val(#{location}.lng());"
   end  
 
 end
