@@ -8,20 +8,20 @@ module Google
     # * +south_west_point+ - Optional. The south west point of the rectangle.
     # * +north_east_point+ - Optional. The north east point of the rectangle.
     def initialize(options = {})
-      options.default! :var => :bounds
+      options.default! :variable => :bounds
 
       super
 
       self.south_west_point = Google::OptionsHelper.to_location(options[:south_west_point])
       self.north_east_point = Google::OptionsHelper.to_location(options[:north_east_point])
 
-      if create_var?
+      if create_variable?
         points = if options[:south_west_point].not_nil? || options[:north_east_point].not_nil?
                    [self.south_west_point, self.north_east_point].compact
                  else
                    []
                  end
-        self << "#{self.var} = new GLatLngBounds(#{points.join(', ')});"
+        self << "#{self.variable} = new GLatLngBounds(#{points.join(', ')});"
       end
     end
     

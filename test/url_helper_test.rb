@@ -10,7 +10,7 @@ class UrlHelperTest < Test::Unit::TestCase
 
   def test_encode
     with_eschaton do |script|
-      polygon = Google::Polygon.new :var => :the_polygon, :vertices => @decoded_polygon_vertices
+      polygon = Google::Polygon.new :variable => :the_polygon, :vertices => @decoded_polygon_vertices
 
       assert_equal '#location', Google::UrlHelper.encode(:location)
       assert_equal '#the_polygon', Google::UrlHelper.encode(polygon)

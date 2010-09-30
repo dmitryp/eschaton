@@ -13,21 +13,21 @@ module Google
     # * +anchor+ - Optional, defaulted to +top_left+
     # * +offset+ - Optional, defaulted to [10, 10]
     def initialize(options = {})
-      options.default! :var => 'pane', :css_class => 'pane', :anchor => :top_left,
+      options.default! :variable => 'pane', :css_class => 'pane', :anchor => :top_left,
                        :offset => [10, 10]
 
       super
 
       pane_options = {}
 
-      pane_options[:id] = self.var.to_s
+      pane_options[:id] = self.variable.to_s
       pane_options[:position] = OptionsHelper.to_google_position(options)
       pane_options[:text] = OptionsHelper.to_content(options)
       pane_options[:css_class] = options[:css_class].to_s
 
-      if create_var?
+      if create_variable?
         google_options = pane_options.to_google_options(:dont_convert => [:position])
-        self << "#{self.var} = new GooglePane(#{google_options});"      
+        self << "#{self.variable} = new GooglePane(#{google_options});"      
       end
     end
     
@@ -37,7 +37,7 @@ module Google
     #  pane.replace_html :html => "This is new html"    
     #  pane.replace_html :partial => 'new_html'
     def replace_html(options)
-      self.script.replace_html self.var, options
+      self.script.replace_html self.variable, options
     end
 
   end

@@ -75,7 +75,7 @@ module Google
       if options.is_a?(Google::Location)
         options
       elsif options.is_a?(Symbol) || options.is_a?(String)
-        Google::Location.existing(:var => options)
+        Google::Location.existing(:variable => options)
       elsif options.is_a?(Array)
         Google::Location.new :latitude => options.first, :longitude => options.second        
       elsif options.is_a?(Hash)
@@ -101,7 +101,7 @@ module Google
       elsif options.is_a?(Hash)
         Google::Marker.new options
       elsif options.is_a?(Symbol)
-        Google::Marker.existing :var => options
+        Google::Marker.existing :variable => options
       else
         options
       end

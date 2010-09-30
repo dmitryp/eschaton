@@ -51,7 +51,7 @@ module Google
     # * +fill_colour+ - Optional. The colour that the circle is filled with, defaulted to '#66F'.
     # * +fill_opacity+ - Optional. The opacity of the filled area of the circle, defaulted to 0.5.
     def initialize(options = {})
-      options.default! :var => 'polygon', 
+      options.default! :variable => 'polygon', 
                        :vertices => [],
                        :editable => false,
                        :border_colour => '#00F',
@@ -68,7 +68,7 @@ module Google
 
       super
 
-      if create_var?
+      if create_variable?
         self.encoded = options.extract(:encoded)
 
         if self.encoded?
@@ -101,10 +101,10 @@ module Google
                             :color => fill_colour, :opacity => fill_opacity,
                             :fill => fill, :outline => outline}
 
-          self << "#{self.var} = new GPolygon.fromEncoded(#{encode_options.to_google_options(:dont_convert => [:polylines])});"
+          self << "#{self.variable} = new GPolygon.fromEncoded(#{encode_options.to_google_options(:dont_convert => [:polylines])});"
         else
           javascript_locations = Google::OptionsHelper.to_location_array(self.vertices)
-          self << "#{self.var} = new GPolygon(#{javascript_locations}, #{border_colour.to_js}, #{border_thickness.to_js}, #{border_opacity.to_js}, #{fill_colour.to_js}, #{fill_opacity.to_js}, #{remaining_options.to_google_options});"
+          self << "#{self.variable} = new GPolygon(#{javascript_locations}, #{border_colour.to_js}, #{border_thickness.to_js}, #{border_opacity.to_js}, #{fill_colour.to_js}, #{fill_opacity.to_js}, #{remaining_options.to_google_options});"
         end
 
         self.enable_editing! if editable
@@ -115,12 +115,12 @@ module Google
     # Adds a vertex at the given +location+ and updates the shape of the polygon.
     def add_vertex(location)
       location = Google::OptionsHelper.to_location(location)
-      self << "#{self.var}.insertVertex(#{self.last_vertex_index}, #{location})"
+      self << "#{self.variable}.insertVertex(#{self.last_vertex_index}, #{location})"
     end
     
     def add_vertex_at(options) # TODO - test
       location = Google::OptionsHelper.to_location(options[:location])
-      self << "#{self.var}.insertVertex(#{options[:position]}, #{location})"      
+      self << "#{self.variable}.insertVertex(#{options[:position]}, #{location})"      
     end
 
     def remove_vertex_at(position) # TODO - test
@@ -169,7 +169,7 @@ module Google
     end
     
     def vertex_count
-      "#{self.var}.getVertexCount()"
+      "#{self.variable}.getVertexCount()"
     end
 
     def added_to_map(map) # :nodoc:

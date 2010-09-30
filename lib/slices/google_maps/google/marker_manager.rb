@@ -44,8 +44,8 @@ module Google
       # TODO - user prepared options and call rename
       options[:max_zoom] = options.extract(:maximum_zoom) if options.has_key?(:maximum_zoom)
 
-      if self.create_var?
-        self << "#{self.var} = new MarkerManager(#{Google::current_map}, #{options.to_google_options});"
+      if self.create_variable?
+        self << "#{self.variable} = new MarkerManager(#{Google::current_map}, #{options.to_google_options});"
       end
     end
 
@@ -74,7 +74,7 @@ module Google
 
       arguments = [marker, options[:minimum_zoom], options[:maximum_zoom]]
 
-      self << "#{self.var}.addMarker(#{arguments.to_compact_js_arguments})"
+      self << "#{self.variable}.addMarker(#{arguments.to_compact_js_arguments})"
     end
     
     # Adds markers to the manager. +markers_or_options+ is an array of options that add_marker supports

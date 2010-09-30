@@ -50,7 +50,7 @@ module Google
       self.prepare_options options
 
       script << "var #{self.marker_array_var} = new Array();"
-      Google::Scripts.end_of_map_script << "#{self.var} = new MarkerClusterer(#{Google.current_map}, #{self.marker_array_var}, #{options.to_google_options(:dont_convert => 'styles')});"
+      Google::Scripts.end_of_map_script << "#{self.variable} = new MarkerClusterer(#{Google.current_map}, #{self.marker_array_var}, #{options.to_google_options(:dont_convert => 'styles')});"
     end
     
     # Adds a marker to the clusterer, +marker_or_options+ can be a Marker or whatever Marker#new supports.
@@ -72,7 +72,7 @@ module Google
       end
 
       def marker_array_var # :nodoc:
-        "#{self.var}_markers"
+        "#{self.variable}_markers"
       end
       
       def prepare_options(options) # :nodoc:      

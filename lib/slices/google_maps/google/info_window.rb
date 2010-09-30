@@ -6,7 +6,7 @@ module Google
     def initialize(options = {})
       self.object = options.extract(:for)
 
-      options[:var] = self.object.var
+      options[:variable] = self.object.variable
 
       super
     end
@@ -106,7 +106,7 @@ module Google
           open_tabbed_info_window_on_map options
         else
           content = window_content options[:content]
-          self << "#{self.var}.openInfoWindow(#{options[:location]}, #{content}, #{prepare_info_window_options(options[:options])});"        
+          self << "#{self.variable}.openInfoWindow(#{options[:location]}, #{content}, #{prepare_info_window_options(options[:options])});"        
         end
       end
 
@@ -115,20 +115,20 @@ module Google
           open_tabbed_info_window_on_marker options          
         else
           content = window_content options[:content]
-          self << "#{self.var}.openInfoWindow(#{content}, #{prepare_info_window_options(options[:options])});"
+          self << "#{self.variable}.openInfoWindow(#{content}, #{prepare_info_window_options(options[:options])});"
         end
       end
 
       def open_tabbed_info_window_on_map(options)
         create_info_window_tab_array options[:tabs]
 
-        self << "#{self.var}.openInfoWindowTabs(#{options[:location]}, tabs, #{prepare_info_window_options(options[:options])});"      
+        self << "#{self.variable}.openInfoWindowTabs(#{options[:location]}, tabs, #{prepare_info_window_options(options[:options])});"      
       end
 
       def open_tabbed_info_window_on_marker(options)
         create_info_window_tab_array options[:tabs]
         
-        self << "#{self.var}.openInfoWindowTabs(tabs, #{prepare_info_window_options(options[:options])});"
+        self << "#{self.variable}.openInfoWindowTabs(tabs, #{prepare_info_window_options(options[:options])});"
       end
 
       def create_info_window_tab_array(tabs)
@@ -144,7 +144,7 @@ module Google
       def cache_info_window_for_marker(options)
         content = window_content(options[:content])
 
-        self << "#{self.var}.bindInfoWindowHtml(#{content}, #{prepare_info_window_options(options[:options])});"
+        self << "#{self.variable}.bindInfoWindowHtml(#{content}, #{prepare_info_window_options(options[:options])});"
       end
 
       def get(options)

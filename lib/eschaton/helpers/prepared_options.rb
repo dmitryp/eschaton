@@ -6,7 +6,7 @@ module Eschaton
   #  # A sample initializer in which the PreparedOptions is used.
   #  def initialize(options = {})
   #    prepared_options = options.prepare_options do |prepared_options|
-  #                         prepared_options.default! :var => :map, :center => :best_fit, :zoom => :best_fit,
+  #                         prepared_options.default! :variable => :map, :center => :best_fit, :zoom => :best_fit,
   #                                                   :keyboard_navigation => false
   #
   #                         prepared_options.validate_presence_of :center, :controls, :zoom, :type, 

@@ -65,7 +65,7 @@ class JavascriptVariableTest < Test::Unit::TestCase
   
   def test_each
     with_eschaton do |script|
-      the_array = Eschaton::JavascriptVariable.new(:var => :my_array, :value => '["one", "two", "three"]')
+      the_array = Eschaton::JavascriptVariable.new(:variable => :my_array, :value => '["one", "two", "three"]')
       
       assert_eschaton_output 'jQuery.each(my_array, function(index, item){
                                alert(item);
@@ -80,7 +80,7 @@ class JavascriptVariableTest < Test::Unit::TestCase
 
   def test_each_with_index
     with_eschaton do |script|
-      the_array = Eschaton::JavascriptVariable.new(:var => :my_array, :value => '["one", "two", "three"]')
+      the_array = Eschaton::JavascriptVariable.new(:variable => :my_array, :value => '["one", "two", "three"]')
       
       assert_eschaton_output "jQuery.each(my_array, function(index, item){
                                 alert(item + ' is at ' + index);

@@ -87,7 +87,7 @@ module Eschaton # :nodoc:
   end
 
   def self.variable(name)
-    Eschaton::JavascriptObject.existing(:var => name)
+    Eschaton::JavascriptObject.existing(:variable => name)
   end
   
   def self.with_global_script(script = Eschaton.script, options = {})

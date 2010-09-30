@@ -60,9 +60,9 @@ class LineTest < Test::Unit::TestCase
 
   def test_between_markers
     with_eschaton do |script|
-      markers = [Google::Marker.new(:var => :marker_1, :location => {:latitude => -33.947, :longitude => 18.462}),
-                 Google::Marker.new(:var => :marker_2, :location => {:latitude => -34.0, :longitude => 19.0}),
-                 Google::Marker.new(:var => :marker_3, :location => {:latitude => -35.0, :longitude => 19.0})]
+      markers = [Google::Marker.new(:variable => :marker_1, :location => {:latitude => -33.947, :longitude => 18.462}),
+                 Google::Marker.new(:variable => :marker_2, :location => {:latitude => -34.0, :longitude => 19.0}),
+                 Google::Marker.new(:variable => :marker_3, :location => {:latitude => -35.0, :longitude => 19.0})]
 
       assert_eschaton_output 'line = new GPolyline([marker_1.getLatLng(), marker_2.getLatLng(), marker_3.getLatLng()], null, null, null);' do
                                Google::Line.new :between_markers => markers

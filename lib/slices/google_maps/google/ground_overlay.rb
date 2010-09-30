@@ -36,11 +36,11 @@ module Google
     # * +south_west_point+ - Optional. The south west point of the rectangle. 
     # * +north_east_point+ - Optional. The north east point of the rectangle.
     def initialize(options = {})
-      options.default! :var => :ground_overlay, :image => ''
+      options.default! :variable => :ground_overlay, :image => ''
 
       super
 
-      if create_var?
+      if create_variable?
         self.bounds = if options.has_option?(:bounds)
                         Google::OptionsHelper.to_bounds(options[:bounds])
                       else
@@ -50,7 +50,7 @@ module Google
 
         self.image = options.extract(:image)
 
-        self << "#{self.var} = new GGroundOverlay('#{self.image}', #{self.bounds});"
+        self << "#{self.variable} = new GGroundOverlay('#{self.image}', #{self.bounds});"
       end
     end
 

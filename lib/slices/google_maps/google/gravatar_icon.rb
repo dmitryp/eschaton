@@ -8,7 +8,7 @@ module Google
     
     # See Gravatar#image_url for valid options.
     def initialize(options = {})
-      options.default! :var => 'icon'
+      options.default! :variable => 'icon'
 
       # TODO - uses hashish goodness here!
       gravatar_options = {}

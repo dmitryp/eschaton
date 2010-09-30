@@ -6,7 +6,7 @@ class MapObjectTest < Test::Unit::TestCase
     @script = Eschaton.script
     Eschaton.global_script = @script
 
-    @map_object = Google::MapObject.new(:var => 'test_object')
+    @map_object = Google::MapObject.new(:variable => 'test_object')
   end
   
   def test_listen_to_with

@@ -17,11 +17,11 @@ class MarkerClustererTest < Test::Unit::TestCase
                               cluster_markers.push(marker_2);
                               marker_3 = new GMarker(new GLatLng(-33.999, 18.469), {draggable: false});
                               cluster_markers.push(marker_3);' do
-                              clusterer = map.add_marker_clusterer :var => :cluster
+                              clusterer = map.add_marker_clusterer :variable => :cluster
 
-                              clusterer.add_marker :var => :marker_1, :location => {:latitude => -33.947, :longitude => 18.462}
-                              clusterer.add_marker :var => :marker_2, :location => {:latitude => -33.979, :longitude => 18.465}
-                              clusterer.add_marker :var => :marker_3, :location => {:latitude => -33.999, :longitude => 18.469}      
+                              clusterer.add_marker :variable => :marker_1, :location => {:latitude => -33.947, :longitude => 18.462}
+                              clusterer.add_marker :variable => :marker_2, :location => {:latitude => -33.979, :longitude => 18.465}
+                              clusterer.add_marker :variable => :marker_3, :location => {:latitude => -33.999, :longitude => 18.469}      
       end
       
       assert_eschaton_output 'if(!track_bounds.isEmpty()){
@@ -41,11 +41,11 @@ class MarkerClustererTest < Test::Unit::TestCase
       assert_eschaton_output 'var cluster_markers = new Array();
                               marker_1 = new GMarker(new GLatLng(-33.947, 18.462), {draggable: false});
                               cluster_markers.push(marker_1);' do
-                              clusterer = map.add_marker_clusterer :var => :cluster, 
+                              clusterer = map.add_marker_clusterer :variable => :cluster, 
                                                                       :grid_size => 80,
                                                                       :max_zoom => 12
 
-                              clusterer.add_marker :var => :marker_1, :location => {:latitude => -33.947, :longitude => 18.462}
+                              clusterer.add_marker :variable => :marker_1, :location => {:latitude => -33.947, :longitude => 18.462}
       end
       
       
@@ -65,11 +65,11 @@ class MarkerClustererTest < Test::Unit::TestCase
       assert_eschaton_output 'var cluster_markers = new Array();
                               marker_1 = new GMarker(new GLatLng(-33.947, 18.462), {draggable: false});
                               cluster_markers.push(marker_1);' do
-                              clusterer = map.add_marker_clusterer :var => :cluster, 
+                              clusterer = map.add_marker_clusterer :variable => :cluster, 
                                                                       :styles => [{:height => 10, :url => 'small.png'}, 
                                                                                   {:height => 20, :url => 'bigger.png', :text_colour => :blue}]
 
-                              clusterer.add_marker :var => :marker_1, :location => {:latitude => -33.947, :longitude => 18.462}
+                              clusterer.add_marker :variable => :marker_1, :location => {:latitude => -33.947, :longitude => 18.462}
       end
       
       assert_eschaton_output 'if(!track_bounds.isEmpty()){
@@ -88,10 +88,10 @@ class MarkerClustererTest < Test::Unit::TestCase
       assert_eschaton_output 'var cluster_markers = new Array();
                               marker_1 = new GMarker(new GLatLng(-33.947, 18.462), {draggable: false});
                               cluster_markers.push(marker_1);' do
-                              clusterer = map.add_marker_clusterer :var => :cluster, 
+                              clusterer = map.add_marker_clusterer :variable => :cluster, 
                                                                       :styles => [{:text_colour => 10, :anchor => [1, 2]}]
 
-                              clusterer.add_marker :var => :marker_1, :location => {:latitude => -33.947, :longitude => 18.462}
+                              clusterer.add_marker :variable => :marker_1, :location => {:latitude => -33.947, :longitude => 18.462}
       end
       
       assert_eschaton_output 'if(!track_bounds.isEmpty()){

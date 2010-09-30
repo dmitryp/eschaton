@@ -4,9 +4,9 @@ module Google
     attr_reader :on, :event
 
     def initialize(options = {})
-      options.default! :var => "#{options[:on]}_#{options[:event]}_event"
+      options.default! :variable => "#{options[:on]}_#{options[:event]}_event"
 
-      options.assert_valid_keys :var, :on, :event
+      options.assert_valid_keys :variable, :on, :event
 
       super
 
@@ -38,11 +38,11 @@ module Google
       self <<  "});"
       self << "}"
 
-      script << "#{self.var} = #{wrap_method};"
+      script << "#{self.variable} = #{wrap_method};"
     end    
 
     def remove
-      self << "GEvent.removeListener(#{self.var});"
+      self << "GEvent.removeListener(#{self.variable});"
     end
 
   end

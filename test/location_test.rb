@@ -15,13 +15,13 @@ class LocationTest < Test::Unit::TestCase
 
   def test_existing_location
     with_eschaton do |script|
-      location = Google::Location.existing(:var => :map_center)
+      location = Google::Location.existing(:variable => :map_center)
 
       assert_eschaton_output 'map_center', location.to_js
       assert_eschaton_output 'map_center.lat()', location.latitude
       assert_eschaton_output 'map_center.lng()', location.longitude
 
-      location = Google::Location.existing(:var => 'marker.getLatLng()')
+      location = Google::Location.existing(:variable => 'marker.getLatLng()')
   
       assert_eschaton_output 'marker.getLatLng()', location.to_js
       assert_eschaton_output 'marker.getLatLng().lat()', location.latitude

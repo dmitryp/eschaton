@@ -63,11 +63,11 @@ module Google
     # * +thickness+ - Optional. The thickness of the line in pixels.
     # * +opacity+ - Optional. The opacity of the line between 0 and 1.
     def initialize(options = {})
-      options.default! :var => 'line', :vertices => [], :editable => false
+      options.default! :variable => 'line', :vertices => [], :editable => false
 
       super
 
-      if create_var?
+      if create_variable?
         self.encoded = options.extract(:encoded)
         
         unless self.encoded?
@@ -92,9 +92,9 @@ module Google
         if self.encoded?
           encoded_options = self.encoded.merge(:color => colour, :weight => thickness, :opacity => opacity)
           encoded_argument = Google::OptionsHelper.to_encoded_polyline(encoded_options)
-          self << "#{self.var} = new GPolyline.fromEncoded(#{encoded_argument});"
+          self << "#{self.variable} = new GPolyline.fromEncoded(#{encoded_argument});"
         else
-          self << "#{self.var} = new GPolyline([#{self.vertices.join(', ')}], #{colour.to_js}, #{thickness.to_js}, #{opacity.to_js});"
+          self << "#{self.variable} = new GPolyline([#{self.vertices.join(', ')}], #{colour.to_js}, #{thickness.to_js}, #{opacity.to_js});"
         end
 
         self.enable_editing! if options[:editable] == true
@@ -108,13 +108,13 @@ module Google
     # +location+ can be a Location or whatever Location#new supports 
     def add_vertex(location)
       location = Google::OptionsHelper.to_location(location)
-      self << "#{self.var}.insertVertex(#{self.last_vertex_index}, #{location})"
+      self << "#{self.variable}.insertVertex(#{self.last_vertex_index}, #{location})"
     end
 
     # The length of the line along the surface of a spherical earth.
     # The +format+ can be +meters+ or +kilometers+, defaulted to +meters+.
     def length(format = :meters)
-      length = "#{self.var}.getLength()"
+      length = "#{self.variable}.getLength()"
       length = "#{length} / 1000" if format == :kilometers
 
       length
@@ -137,7 +137,7 @@ module Google
 
       stroke_style_options.merge! options
       
-      self << "#{self.var}.setStrokeStyle(#{stroke_style_options.to_google_options});"
+      self << "#{self.variable}.setStrokeStyle(#{stroke_style_options.to_google_options});"
     end
     
     def click(&block)
@@ -174,11 +174,11 @@ module Google
     end    
 
     def last_vertex_index
-      "#{self.var}.getVertexCount() - 1"
+      "#{self.variable}.getVertexCount() - 1"
     end   
     
     def vertex_count
-      "#{self.var}.getVertexCount()"
+      "#{self.variable}.getVertexCount()"
     end    
     
     def added_to_map(map) # :nodoc:

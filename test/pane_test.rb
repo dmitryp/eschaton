@@ -39,11 +39,11 @@ class PaneTest < Test::Unit::TestCase
       output = 'my_pane = new GooglePane({cssClass: "pane", id: "my_pane", position: new GControlPosition(G_ANCHOR_TOP_LEFT, new GSize(10, 10)), text: "Poly Jean Harvey is indeed a unique women"});'
      
       assert_eschaton_output output do
-                              Google::Pane.new(:var => :my_pane, :html => 'Poly Jean Harvey is indeed a unique women')
+                              Google::Pane.new(:variable => :my_pane, :html => 'Poly Jean Harvey is indeed a unique women')
                             end
 
       assert_eschaton_output output do
-                              Google::Pane.new(:var => 'my_pane', :html => 'Poly Jean Harvey is indeed a unique women')
+                              Google::Pane.new(:variable => 'my_pane', :html => 'Poly Jean Harvey is indeed a unique women')
                             end
     end
   end

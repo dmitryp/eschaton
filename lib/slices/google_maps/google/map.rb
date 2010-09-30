@@ -116,7 +116,7 @@ module Google # :nodoc:
     # * +keyboard_navigation+ - Optional. Indicates if
     #   {keyboad navigation}[http://code.google.com/apis/maps/documentation/reference.html#GKeyboardHandler] should be enabled, defaulted to +false+.
     def initialize(options = {})
-      options.default! :var => 'map', :center => :best_fit, 
+      options.default! :variable => 'map', :center => :best_fit, 
                        :controls => [:large_map_3D, :map_type],
                        :zoom => :best_fit,
                        :keyboard_navigation => false
@@ -129,11 +129,11 @@ module Google # :nodoc:
       
       self.track_bounds!
 
-      if self.create_var?
+      if self.create_variable?
         Google::Scripts.before_map_script << "var map;" # For IE Fix
 
         script << "map_lines = new Array();"
-        script << "#{self.var} = new GMap2(document.getElementById('#{self.var}'));" 
+        script << "#{self.variable} = new GMap2(document.getElementById('#{self.variable}'));" 
 
         self.center = options.extract(:center)
         self.zoom = options.extract(:zoom)        
@@ -156,7 +156,7 @@ module Google # :nodoc:
     #  map.type = :sky_visible
     def type=(value)
       @type = value
-      self << "#{self.var}.setMapType(#{Google::OptionsHelper.to_map_type(value)});"
+      self << "#{self.variable}.setMapType(#{Google::OptionsHelper.to_map_type(value)});"
     end
     
     # Removes map +types+ from the map. See the map type contants[http://code.google.com/apis/maps/documentation/reference.html#GMapType]
@@ -208,7 +208,7 @@ module Google # :nodoc:
     end
 
     def center
-      Google::Location.existing(:var => "#{self}.getCenter()")
+      Google::Location.existing(:variable => "#{self}.getCenter()")
     end
     
     # Sets the zoom level of the map, +zoom+ can be a number(1 - 22) or <tt>:best_fit</tt>. If set to <tt>:best_fit</tt> 
@@ -278,7 +278,7 @@ module Google # :nodoc:
       position = Google::OptionsHelper.to_google_position options[:position]
       arguments = [control, position].compact
 
-      script << "#{self.var}.addControl(#{arguments.join(', ')});"
+      script << "#{self.variable}.addControl(#{arguments.join(', ')});"
 
       control
     end
@@ -612,7 +612,7 @@ module Google # :nodoc:
       options[:map_type] = Google::OptionsHelper.to_map_type(options[:map_type]) if options[:map_type]
       location = Google::OptionsHelper.to_location(options.extract(:location))
 
-      self << "#{self.var}.showMapBlowup(#{location.to_js}, #{options.to_google_options});" 
+      self << "#{self.variable}.showMapBlowup(#{location.to_js}, #{options.to_google_options});" 
     end
 
     # The default center for the map which is Mzanzi.
@@ -621,7 +621,7 @@ module Google # :nodoc:
     end
     
     def bounds
-      Google::Bounds.existing :var => "#{self}.getBounds()"
+      Google::Bounds.existing :variable => "#{self}.getBounds()"
     end
     
     protected
@@ -632,10 +632,10 @@ module Google # :nodoc:
       end
 
       def track_bounds! # :nodoc:
-        self.track_bounds = if self.create_var?
-                              Google::Bounds.new(:var => :track_bounds)
+        self.track_bounds = if self.create_variable?
+                              Google::Bounds.new(:variable => :track_bounds)
                             else
-                              Google::Bounds.existing(:var => :track_bounds)
+                              Google::Bounds.existing(:variable => :track_bounds)
                             end
       end
 

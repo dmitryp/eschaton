@@ -5,7 +5,6 @@ module Eschaton
   # Any method called on this object will translate the methods into a javascript compatable 
   # camelCase method which is called on the +var+. Calls are stacked and javascript is returned by calling to_s.
   class JavascriptObject
-    attr_reader :var
     attr_accessor :variable
 
     # ==== Options:
@@ -13,11 +12,10 @@ module Eschaton
     # * +create_var+ - Optional. Indicates whether the javascript variable should be created and assigned, defaulted to +true+.
     # * +script+ - Optional. The script object to use for generation.
     def initialize(options = {})
-      options.default! :var => :random, :create_var => true
-    
-      self.var = options.extract(:var)
-      self.variable = self.var
-      @create_var = options.extract(:create_var)
+      options.default! :variable => :random, :create_var => true
+
+      self.variable = options.extract(:variable)
+      @create_variable = options.extract(:create_var)
       @script = options.extract(:script)
     end
 
@@ -27,11 +25,9 @@ module Eschaton
       self.new(options)
     end
 
-    def create_var?
-      @create_var
+    def create_variable?
+      @create_variable
     end
-    
-    alias create_variable? create_var?
     
     def existing_variable?
       !self.create_variable?
@@ -41,9 +37,9 @@ module Eschaton
       method_name = method_name.to_s
 
       if method_name =~ /\?$/
-        "#{self.var}.#{method_name.to_js_method}(#{options.to_js_arguments})".to_sym
+        "#{self.variable}.#{method_name.to_js_method}(#{options.to_js_arguments})".to_sym
       else
-        self << "#{self.var}.#{method_name.to_js_method}(#{options.to_js_arguments});"
+        self << "#{self.variable}.#{method_name.to_js_method}(#{options.to_js_arguments});"
       end
     end
     
@@ -59,7 +55,7 @@ module Eschaton
     end
 
     def to_s
-      self.var.to_s
+      self.variable.to_s
     end
 
     alias to_js to_s

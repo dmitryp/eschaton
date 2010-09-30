@@ -96,7 +96,7 @@ class GoogleScriptExtTest < Test::Unit::TestCase
                               script.set_coordinate_elements :location => map.center
                             end
 
-      marker = map.add_marker(:var => :marker, :location => map.center)
+      marker = map.add_marker(:variable => :marker, :location => map.center)
       
       # Testing with a marker location
       assert_eschaton_output "jQuery('#latitude').val(marker.getLatLng().lat());

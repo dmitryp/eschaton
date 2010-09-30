@@ -16,7 +16,7 @@ module Google
     # * +css_class+ - Optional. The css class to use for the tooltip, defaulted to +tooltip+.
     def initialize(options = {})
       options.default! :base_type => options[:on].class.to_s.downcase ,
-                       :var => "tooltip_#{options[:on]}", 
+                       :variable => "tooltip_#{options[:on]}", 
                        :padding => 3,
                        :show => :on_mouse_hover,
                        :css_class => 'tooltip'

@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/test_helper'
 class MarkerTest < Test::Unit::TestCase
 
   def default_marker
-    Google::Marker.new(:var => :marker, :location => {:latitude => -33.947, :longitude => 18.462})
+    Google::Marker.new(:variable => :marker, :location => {:latitude => -33.947, :longitude => 18.462})
   end
 
   def test_initialize
@@ -13,19 +13,19 @@ class MarkerTest < Test::Unit::TestCase
                               end
 
       assert_eschaton_output 'marker = new GMarker(existing_location, {draggable: false});' do
-                               marker = Google::Marker.new :var => :marker, :location => :existing_location  
+                               marker = Google::Marker.new :variable => :marker, :location => :existing_location  
                              end
 
       assert_eschaton_output :marker_with_icon do
-                              marker = Google::Marker.new :var => :marker, :location => :existing_location, :icon => :blue
+                              marker = Google::Marker.new :variable => :marker, :location => :existing_location, :icon => :blue
                             end
 
       assert_eschaton_output 'marker = new GMarker(existing_location, {draggable: false, title: "Marker title!"});' do
-                              marker = Google::Marker.new :var => :marker, :location => :existing_location, :title => 'Marker title!'
+                              marker = Google::Marker.new :variable => :marker, :location => :existing_location, :title => 'Marker title!'
                             end
 
       assert_eschaton_output 'marker = new GMarker(existing_location, {bouncy: false, draggable: false, title: "Marker title!"});' do
-                              marker = Google::Marker.new :var => :marker, :location => :existing_location, :title => 'Marker title!',
+                              marker = Google::Marker.new :variable => :marker, :location => :existing_location, :title => 'Marker title!',
                                                           :bouncy => false
                             end
     end
@@ -34,28 +34,28 @@ class MarkerTest < Test::Unit::TestCase
   def test_initialize_with_gravatar
     with_eschaton do |script|
       assert_eschaton_output :marker_gravatar do
-                               Google::Marker.new :var => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
+                               Google::Marker.new :variable => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
                                                   :gravatar => 'yawningman@eschaton.com'
                              end
 
      assert_eschaton_output :marker_gravatar do
-                              Google::Marker.new :var => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
+                              Google::Marker.new :variable => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
                                                  :gravatar => {:email_address => 'yawningman@eschaton.com'}
                             end
 
       assert_eschaton_output :marker_gravatar_with_size do
-                              Google::Marker.new :var => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
+                              Google::Marker.new :variable => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
                                                  :gravatar => {:email_address => 'yawningman@eschaton.com', :size => 50}
                             end
 
       assert_eschaton_output :marker_gravatar_with_default_icon do
-                              Google::Marker.new :var => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
+                              Google::Marker.new :variable => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
                                                  :gravatar => {:email_address => 'yawningman@eschaton.com', 
                                                                :default => 'http://localhost:3000/images/blue.png'}
                             end
 
       assert_eschaton_output :marker_gravatar_with_size_and_default_icon do
-                              Google::Marker.new :var => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
+                              Google::Marker.new :variable => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
                                                   :gravatar => {:email_address => 'yawningman@eschaton.com', 
                                                                 :default => 'http://localhost:3000/images/blue.png',
                                                                 :size => 50}
@@ -67,22 +67,22 @@ class MarkerTest < Test::Unit::TestCase
     with_eschaton do |script|
       map = Google::Map.new
       assert_eschaton_output :marker_tooltip do
-                               map.add_marker :var => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
+                               map.add_marker :variable => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
                                               :tooltip => {:text => 'This is sparta!'}
                              end
                              
       assert_eschaton_output :marker_tooltip do
-                              map.add_marker :var => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
+                              map.add_marker :variable => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
                                              :tooltip => {:text => 'This is sparta!', :show => :on_mouse_hover}
                             end
 
       assert_eschaton_output :marker_tooltip_show_always do
-                              map.add_marker :var => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
+                              map.add_marker :variable => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
                                              :tooltip => {:text => 'This is sparta!', :show => :always}
                             end
  
       assert_eschaton_output :marker_tooltip_with_partial do
-                              map.add_marker :var => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
+                              map.add_marker :variable => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
                                              :tooltip => {:partial => 'spot_information'}
                             end
    end
@@ -93,10 +93,10 @@ class MarkerTest < Test::Unit::TestCase
       marker = self.default_marker
       assert_equal "marker.getLatLng()", marker.location.variable
 
-      marker_one = Google::Marker.new :var => :marker_one, :location => {:latitude => -33.947, :longitude => 18.462}
+      marker_one = Google::Marker.new :variable => :marker_one, :location => {:latitude => -33.947, :longitude => 18.462}
       assert_equal "marker_one.getLatLng()", marker_one.location.variable
 
-      marker = Google::Marker.new :var => :marker, :location => :mouse_location
+      marker = Google::Marker.new :variable => :marker, :location => :mouse_location
       assert_equal "marker.getLatLng()", marker.location.variable
 
       assert_eschaton_output "marker.getLatLng().lat()", marker.location.latitude
@@ -315,13 +315,13 @@ class MarkerTest < Test::Unit::TestCase
     with_eschaton do |script|
       assert_eschaton_output 'marker = new GMarker(new GLatLng(-33.947, 18.462), {draggable: false});
                              circle_marker = drawCircle(marker.getLatLng(), 1.5, 40, null, 2, null, "#0055ff", null);' do
-                               Google::Marker.new :var => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
+                               Google::Marker.new :variable => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
                                                   :circle => true
                              end
  
       assert_eschaton_output 'marker = new GMarker(new GLatLng(-33.947, 18.462), {draggable: false});
                              circle_marker = drawCircle(marker.getLatLng(), 500, 40, null, 5, null, "#0055ff", null);' do
-                              Google::Marker.new :var => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
+                              Google::Marker.new :variable => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
                                                  :circle => {:radius => 500, :border_width => 5}
                             end
 
@@ -377,7 +377,7 @@ class MarkerTest < Test::Unit::TestCase
   def test_update_tooltip
     with_eschaton do |script|            
       map = Google::Map.new
-      marker = map.add_marker :var => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
+      marker = map.add_marker :variable => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
                               :tooltip => {:text => 'tooltip'}
       
       # If you update and there is no tooltip it will use the default behavior
@@ -399,7 +399,7 @@ class MarkerTest < Test::Unit::TestCase
 
   def test_show_tooltip
     with_eschaton do |script|            
-      marker = Google::Marker.new :var => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
+      marker = Google::Marker.new :variable => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
                                   :tooltip => {:text => 'This is sparta!'}
 
       assert_eschaton_output 'tooltip_marker.show();' do
@@ -410,7 +410,7 @@ class MarkerTest < Test::Unit::TestCase
 
   def test_hide_tooltip
     with_eschaton do |script|            
-      marker = Google::Marker.new :var => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
+      marker = Google::Marker.new :variable => :marker, :location => {:latitude => -33.947, :longitude => 18.462},
                                   :tooltip => {:text => 'This is sparta!'}
 
       assert_eschaton_output 'tooltip_marker.hide();' do
@@ -422,12 +422,12 @@ class MarkerTest < Test::Unit::TestCase
   def test_draggable
     with_eschaton do |script|
       assert_eschaton_output 'marker = new GMarker(existing_location, {draggable: false});' do
-                              marker = Google::Marker.new :var => :marker, :location => :existing_location
+                              marker = Google::Marker.new :variable => :marker, :location => :existing_location
                               assert_false marker.draggable?
                             end
 
       assert_eschaton_output :marker_draggable do
-                              marker = Google::Marker.new :var => :marker, :location => :existing_location, :title => 'Draggable marker!', 
+                              marker = Google::Marker.new :variable => :marker, :location => :existing_location, :title => 'Draggable marker!', 
                                                           :draggable => true
                               assert marker.draggable?
                             end

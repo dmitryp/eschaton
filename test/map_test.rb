@@ -209,11 +209,11 @@ class MapTest < Test::Unit::TestCase
         map = self.default_test_map
       
         assert_eschaton_output 'manager = new MarkerManager(map, {});' do
-                                map.add_marker_manager :var => :manager
+                                map.add_marker_manager :variable => :manager
                               end
                               
         assert_eschaton_output 'manager = new MarkerManager(map, {borderPadding: 100, maxZoom: 22});' do
-                                map.add_marker_manager :var => :manager, :border_padding => 100, :maximum_zoom => 22
+                                map.add_marker_manager :variable => :manager, :border_padding => 100, :maximum_zoom => 22
                               end                              
       end
     end    
@@ -227,7 +227,7 @@ class MapTest < Test::Unit::TestCase
         assert_eschaton_output "marker = new GMarker(new GLatLng(-33.947, 18.462), {draggable: false});
                                 map.addOverlay(marker);
                                 track_bounds.extend(marker.getLatLng());" do
-                                map.add_marker :var => :marker, :location => {:latitude => -33.947, :longitude => 18.462}
+                                map.add_marker :variable => :marker, :location => {:latitude => -33.947, :longitude => 18.462}
                               end
 
         assert_eschaton_output "marker_1 = new GMarker(new GLatLng(-33.947, 18.462), {draggable: false});
@@ -236,8 +236,8 @@ class MapTest < Test::Unit::TestCase
                                 marker_2 = new GMarker(new GLatLng(-34.947, 19.462), {draggable: false});
                                 map.addOverlay(marker_2);
                                 track_bounds.extend(marker_2.getLatLng());" do
-                                map.add_markers({:var => :marker_1, :location => {:latitude => -33.947, :longitude => 18.462}},
-                                                {:var => :marker_2, :location => {:latitude => -34.947, :longitude => 19.462}})
+                                map.add_markers({:variable => :marker_1, :location => {:latitude => -33.947, :longitude => 18.462}},
+                                                {:variable => :marker_2, :location => {:latitude => -34.947, :longitude => 19.462}})
                               end
       end
     end
@@ -258,7 +258,7 @@ class MapTest < Test::Unit::TestCase
                              marker = new GMarker(new GLatLng(-33.947, 18.462), {draggable: false});
                              map.addOverlay(marker);
                              track_bounds.extend(marker.getLatLng());" do
-                              map.replace_marker :var => :marker, :location => {:latitude => -33.947, :longitude => 18.462}
+                              map.replace_marker :variable => :marker, :location => {:latitude => -33.947, :longitude => 18.462}
                             end
     end
   end
@@ -279,7 +279,7 @@ class MapTest < Test::Unit::TestCase
                              map.addOverlay(marker);
                              track_bounds.extend(marker.getLatLng());" do
                               map.change_marker :create_spot,
-                                                {:var => :marker,
+                                                {:variable => :marker,
                                                  :location => {:latitude => -33.947, :longitude => 18.462}}
                             end
     end
@@ -359,9 +359,9 @@ class MapTest < Test::Unit::TestCase
                                            :colour => 'red', :thickness => 10, :opacity => 0.7
                             end
 
-      markers = [Google::Marker.new(:var => :marker_1, :location => {:latitude => -33.947, :longitude => 18.462}),
-                 Google::Marker.new(:var => :marker_2, :location => {:latitude => -34.0, :longitude => 19.0}),
-                 Google::Marker.new(:var => :marker_3, :location => {:latitude => -35.0, :longitude => 19.0})]
+      markers = [Google::Marker.new(:variable => :marker_1, :location => {:latitude => -33.947, :longitude => 18.462}),
+                 Google::Marker.new(:variable => :marker_2, :location => {:latitude => -34.0, :longitude => 19.0}),
+                 Google::Marker.new(:variable => :marker_3, :location => {:latitude => -35.0, :longitude => 19.0})]
 
       assert_eschaton_output :map_add_line_between_markers do
                               map.add_line :between_markers => markers
@@ -440,8 +440,8 @@ class MapTest < Test::Unit::TestCase
       script.google_map_script do
         map = Google::Map.new :center => :best_fit
 
-        map.add_marker :var => :marker, :location => {:latitude => -33.0, :longitude => 18.0}
-        map.add_marker :var => :marker, :location => {:latitude => -33.5, :longitude => 18.5}      
+        map.add_marker :variable => :marker, :location => {:latitude => -33.0, :longitude => 18.0}
+        map.add_marker :variable => :marker, :location => {:latitude => -33.5, :longitude => 18.5}      
       end
       
       assert_eschaton_output :map_best_fit_center, script      
@@ -455,8 +455,8 @@ class MapTest < Test::Unit::TestCase
       script.google_map_script do
         map = Google::Map.new :center => :best_fit, :zoom => :best_fit
 
-        map.add_marker :var => :marker, :location => {:latitude => -33.0, :longitude => 18.0}
-        map.add_marker :var => :marker, :location => {:latitude => -33.5, :longitude => 18.5}
+        map.add_marker :variable => :marker, :location => {:latitude => -33.0, :longitude => 18.0}
+        map.add_marker :variable => :marker, :location => {:latitude => -33.5, :longitude => 18.5}
       end
 
       assert_eschaton_output :map_best_fit_center_and_zoom, script

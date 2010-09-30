@@ -76,7 +76,7 @@ module JavascriptScriptExt
   end
 
   def variable(name)
-    Eschaton.variable :var => name
+    Eschaton.variable :variable => name
   end
 
   def element(options)

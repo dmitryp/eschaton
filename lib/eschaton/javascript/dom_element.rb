@@ -8,7 +8,7 @@ module Eschaton
 
       self.variable = self.element
       
-      super :var => self.variable 
+      super :variable => self.variable 
     end
 
     def update_html(html)

@@ -3,13 +3,13 @@ module Google
   
     # :image, :shadow, :size, :anchor, :info_window_anchor
     def initialize(options = {})
-      options.default! :var => 'icon'
+      options.default! :variable => 'icon'
 
       super
 
       options.default! :anchor => '9x34', :info_window_anchor => '9x2'
             
-      script << "#{self.var} = new GIcon();"
+      script << "#{self.variable} = new GIcon();"
     
       options_to_fields options
     end
@@ -17,28 +17,28 @@ module Google
     def image=(image)
       image = Google::OptionsHelper.to_image(image)
 
-      self << "#{self.var}.image = #{image.to_js};"
+      self << "#{self.variable}.image = #{image.to_js};"
     end
   
     def shadow=(image)
       image = Google::OptionsHelper.to_image(image)
             
-      self << "#{self.var}.shadow = #{image.to_js};"
+      self << "#{self.variable}.shadow = #{image.to_js};"
     end
   
     def size=(size)
       width, height = parse_dimentions(size)
-      script << "#{self.var}.iconSize = new GSize(#{width}, #{height});"
+      script << "#{self.variable}.iconSize = new GSize(#{width}, #{height});"
     end
   
     def anchor=(point)
       width, height = parse_dimentions(point)
-      script << "#{self.var}.iconAnchor = new GPoint(#{width}, #{height});"
+      script << "#{self.variable}.iconAnchor = new GPoint(#{width}, #{height});"
     end
   
     def info_window_anchor=(point)
       width, height = parse_dimentions(point)
-      script << "#{self.var}.infoWindowAnchor = new GPoint(#{width}, #{height});"
+      script << "#{self.variable}.infoWindowAnchor = new GPoint(#{width}, #{height});"
     end  
     
     private

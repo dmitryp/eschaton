@@ -101,7 +101,7 @@ module Google
 
       @circle_var = "circle_#{self}"      
 
-      if create_var?
+      if create_variable?
         location = Google::OptionsHelper.to_location(options.extract(:location))
 
         self.icon = if icon = options.extract(:icon)
@@ -115,7 +115,7 @@ module Google
         circle_options = options.extract(:circle)
         tooltip_options = options.extract(:tooltip)
         
-        self << "#{self.var} = new GMarker(#{location}, #{options.to_google_options});"
+        self << "#{self.variable} = new GMarker(#{location}, #{options.to_google_options});"
 
         self.draggable = options[:draggable]
         self.set_tooltip(tooltip_options) if tooltip_options
@@ -129,7 +129,7 @@ module Google
     
     # The location at which the marker is currently placed on the map.
     def location
-      Google::Location.existing :var => "#{self}.getLatLng()"
+      Google::Location.existing :variable => "#{self}.getLatLng()"
     end
 
     # Opens a information window on the marker using either +url+, +partial+ or +html+ options as content or if a +tabs+ 
@@ -242,7 +242,7 @@ module Google
     # * +current_location+ - The location at which the marker is presently hovering.
     def when_being_dragged
       self.listen_to :event => :drag do
-        script << "current_location = #{self.var}.getLatLng();"
+        script << "current_location = #{self.variable}.getLatLng();"
 
         yield script, :current_location
       end
@@ -255,7 +255,7 @@ module Google
     # * +drop_location+ - The location on the map where the marker was dropped.
     def when_dropped
       self.listen_to :event => :dragend do |script|          
-        script << "drop_location = #{self.var}.getLatLng();"
+        script << "drop_location = #{self.variable}.getLatLng();"
 
         yield script, :drop_location
       end
@@ -269,7 +269,7 @@ module Google
     def show_map_blowup(options = {})
      options[:map_type] = Google::OptionsHelper.to_map_type(options[:map_type]) if options[:map_type]
 
-     self << "#{self.var}.showMapBlowup(#{options.to_google_options});" 
+     self << "#{self.variable}.showMapBlowup(#{options.to_google_options});" 
     end
     
     # Changes the foreground icon of the marker to the given +image+. Note neither the print image nor the shadow image are adjusted.
@@ -279,7 +279,7 @@ module Google
     def change_icon(image)
       image = Google::OptionsHelper.to_image(image)
 
-      self << "#{self.var}.setImage(#{image.to_js});"
+      self << "#{self.variable}.setImage(#{image.to_js});"
     end
 
     # Draws a circle around the marker, see Circle#new for valid styling options.
@@ -289,7 +289,7 @@ module Google
     #
     #  marker.circle! :radius => 500, :border_width => 5
     def circle!(options = {})
-      options[:var] = self.circle_var
+      options[:variable] = self.circle_var
       options[:location] = self.location
 
       @circle = Google::Circle.new options

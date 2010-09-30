@@ -31,22 +31,22 @@ class JavascriptObjectTest < Test::Unit::TestCase
   end
 
   def test_new
-    object = Eschaton::JavascriptObject.new(:var => :map)
+    object = Eschaton::JavascriptObject.new(:variable => :map)
 
-    assert_equal :map, object.var
-    assert object.create_var?    
+    assert_equal :map, object.variable
+    assert object.create_variable?    
   end
 
   def test_existing
-    object = Eschaton::JavascriptObject.existing(:var => :map)
+    object = Eschaton::JavascriptObject.existing(:variable => :map)
 
-    assert_equal :map, object.var
-    assert_false object.create_var?    
+    assert_equal :map, object.variable
+    assert_false object.create_variable?    
   end
 
   def test_translation
     with_eschaton do |script|
-      object = Eschaton::JavascriptObject.new(:var => :map)
+      object = Eschaton::JavascriptObject.new(:variable => :map)
 
       object.zoom = 12
       object.set_zoom 12
@@ -73,7 +73,7 @@ class JavascriptObjectTest < Test::Unit::TestCase
     
   def test_script
     script = Eschaton.script
-    object = Eschaton::JavascriptObject.existing(:var => 'map', :script => script)
+    object = Eschaton::JavascriptObject.existing(:variable => 'map', :script => script)
     
     assert script, object.script
   end
@@ -90,7 +90,7 @@ class JavascriptObjectTest < Test::Unit::TestCase
   
   def test_question_mark_translation
     with_eschaton do |script|
-      object = Eschaton::JavascriptObject.new(:var => :array)
+      object = Eschaton::JavascriptObject.new(:variable => :array)
 
       return_value = object.index_of?("A value")
 

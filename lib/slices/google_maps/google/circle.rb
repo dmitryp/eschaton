@@ -36,7 +36,7 @@ module Google
     # * +fill_colour+ - Optional. The colour that the circle is filled with, defaulted to '##0055ff'.
     # * +fill_opacity+ - Optional. The opacity of the filled area of the circle, defaulted to google maps polygon fill opacity.
     def initialize(options = {})
-      options.default! :var => :circle, :radius => 1.5, :quality => 40,
+      options.default! :variable => :circle, :radius => 1.5, :quality => 40,
                        :border_colour => nil, :border_width => 2, :border_opacity => nil,
                        :fill_colour => '#0055ff', :fill_opacity => nil
 

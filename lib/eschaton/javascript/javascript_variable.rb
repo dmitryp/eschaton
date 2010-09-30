@@ -12,23 +12,23 @@ module Eschaton
   #  my_array.splice(1, 0, "A new item at position 1")
   #
   #  # Reference an existing variable
-  #  my_existing_array = JavascriptVariable.existing(:var => :my_array)
+  #  my_existing_array = JavascriptVariable.existing(:variable => :my_array)
   #  my_existing_array.push("Four")
   #  my_existing_array.push(5)
   class JavascriptVariable < JavascriptObject
 
     def initialize(options = {})
-      options.default! :value => nil, :var => options[:name]
+      options.default! :value => nil, :variable => options[:name]
 
       super
 
-      if self.create_var?
-        self << "var #{self.var} = #{options[:value]};"
+      if self.create_variable?
+        self << "var #{self.variable} = #{options[:value]};"
       end
     end
 
     def [](key)
-      "#{self.var}[#{key.to_js}]".to_sym
+      "#{self.variable}[#{key.to_js}]".to_sym
     end
 
     def []=(key, value)
@@ -39,7 +39,7 @@ module Eschaton
     # to perform the loop on the client.
     #
     # ==== Examples
-    #   the_array = Eschaton::JavascriptVariable.new(:var => :my_array, :value => '["one", "two", "three"]')
+    #   the_array = Eschaton::JavascriptVariable.new(:variable => :my_array, :value => '["one", "two", "three"]')
     #
     #   # Alert each element
     #   the_array.each do |element|
@@ -47,7 +47,7 @@ module Eschaton
     #   end
     def each
       self << "jQuery.each(#{self}, function(index, item){"
-      yield JavascriptVariable.existing(:var => :item)
+      yield JavascriptVariable.existing(:variable => :item)
       self << "});"
     end
     
@@ -56,7 +56,7 @@ module Eschaton
     #
     # ==== Examples
     #   # Using an Associative array
-    #   the_array = Eschaton::JavascriptVariable.new(:var => :my_array, :value => '{"name": "yawningman", "project": "eschaton"}')
+    #   the_array = Eschaton::JavascriptVariable.new(:variable => :my_array, :value => '{"name": "yawningman", "project": "eschaton"}')
     #
     #   # Alert each element and its index
     #   the_array.each_with_index do |element, index|
@@ -64,7 +64,7 @@ module Eschaton
     #   end
     #
     #   # Using a normal array
-    #   the_array = Eschaton::JavascriptVariable.new(:var => :my_array, :value => '[0, 1, 2]')
+    #   the_array = Eschaton::JavascriptVariable.new(:variable => :my_array, :value => '[0, 1, 2]')
     #
     #   # Alert each element and its index
     #   the_array.each_with_index do |element, index|
@@ -73,7 +73,7 @@ module Eschaton
     #
     def each_with_index
       self << "jQuery.each(#{self}, function(index, item){"
-      yield JavascriptVariable.existing(:var => :item), JavascriptVariable.existing(:var => :index)
+      yield JavascriptVariable.existing(:variable => :item), JavascriptVariable.existing(:variable => :index)
       self << "});"
     end    
 
