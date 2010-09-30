@@ -5,28 +5,29 @@ module Eschaton
   # Any method called on this object will translate the methods into a javascript compatable 
   # camelCase method which is called on the +var+. Calls are stacked and javascript is returned by calling to_s.
   class JavascriptObject
-    attr_accessor :variable
+    attr_accessor :variable, :create_variable
 
     # ==== Options:
-    # * +var+ - Optional. The name of the javascript variable, defaulted to a random name.
-    # * +create_var+ - Optional. Indicates whether the javascript variable should be created and assigned, defaulted to +true+.
+    # * +variable+ - Optional. The name of the javascript variable, defaulted to a random name.
+    # * +create_variable+ - Optional. Indicates whether the javascript variable should be created and assigned, defaulted to +true+.
     # * +script+ - Optional. The script object to use for generation.
     def initialize(options = {})
-      options.default! :variable => :random, :create_var => true
+      options.default! :variable => :random, :create_variable => true
 
       self.variable = options.extract(:variable)
-      @create_variable = options.extract(:create_var)
+      self.create_variable = options.extract(:create_variable)
+
       @script = options.extract(:script)
     end
 
     def self.existing(options)
-      options[:create_var] = false
+      options[:create_variable] = false
 
       self.new(options)
     end
 
     def create_variable?
-      @create_variable
+      self.create_variable
     end
     
     def existing_variable?
@@ -45,9 +46,6 @@ module Eschaton
     
     alias method_missing translate_to_javascript_method_call
     
-    # Adds +javascript+ to the generator.
-    #
-    # self << "var i = 10;"
     def <<(javascript)
       self.script << javascript
     
@@ -61,20 +59,19 @@ module Eschaton
     alias to_js to_s
     alias to_json to_s
 
+    def variable=(name)
+      @variable = if name == :random
+                    Eschaton.random_id
+                  else
+                    name
+                  end
+    end
+
     protected
       def script
         @script || Eschaton.global_script
       end
 
-    private
-      def var=(name)
-        @var = if name == :random
-                 Eschaton.random_id
-               else
-                 name
-               end
-      end
-    
   end
 
 end
