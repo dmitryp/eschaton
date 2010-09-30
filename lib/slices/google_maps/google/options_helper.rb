@@ -72,8 +72,10 @@ module Google
     end
     
     def self.to_location(options) # :nodoc:
-      if options.is_a?(Google::Location) || options.is_a?(Symbol) || options.is_a?(String)
+      if options.is_a?(Google::Location)
         options
+      elsif options.is_a?(Symbol) || options.is_a?(String)
+        Google::Location.existing(:var => options)
       elsif options.is_a?(Array)
         Google::Location.new :latitude => options.first, :longitude => options.second        
       elsif options.is_a?(Hash)

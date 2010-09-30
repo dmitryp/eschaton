@@ -106,7 +106,11 @@ class Test::Unit::TestCase
   def assert_is_a(type_of_class, object)
     assert_true object.is_a?(type_of_class)
   end
-
+  
+  def assert_javascript_object_hash_random_id(javascript_object)
+    assert_true javascript_object.not_nil?
+  end
+  
 end
 
 Eschaton.current_view = EschatonMockView.new

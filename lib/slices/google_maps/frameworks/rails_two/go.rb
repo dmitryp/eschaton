@@ -1,1 +1,0 @@
-puts 'rails two got loaded'

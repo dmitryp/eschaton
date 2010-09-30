@@ -92,8 +92,8 @@ class EschatonTest < Test::Unit::TestCase
   def test_url_for
     assert_equal "'/posts/create'", Eschaton.url_for_javascript(:controller => :posts, :action => :create)
     assert_equal "'/posts/update/1'", Eschaton.url_for_javascript(:controller => :posts, :action => :update, :id => 1)
-    
-    assert_equal "'/marker/create?longitude=' + location.lng() + '&latitude=' + location.lat() + ''",
+
+    assert_equal "'/marker/create?latitude=' + location.lat() + '&longitude=' + location.lng() + ''",
                  Eschaton.url_for_javascript(:controller => :marker, :action => :create, :latitude => '#location.lat()', 
                                              :longitude => '#location.lng()')
     

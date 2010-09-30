@@ -91,13 +91,16 @@ class MarkerTest < Test::Unit::TestCase
   def test_location
     with_eschaton do |script|
       marker = self.default_marker
-      assert_equal "marker.getLatLng()", marker.location
-      
+      assert_equal "marker.getLatLng()", marker.location.variable
+
       marker_one = Google::Marker.new :var => :marker_one, :location => {:latitude => -33.947, :longitude => 18.462}
-      assert_equal "marker_one.getLatLng()", marker_one.location
-      
+      assert_equal "marker_one.getLatLng()", marker_one.location.variable
+
       marker = Google::Marker.new :var => :marker, :location => :mouse_location
-      assert_equal "marker.getLatLng()", marker.location      
+      assert_equal "marker.getLatLng()", marker.location.variable
+
+      assert_eschaton_output "marker.getLatLng().lat()", marker.location.latitude
+      assert_eschaton_output "marker.getLatLng().lng()", marker.location.longitude
    end    
   end
 

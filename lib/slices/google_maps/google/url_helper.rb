@@ -46,12 +46,10 @@ module Google
     end
 
     # Encodes the given +location+
-    def self.encode_location(location)      
-      hash = if location.is_a?(Symbol) || location.is_a?(String)
-        {:latitude => "##{location}.lat()", :longitude => "##{location}.lng()"}
-      else
-        {:latitude => location.latitude, :longitude => location.longitude}
-      end
+    def self.encode_location(location)            
+      location = Google::OptionsHelper.to_location(location)
+
+      {:latitude => self.encode(location.latitude), :longitude => self.encode(location.longitude)}
     end
     
     def self.encode(javascript)

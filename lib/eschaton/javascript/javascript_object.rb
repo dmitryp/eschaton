@@ -30,6 +30,12 @@ module Eschaton
     def create_var?
       @create_var
     end
+    
+    alias create_variable? create_var?
+    
+    def existing_variable?
+      !self.create_variable?
+    end
 
     def translate_to_javascript_method_call(method_name, *options)
       method_name = method_name.to_s

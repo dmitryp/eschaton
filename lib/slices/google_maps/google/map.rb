@@ -181,14 +181,13 @@ module Google # :nodoc:
     #
     #  map.center = Google::Location.new(:latitude => -34, :longitude => 18.5)
     def center=(location)
-      location = Google::OptionsHelper.to_location(location)
-
       if location == :best_fit
         self.center = self.default_center
         Google::Scripts.end_of_map_script do
           self.auto_center!          
         end
       else
+        location = Google::OptionsHelper.to_location(location)
         self.set_center location
       end
     end
@@ -209,7 +208,7 @@ module Google # :nodoc:
     end
 
     def center
-      "#{self}.getCenter()"
+      Google::Location.existing(:var => "#{self}.getCenter()")
     end
     
     # Sets the zoom level of the map, +zoom+ can be a number(1 - 22) or <tt>:best_fit</tt>. If set to <tt>:best_fit</tt> 
@@ -612,13 +611,13 @@ module Google # :nodoc:
     def show_blowup(options = {})
       options[:map_type] = Google::OptionsHelper.to_map_type(options[:map_type]) if options[:map_type]
       location = Google::OptionsHelper.to_location(options.extract(:location))
-      
-      self << "#{self.var}.showMapBlowup(#{location}, #{options.to_google_options});" 
+
+      self << "#{self.var}.showMapBlowup(#{location.to_js}, #{options.to_google_options});" 
     end
 
     # The default center for the map which is Mzanzi.
     def default_center # :nodoc:
-      {:latitude => -33.947, :longitude => 18.462}
+      Google::Location.new :latitude => -33.947, :longitude => 18.462
     end
     
     def bounds

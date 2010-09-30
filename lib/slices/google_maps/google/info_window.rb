@@ -18,8 +18,11 @@ module Google
     def open_on_map(options)
       options.default! :location => :center, :include_location => true, :options => {}
 
-      location = Google::OptionsHelper.to_location(options[:location])
-      location = self.object.center if location == :center
+      location = if options[:location] == :center
+                   self.object.center 
+                 else
+                   Google::OptionsHelper.to_location(options[:location])
+                 end
       
       setup_when_opened_functions options
       

@@ -32,27 +32,27 @@ class OptionsHelperTest < Test::Unit::TestCase
   end
 
   def test_options_helper_to_location
-    assert_equal "location", Google::OptionsHelper.to_location("location")
-    assert_equal "map.getCenter()", Google::OptionsHelper.to_location("map.getCenter()")
-    assert_equal :location, Google::OptionsHelper.to_location(:location)
-    assert_equal :marker_location, Google::OptionsHelper.to_location(:marker_location)
+    location_string = "map.getCenter()"
+    location_from_string = Google::OptionsHelper.to_location(location_string)
 
-    location = Google::Location.new(:latitide => 34, :longitude => 18)
-    assert_equal location, Google::OptionsHelper.to_location(location)
+    assert_equal location_string, location_from_string.variable
+        
+    location_symbol = :marker_location
+    location_from_symbol =  Google::OptionsHelper.to_location(location_symbol)
 
+    assert_equal location_symbol, location_from_symbol.variable
+    
     location_hash = {:latitide => 34, :longitude => 18}
-    location = Google::OptionsHelper.to_location(location_hash)
+    location_from_hash = Google::OptionsHelper.to_location(location_hash)
 
-    assert location.is_a?(Google::Location)
-    assert_equal location_hash[:latitude], location.latitude
-    assert_equal location_hash[:longitude], location.longitude
+    assert_equal location_hash[:latitude], location_from_hash.latitude
+    assert_equal location_hash[:longitude], location_from_hash.longitude
 
     location_array = [18, 34]
-    location = Google::OptionsHelper.to_location(location_array)
+    location_from_array = Google::OptionsHelper.to_location(location_array)
 
-    assert_equal Google::Location, location.class
-    assert_equal location_array.first, location.latitude
-    assert_equal location_array.second, location.longitude
+    assert_equal location_array.first, location_from_array.latitude
+    assert_equal location_array.second, location_from_array.longitude
   end
   
   def test_to_marker

@@ -56,7 +56,7 @@ module Eschaton # :nodoc:
     url = self.current_view.url_for(options)
 
     interpolate_symbol, brackets = '#', '()'
-    url.scan(/#{interpolate_symbol.escape}[\w\.#{brackets.escape}]+/).each do |javascript_variable|
+    url.scan(/#{interpolate_symbol.escape}[\-\d\w\.#{brackets.escape}]+/).each do |javascript_variable|
       interpolation = javascript_variable.gsub(interpolate_symbol.escape, '')
       interpolation.gsub!(brackets.escape, brackets)
 

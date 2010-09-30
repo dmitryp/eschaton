@@ -129,7 +129,7 @@ module Google
     
     # The location at which the marker is currently placed on the map.
     def location
-      "#{self}.getLatLng()"
+      Google::Location.existing :var => "#{self}.getLatLng()"
     end
 
     # Opens a information window on the marker using either +url+, +partial+ or +html+ options as content or if a +tabs+ 
