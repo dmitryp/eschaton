@@ -1,0 +1,4 @@
+** Talk about Content
+** Talk about working with the DOM
+** Talk about working with javascript
+** Talk about convenience of working with the built in slices(EschatonKernal, GoogleMaps, JQuery) 

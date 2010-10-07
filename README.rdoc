@@ -58,9 +58,12 @@ Eschaton code can be placed in a view helper, contained within the run_map_scrip
 
   # Draw a polygon, yellow with a green border ...
   map.add_polygon :vertices => [[-34.2023, 18.3794], [-34.2029, 18.3797], [-34.2022, 18.3811]], 
-                  :fill_colour => 'yellow', :border_colour => 'green'  
+                  :fill_colour => 'yellow', :border_colour => 'green'
 
 ...
+  
+  map = Google::Map.new(:controls => [:small_map, :map_type],
+                        :type => :satellite, :zoom => 16)  
   
   # A draggable marker that talks when its being dragged and dropped
   marker = map.add_marker :location => {:latitude => -33.947, :longitude => 18.462},
