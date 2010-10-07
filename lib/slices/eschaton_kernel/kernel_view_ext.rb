@@ -32,6 +32,7 @@ module KernelViewExt
 
   alias run_javascript in_script_tag
   
+  # TODO - Unobtrusive script here
   def link_to_eschaton_script(options, &block)
     text = options[:text]
     element_id = Eschaton.random_id

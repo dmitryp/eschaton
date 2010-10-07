@@ -74,17 +74,16 @@ module GoogleViewExt
   #    script.map.open_info_window :html => 'I am showing some info'
   #  end
   def link_to_map_script(name, *args, &block)
-    link_to_function name, *args do |script|
-      Eschaton.with_global_script(script) do
-        script.with_mapping_scripts do
-          yield script
-
-          script << Google::Scripts.extract(:end_of_map_script)
-        end
-      end
+    link_to_eschaton_script :text => name do |script|
+      script.with_mapping_scripts do
+      
+      yield script
+      
+      script << Google::Scripts.extract(:end_of_map_script)
+     end
     end
-  end
-
+  end  
+  
   # Unless the +condition+ is +true+ this will have the same effect as link_to_map_script otherwise
   # +name+ will be returned.
   def link_to_map_script_unless(condition, name, *args, &block)
@@ -93,24 +92,6 @@ module GoogleViewExt
     else
       name
     end
-  end
-  
-  # Works in exactly the same way as rails +form_remote_tag+ but provides some extra options. This would be used 
-  # to create a remote form tag within an info window.
-  #
-  # ==== Options:
-  #
-  # * +include_location+ - Optional. Indicates if latitude and longitude +params+(if present) should be include in the +url+, defaulted to +true+.
-  def info_window_form(options, &block) #TODO rename => info_window_form_tag
-    prepare_info_window_options(options)
-    
-    form_remote_tag options, &block
-  end
-
-  def info_window_form_for(model, model_instance, options, &block)
-    prepare_info_window_options(options)
-    
-    remote_form_for model, model_instance, options, &block
   end
 
   def prepare_info_window_options(options)
