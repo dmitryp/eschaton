@@ -7,7 +7,7 @@ module Eschaton
       self.determine_element_selector options
 
       self.variable = self.element
-      
+
       super :variable => self.variable 
     end
 
@@ -65,7 +65,6 @@ module Eschaton
                     elsif options.has_option?(:selector)
                       options.selector
                     end
-      
         self.element = "jQuery('#{selector}')"
       end    
   end

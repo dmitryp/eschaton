@@ -18,4 +18,15 @@ module GoogleViewExt
     remote_form_for model, model_instance, options, &block
   end
   
+  def prepare_info_window_options(options)
+    options.default! :include_location => true, :html => {}
+
+    include_location = options.extract(:include_location)
+    if include_location && params[:location].not_blank?
+      options[:url][:location] = params[:location]
+    end
+
+    options[:html][:class] = :info_window_form
+  end
+  
 end
