@@ -6,7 +6,7 @@ module JavascriptScriptExt
   #  
   #   script.alert "Hello world!"
   def alert(message)
-    self << "alert(\"#{message}\");"
+    self << "alert(#{message.to_js});"
   end
   
   # Pops up a confimation message box. Any code generated within the block will be run if the user confirms.

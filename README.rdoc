@@ -1,21 +1,22 @@
+== SOME THINGS MAY NOT WORK IN THE rails_three BRANCH !
+
 = eschaton => It's like nutella on your sarmie
 
 Helps with writing google map mashups in Rails by providing a language that is as natural as possible.
 
-== Get it and Get going...
+== Get the plugin ...
 
-Install the plugin:
+Rails 3 peeps:
 
   $ rails plugin install git://github.com/yawningman/eschaton.git
-
-Generate a map, look at the files the generator created and play a bit:
-
   $ rails generate map
-  
-Put some test code in your <b><i>app/helpers/map_helper.rb</i></b> and *_play_*!
-Visit the map at http://localhost:3000/map or wherever your server runs.
 
-== Enough talk, lets code.
+Rails 2.3.8 and up peeps:
+
+  $ script/plugin install git://github.com/yawningman/eschaton.git
+  $ script/generate map
+
+== Some code examples:
 
 Eschaton code can be placed in a view helper, contained within the run_map_script methods' block and it will happily return javascript to you.
 
@@ -111,9 +112,8 @@ Both Hashes and Arrays can represent a Location, so use which ever form you pref
   {:latitude => -33.947, :longitude => 18.462} == [-33.947, 18.462]
 
 Checkout the online[http://rdoc.info/github/yawningman/eschaton/master/file/README.rdoc] docs for more on each mapping objects possibilities.
-
+  
 == FAQ
-
 
 ==== The google maps api is not completely covered and I don't see a method in the docs that I want to use, what's the deal?
 
@@ -152,10 +152,6 @@ Like this:
 
 and so forth and so on
 
-==== Please fork
-
-Forking of eschaton is encouraged, so it can be more distributed. If you are keen on the plugin, create a fork for yourself today and help distribute code!
-
 ==== License(or lack thereof)
 
-You can do whatever you like with the code, copy it, share it, fork it, use it, don't use it, claim it as your own! Go wild!
+You can do whatever you like with the code, copy it, share it, fork it, use it, don't use it, claim it as your own!

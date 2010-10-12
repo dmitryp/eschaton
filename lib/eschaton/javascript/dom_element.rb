@@ -47,7 +47,22 @@ module Eschaton
     end
     
     alias text value
-
+    
+    def set(options)
+      attribute = options[:attribute].to_s
+      value = options[:value]
+      
+      self << "#{self.variable}.attr(#{attribute.to_js}, #{value.to_js})"
+    end
+    
+    def attribute(name)
+      "#{self.variable}.attr(#{name.to_s.to_js})".to_sym
+    end
+    
+    def attributes(options)
+      self << "#{self.variable}.attr(#{options.to_js})"      
+    end
+    
     protected
       def determine_element_selector(options)
         options = if options.is_a?(String)
