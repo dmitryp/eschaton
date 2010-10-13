@@ -18,13 +18,14 @@ class DomElementTest < Test::Unit::TestCase
     end
   end
 
-  def test_selector
+  def test_that_the_variable_is_set_to_the_selector
     with_eschaton do |script|
-      assert_eschaton_output "jQuery('#map_sidebar')", script.element(:id => 'map_sidebar').element
-      assert_eschaton_output "jQuery('.map_sidebar')", script.element(:css_class => 'map_sidebar').element
-      assert_eschaton_output "jQuery('div > a')", script.element(:selector => 'div > a').element      
-      assert_eschaton_output "jQuery('div > a.my_link')", script.element('div > a.my_link').element
-      assert_eschaton_output "jQuery('#side_bar')", script.element(:side_bar).element      
+      assert_eschaton_output "jQuery('#map_sidebar')", script.element(:id => 'map_sidebar').variable
+      assert_eschaton_output "jQuery('.map_sidebar')", script.element(:css_class => 'map_sidebar').variable
+      assert_eschaton_output "jQuery('div > a')", script.element(:selector => 'div > a').variable      
+      
+      assert_eschaton_output "jQuery('#map_sidebar')", script.element(:map_sidebar).variable
+      assert_eschaton_output "jQuery('div > a')", script.element('div > a').variable
     end    
   end
   
@@ -89,5 +90,5 @@ class DomElementTest < Test::Unit::TestCase
       
     end    
   end
-
+  
 end
