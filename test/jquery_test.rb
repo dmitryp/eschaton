@@ -150,4 +150,18 @@ class JQueryTest < Test::Unit::TestCase
     end
   end
   
+  def test_ready
+    with_eschaton do |script|
+      assert_eschaton_output 'jQuery(document).ready(function(){
+                                jQuery(\'#feedback\').html("Document ready");
+                                jQuery(\'#feedback\').css({"background-color": "green"})
+                               })' do
+                                jQuery.ready do |script|
+                                  jQuery(:feedback).update_html "Document ready"
+                                  jQuery(:feedback).set_style :background_color => 'green'
+                                end  
+                              end
+    end
+  end  
+  
 end

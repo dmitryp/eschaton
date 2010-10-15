@@ -1,7 +1,11 @@
 Eschaton::Extensions.make_globally_available do
 
-  def jQuery(options, &block)
-    Eschaton::Jquery.new options, &block
+  def jQuery(selector = nil, &block)
+    if selector.not_nil?
+      Eschaton::Jquery.new selector, &block
+    else
+      Eschaton::Jquery
+    end
   end
 
 end
@@ -39,6 +43,19 @@ module Eschaton
       super :variable => self.variable
       
       yield self if block_given?
+    end
+    
+    # Any script generated within the +block+ will execute when the document is ready.
+    #
+    #  jQuery.ready do
+    #    jQuery(:feedback).update_html "The Document is ready"
+    #  end 
+    def self.ready(&block)
+      Eschaton.global_script do |script|
+        ready_function = Eschaton.function(&block)
+
+        script << "jQuery(document).ready(#{ready_function})"
+      end
     end
     
     # Updates the html content.
