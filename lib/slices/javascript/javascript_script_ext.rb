@@ -71,12 +71,4 @@ module JavascriptScriptExt
     self << "}"
   end  
 
-  def function(options = {}, &block)
-    Eschaton.function options, &block
-  end
-
-  def variable(name)
-    Eschaton.variable :variable => name
-  end
-
 end

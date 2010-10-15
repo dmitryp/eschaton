@@ -4,7 +4,7 @@ class JavascriptFunctionTest < Test::Unit::TestCase
       
   def test_function
     with_eschaton do |script|
-      function = script.function do |function|
+      function = javascript.function do |function|
                    function.alert("hello world!")
                  end
 
@@ -22,7 +22,7 @@ class JavascriptFunctionTest < Test::Unit::TestCase
       assert_eschaton_output 'function helloWorld(){
                                 alert("hello world!");
                               }' do |script|
-                              function = script.function(:name => :hello_world) do |function|
+                              function = javascript.function(:name => :hello_world) do |function|
                                            function.alert("hello world!")
                                          end
 
@@ -33,7 +33,7 @@ class JavascriptFunctionTest < Test::Unit::TestCase
 
   def test_call
     with_eschaton do |script|                 
-      function = script.function do |function|
+      function = javascript.function do |function|
                    function.alert("hello world!")
                  end
 
@@ -47,7 +47,7 @@ class JavascriptFunctionTest < Test::Unit::TestCase
   
   def test_call_on_named_function
     with_eschaton do |script|                 
-      function = script.function(:name => :hello_world) do |function|
+      function = javascript.function(:name => :hello_world) do |function|
                    function.alert("hello world!")
                  end      
 
@@ -66,7 +66,7 @@ class JavascriptFunctionTest < Test::Unit::TestCase
                                 good bye
                                 /* This is a comment */
                               }' do |script|
-                                   named_function = script.function(:name => :hello_world) do |function|
+                                   named_function = javascript.function(:name => :hello_world) do |function|
                                                       function.alert("hello world!")
                                                     end
 
@@ -80,7 +80,7 @@ class JavascriptFunctionTest < Test::Unit::TestCase
       
   def test_anonymous_function_script_added_after_function_is_returned_is_added_to_the_body_of_the_function
     with_eschaton do |script|
-      anonymous_function = script.function do |function|
+      anonymous_function = javascript.function do |function|
                              function.alert("hello world!")
                            end
 

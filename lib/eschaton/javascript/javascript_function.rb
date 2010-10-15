@@ -5,7 +5,7 @@ module Eschaton
   #  
   # ==== Examples
   #
-  #  function = Eschaton.function do |function|
+  #  function = javascript.function do |function|
   #              function.alert("Hello world!")
   #             end
   #
@@ -13,7 +13,7 @@ module Eschaton
   #
   # It can also be used to declare a function that can be called at a later stage:
   #  
-  #  function = Eschaton.function(:name => :hello_world) do |function|
+  #  function = javascript.function(:name => :hello_world) do |function|
   #               function.alert("Hello world!")
   #             end
   #

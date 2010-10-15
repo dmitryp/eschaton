@@ -52,7 +52,7 @@ module Eschaton
     #  end 
     def self.ready(&block)
       Eschaton.global_script do |script|
-        ready_function = Eschaton.function(&block)
+        ready_function = javascript.function(&block)
 
         script << "jQuery(document).ready(#{ready_function})"
       end
@@ -119,7 +119,7 @@ module Eschaton
     #  end    
     def listen_to(options, &block)
       event = options[:event].to_jquery_event
-      function = self.script.function(&block)
+      function = self.javascript.function(&block)
       
       self << "#{self.variable}.bind('#{event}', #{function});"
     end

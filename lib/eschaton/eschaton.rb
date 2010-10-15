@@ -76,14 +76,6 @@ module Eschaton
 
     script
   end
-    
-  def self.function(options = {}, &block)
-    Eschaton::JavascriptFunction.from_block options, &block
-  end
-
-  def self.variable(name)
-    Eschaton::JavascriptObject.existing(:variable => name)
-  end
   
   def self.with_global_script(script = Eschaton.script, options = {})
     options.default! :reset_after => false
