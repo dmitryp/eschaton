@@ -1,20 +1,51 @@
+Eschaton::Extensions.make_globally_available do
+
+  def jQuery(options, &block)
+    Eschaton::Jquery.new options, &block
+  end
+
+end
+
 module Eschaton
-  
-  # Allows for working with Dom elements by using jQuery, see Eschaton#element for details on finding elements.
-  class DomElements < JavascriptObject
+
+  # jQuery, without seeds.
+  #
+  # As a convenience, if a symbol is supplied as a +selector+ it will be treated as the +id+ and
+  # if a string is supplied it is treated as the +selector+.
+  #
+  # ==== Options:
+  #
+  # * +id+ - Optional. Finds elements by their id.
+  # * +css_class+ - Optional. Finds elements by their css class.
+  # * +selector+ - Optional. Finds elements using a jQuery selector.
+  #
+  # ==== Examples
+  #
+  #  feedback_element = jQuery(:feedback) 
+  #
+  #  feedback_element = jQuery(:id => :feedback)
+  #
+  #  anchors_in_divs = jQuery('div > a')
+  #
+  #  anchors_in_divs = jQuery(:selector => 'div > a')
+  #
+  #  selected_elements = jQuery(:css_class => 'selected')
+  class Jquery < JavascriptObject
     attr_accessor :id, :element
     
-    def initialize(options) # :nodoc:
-      self.variable = self.determine_element_selector(options)
+    def initialize(selector) # :nodoc:
+      self.variable = self.determine_element_selector(selector)
 
-      super :variable => self.variable 
+      super :variable => self.variable
+      
+      yield self if block_given?
     end
     
     # Updates the html content.
     #
     # ==== Examples
     #
-    #  map_feedback_element = Eschaton.element(:map_feedback)
+    #  map_feedback_element = jQuery(:map_feedback)
     #
     #  map_feedback_element.update_html "Loading markers ..."
     #  ...
@@ -34,9 +65,9 @@ module Eschaton
     #
     # ==== Examples
     #
-    #  Eschaton.element('div.location_buttons').delete!
+    #  jQuery('div.location_buttons').delete!
     #
-    #  Eschaton.element(:current_label).delete!
+    #  jQuery(:current_label).delete!
     def delete!
       self << "#{self.variable}.remove();"
     end
@@ -45,7 +76,7 @@ module Eschaton
     #
     # ==== Example
     #
-    #  Eschaton.element(:close_info_window_button).click do |script|
+    #  jQuery(:close_info_window_button).click do |script|
     #    script.map.close_info_window
     #  end
     def click(&block)
@@ -60,7 +91,7 @@ module Eschaton
     #
     # ==== Example
     #
-    #  marker_links = Eschaton.element('a.marker_link')
+    #  marker_links = jQuery('a.marker_link')
     #
     #  marker_links.listen_to(:event => :mouse_over) do |script|
     #    marker_links.set_style => 'background-color: green'
@@ -80,10 +111,10 @@ module Eschaton
     #
     # ==== Examples
     #    
-    #  Eschaton.element(:latitude).value = location.latitude
-    #  Eschaton.element(:longitude).value = location.longitude
+    #  jQuery(:latitude).value = location.latitude
+    #  jQuery(:longitude).value = location.longitude
     #
-    #  Eschaton.element(:current_location_label).text = location
+    #  jQuery(:current_location_label).text = location
     def value=(value)
       self << "#{self.variable}.val(#{value.to_js});"
     end
@@ -94,9 +125,9 @@ module Eschaton
     #
     # ==== Examples
     #
-    #  script.alert Eschaton.element(:current_location_name).value
+    #  script.alert jQuery(:current_location_name).value
     #
-    #  script.alert Eschaton.element(:current_search_term).text
+    #  script.alert jQuery(:current_search_term).text
     def value
       "#{self.variable}.val()".to_sym
     end
@@ -107,7 +138,7 @@ module Eschaton
     #
     # ==== Example
     #
-    #  script.alert Eschaton.element(:location_button).attibute(:class)
+    #  script.alert jQuery(:location_button).attibute(:class)
     def attribute(name)
       "#{self.variable}.attr(#{name.to_s.to_js})".to_sym
     end
@@ -116,11 +147,11 @@ module Eschaton
     #
     # ==== Examples
     # 
-    #  Eschaton.element('a.location_button').set_attributes(:class => :location_button, :style => 'border: solid 1px #DDD')
+    #  jQuery('a.location_button').set_attributes(:class => :location_button, :style => 'border: solid 1px #DDD')
     #
     # If you are setting only a single attribute you can use set_attribute:
     #
-    #  Eschaton.element('a.location_button').set_attribute(:class => :location_button)    
+    #  jQuery('a.location_button').set_attribute(:class => :location_button)    
     def set_attributes(attributes)
       self << "#{self.variable}.attr(#{attributes.to_js})"
     end
@@ -131,11 +162,11 @@ module Eschaton
     #
     # ==== Examples
     # 
-    #  Eschaton.element(:feedback).set_styles 'background-color' => 'green', :border => 'solid 1px black'
+    #  jQuery(:feedback).set_styles 'background-color' => 'green', :border => 'solid 1px black'
     #
     # If you are setting only a single style you can use set_style:
     #
-    #  Eschaton.element(:feedback).set_style 'background-color' => 'green'
+    #  jQuery(:feedback).set_style 'background-color' => 'green'
     def set_styles(styles)
       self << "#{self.variable}.css(#{styles.to_css_styles})"      
     end

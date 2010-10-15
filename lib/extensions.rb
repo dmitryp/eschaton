@@ -2,6 +2,10 @@ module Eschaton
 
   class Extensions
 
+    def self.make_globally_available(&block)
+      self.extend_object :object => Object, :extension_block => block
+    end
+
     def self.extend_rails_controllers(&block)
       self.extend_object :object => ActionController::Base, :extension_block => block
     end

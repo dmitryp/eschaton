@@ -3,14 +3,37 @@ require File.dirname(__FILE__) + '/test_helper'
 class DomElementsTest < Test::Unit::TestCase
 
   def setup
-    @element = Eschaton.element(:feedback)
+    @element = jQuery(:feedback)
+  end
+
+  def test_selectors
+    with_eschaton do |script|
+      assert_eschaton_output "jQuery('#map_sidebar')", jQuery(:id => 'map_sidebar').variable
+      assert_eschaton_output "jQuery('.map_sidebar')", jQuery(:css_class => 'map_sidebar').variable
+      assert_eschaton_output "jQuery('div > a')", jQuery(:selector => 'div > a').variable      
+
+      assert_eschaton_output "jQuery('#map_sidebar')", jQuery(:map_sidebar).variable
+      assert_eschaton_output "jQuery('div > a')", jQuery('div > a').variable
+    end    
+  end
+  
+  def test_jquery
+    with_eschaton do
+      assert_eschaton_output 'jQuery(\'#feedback\').html("Updated Marker");
+                              jQuery(\'#feedback\').attr({"class": "updated_feedback"})' do |script|
+        jQuery(:feedback) do |elements|
+          elements.update_html "Updated Marker"
+          elements.set_attributes :class => :updated_feedback
+        end
+      end
+    end
   end
 
   def test_element_with_block
     with_eschaton do
       assert_eschaton_output 'jQuery(\'#feedback\').html("Updated Marker");
                               jQuery(\'#feedback\').attr({"class": "updated_feedback"})' do |script|
-        Eschaton.element(:feedback) do |elements|
+        jQuery(:feedback) do |elements|
           elements.update_html "Updated Marker"
           elements.set_attributes :class => :updated_feedback
         end 
@@ -21,25 +44,16 @@ class DomElementsTest < Test::Unit::TestCase
   def test_calls
     with_eschaton do
       assert_eschaton_output :dom_element_calls do |script|
-        script.element(:id => :one).click do |function_script|
+        jQuery(:one).click do |function_script|
           function_script << "// Testing"
-          function_script.element(:id => :one).show!
-          function_script.element(:id => :two).replace_html "This is two"
+          jQuery(:one).show!
+          jQuery(:two).replace_html "This is two"
         end
       end
     end
   end
 
-  def test_selectors
-    with_eschaton do |script|
-      assert_eschaton_output "jQuery('#map_sidebar')", script.element(:id => 'map_sidebar').variable
-      assert_eschaton_output "jQuery('.map_sidebar')", script.element(:css_class => 'map_sidebar').variable
-      assert_eschaton_output "jQuery('div > a')", script.element(:selector => 'div > a').variable      
-      
-      assert_eschaton_output "jQuery('#map_sidebar')", script.element(:map_sidebar).variable
-      assert_eschaton_output "jQuery('div > a')", script.element('div > a').variable
-    end    
-  end
+
   
   def test_update_html
     with_eschaton do |script|
@@ -94,7 +108,7 @@ class DomElementsTest < Test::Unit::TestCase
                               end
 
       assert_eschaton_output "jQuery('#marker_count').val(12);" do
-                                script.element(:marker_count).value = 12
+                                jQuery(:marker_count).value = 12
                               end
     end
   end

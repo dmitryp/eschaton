@@ -42,7 +42,7 @@ module KernelViewExt
   #
   #  link_to_eschaton_script :text => 'Make it green' do |script|
   #    script.alert('Making the feedback div green')
-  #    script.element(:feedback).set_attribute :style => 'background-color: green'
+  #    jQuery(:feedback).set_attribute :style => 'background-color: green'
   #  end
   def link_to_eschaton_script(options, &block)
     text = options[:text]
@@ -51,7 +51,7 @@ module KernelViewExt
     link_tag = "<a id='#{element_id}' href='#'>#{text}</a>"
     
     link_script = run_javascript(:when_document_ready => true) do |script|
-                    script.element(:id => element_id).when_clicked(&block)
+                    jQuery(:id => element_id).when_clicked(&block)
                   end
 
     collect link_tag, link_script

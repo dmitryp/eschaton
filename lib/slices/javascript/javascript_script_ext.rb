@@ -78,10 +78,5 @@ module JavascriptScriptExt
   def variable(name)
     Eschaton.variable :variable => name
   end
-  
-  # Alias for Eschaton#element
-  def element(options, &block)
-    Eschaton.element options, &block
-  end
 
 end

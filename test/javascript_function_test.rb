@@ -97,21 +97,4 @@ class JavascriptFunctionTest < Test::Unit::TestCase
     end
   end
   
-
-  def test_xx
-    with_eschaton do |script|
-      anonymous_function = script.function do |function|
-                             function.alert("hello world!")
-                             function.element(:name).focus!
-                           end
-      
-      anonymous_function.element(:feedback).update_html = 'Marker created!'
-
-      assert_eschaton_output "function(){
-                                alert(\"hello world!\");
-                                jQuery('#name').focus();
-                              }", anonymous_function
-    end
-  end  
-  
 end
