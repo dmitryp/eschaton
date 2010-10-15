@@ -3,6 +3,7 @@ module Eschaton
   # Helps with writing methods that take a +options+ hash.
   #
   # ==== Examples
+  #
   #  # A sample initializer in which the PreparedOptions is used.
   #  def initialize(options = {})
   #    prepared_options = options.prepare_options do |prepared_options|

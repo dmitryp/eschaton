@@ -1,5 +1,4 @@
-# Provides access to global objects of interest.
-module Eschaton # :nodoc:
+module Eschaton
   include Eschaton::Events
   
   def self.random_id
@@ -78,8 +77,31 @@ module Eschaton # :nodoc:
     script
   end
   
+  # Finds Eschaton::DomElements with the given +options+.
+  # Eschaton::DomElements can be found using the +id+, +css_class+ or a +selector+.
+  #
+  # As a convenience, if a symbol is supplied as +options+ it will be treated as the +id+ and
+  # if a string is supplied it is treated as the +selector+.
+  #
+  # ==== Options:
+  #
+  # * +id+ - Optional. Finds elements by their id.
+  # * +css_class+ - Optional. Finds elements by their css class.
+  # * +selector+ - Optional. Finds elements using a jQuery selector.
+  #
+  # ==== Examples
+  #
+  #  feedback_element = Eschaton.element(:feedback) 
+  #
+  #  feedback_element = Eschaton.element(:id => :feedback)
+  #
+  #  anchors_in_divs = Eschaton.element('div > a')
+  #
+  #  anchors_in_divs = Eschaton.element(:selector => 'div > a')
+  #
+  #  selected_elements = Eschaton.element(:css_class => 'selected')
   def self.element(options)
-    Eschaton::DomElement.new(options)
+    Eschaton::DomElements.new(options)
   end
   
   def self.function(options = {}, &block)

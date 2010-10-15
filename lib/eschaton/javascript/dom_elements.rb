@@ -1,59 +1,16 @@
 module Eschaton
   
-  # There is a graphical element to mashups that inevitably requires access to the HTML Dom. Eschaton facilitates this through Eschaton#element.
-  #
-  # For example to the get the feedback div:
-  #
-  #  feedback_element = Eschaton.element(:feedback) 
-  #
-  # To get all anchor tags in divs:
-  #
-  #  anchors_in_divs = Eschaton.element('div > a') 
-  # 
-  # Once you have the elements you need, you could do some of the following:
-  # 
-  #  Eschaton.element(:feedback).update_html "Loading markers ..."
-  #
-  # ...
-  #
-  #  <div id="close_info_window_button"> | Close | </div>
-  #
-  #  Eschaton.element(:close_info_window_button).when_clicked do 
-  #    map.close_info_window!
-  #  end
-  #
-  # ...
-  #
-  #  <input type="text" id="location" />
-  #
-  #  map.click do |script, location|
-  #    Eschaton.element(:location).value = location
-  #  end
-  #
-  # ...
-  #
-  #  Eschaton.element(:location_button).set :class => :active
-  #
-  # ...
-  #
-  #  Eschaton.element('a.location_button').attributes :class => :location_button , :style => 'border: solid 2px green'
-  #
-  # ...
-  #
-  #  Eschaton.element(:debug_panel).append('This is a debug message!')
-  #
-  # If a method is undocumented here, see jQuerys[http://api.jquery.com/] .
-  class DomElement < JavascriptObject
+  # Allows for working with Dom elements by using jQuery, see Eschaton#element for details on finding elements.
+  class DomElements < JavascriptObject
     attr_accessor :id, :element
     
-    # Elements are obtained through Eschaton#element
-    def initialize(options)
+    def initialize(options) # :nodoc:
       self.variable = self.determine_element_selector(options)
 
       super :variable => self.variable 
     end
     
-    # Updates the Html of the Element, any Inner Html is replaced.
+    # Updates the html content.
     #
     # ==== Examples
     #
@@ -84,16 +41,34 @@ module Eschaton
       self << "#{self.variable}.remove();"
     end
     
-    # 
+    # When the element is clicked the script generated from the given +block+ will be executed.
     #
+    # ==== Example
     #
-    #
-    #
-    def when_clicked(&block)
+    #  Eschaton.element(:close_info_window_button).click do |script|
+    #    script.map.close_info_window
+    #  end
+    def click(&block)
       self.listen_to :event => :click, &block
     end
     
-    # Listen to any of the events noted here[http://api.jquery.com/bind/]
+    # Listen to an +event+ on the elements.
+    #
+    # ==== Options:
+    # 
+    # * +event+ - Required. The event type to listen to, see jQuerys[http://api.jquery.com/bind/] event types for supported events.
+    #
+    # ==== Example
+    #
+    #  marker_links = Eschaton.element('a.marker_link')
+    #
+    #  marker_links.listen_to(:event => :mouse_over) do |script|
+    #    marker_links.set_style => 'background-color: green'
+    #  end
+    #
+    #  marker_links.listen_to(:event => :mouse_leave) do |script|
+    #    marker_links.set_style => 'background-color: grey'
+    #  end    
     def listen_to(options, &block)
       event = options[:event].to_jquery_event
       function = self.script.function(&block)
@@ -128,28 +103,47 @@ module Eschaton
     
     alias text value
     
-    # Gets the value of the attibute with the given +name+
+    # Gets the value of the attibute with the given +name+.
     #
-    # ==== Examples
+    # ==== Example
     #
     #  script.alert Eschaton.element(:location_button).attibute(:class)
     def attribute(name)
       "#{self.variable}.attr(#{name.to_s.to_js})".to_sym
     end
     
-    # Sets the attributes of the element from the given +attribute_hash+.
+    # Sets the attributes of the element from the given +attribute+ hash.
     #
-    # ==== Example
+    # ==== Examples
     # 
-    #  Eschaton.element('a.location_button').attibutes(:class => :location_button, :style => 'border: solid 1px #DDD')
-    def set_attributes(attribute_hash)
-      self << "#{self.variable}.attr(#{attribute_hash.to_js})"      
+    #  Eschaton.element('a.location_button').set_attributes(:class => :location_button, :style => 'border: solid 1px #DDD')
+    #
+    # If you are setting only a single attribute you can use set_attribute:
+    #
+    #  Eschaton.element('a.location_button').set_attribute(:class => :location_button)    
+    def set_attributes(attributes)
+      self << "#{self.variable}.attr(#{attributes.to_js})"
     end
     
     alias set_attribute set_attributes
+    
+    # Sets the styles of the element from the given +styles+ hash.
+    #
+    # ==== Examples
+    # 
+    #  Eschaton.element(:feedback).set_styles 'background-color' => 'green', :border => 'solid 1px black'
+    #
+    # If you are setting only a single style you can use set_style:
+    #
+    #  Eschaton.element(:feedback).set_style 'background-color' => 'green'
+    def set_styles(styles)
+      self << "#{self.variable}.css(#{styles.to_js})"      
+    end
 
+    alias set_style set_styles
+    
     protected
-      def determine_element_selector(options)
+      def determine_element_selector(options) #:nodoc:
         options = if options.is_a?(String)
                     {:selector => options.to_s}.prepare_options
                   elsif options.is_a?(Symbol)

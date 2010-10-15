@@ -1,8 +1,8 @@
 == SOME THINGS MAY NOT WORK IN THE rails_three BRANCH !
 
-= eschaton => It's like nutella on your sarmie
+= eschaton
 
-Helps with writing google map mashups in Rails by providing a language that is as natural as possible.
+Provides the raw materials for writing google map mashups in Rails by providing a language that is as natural as possible.
 
 == Get the plugin ...
 

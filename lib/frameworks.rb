@@ -23,7 +23,6 @@ module Eschaton
             if File.exists?(framework_directory)
               Dir["#{framework_directory}/**/*.rb"].each do |framewok_file|
                 Eschaton.require_file framewok_file
-                puts framewok_file
               end
             end
           end

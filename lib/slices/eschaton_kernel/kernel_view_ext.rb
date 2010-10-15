@@ -5,16 +5,14 @@ module KernelViewExt
   #           javascript_include_tag('jquery'),
   #           some_other_stuff
   def collect(*args)
-    args.compact.join("\n")
+    args.compact.join("\n").html_safe
   end
-  
+    
   def javascript(&block)
-    update_page do |script|
-      Eschaton.with_global_script script, &block
-    end
+    Eschaton.with_global_script(&block).to_s.html_safe
   end
-  
-  def in_script_tag(options = {}, &block)
+
+  def run_javascript(options = {}, &block)
     options = options.prepare_options(:defaults => {:when_document_ready => false}) 
 
     Eschaton.with_global_script do |script|
@@ -29,18 +27,34 @@ module KernelViewExt
       script << '</script>'
     end
   end
-
-  alias run_javascript in_script_tag
   
-  # TODO - Unobtrusive script here
+  # Creates a hyper link that will execute the script generated from the given +block+.
+  # 
+  # ==== Options:
+  #
+  # * +text+ - Required. The text of the hyper link.
+  #  
+  # ==== Examples
+  #
+  #  link_to_eschaton_script :text => 'Close Info Window' do |script|
+  #    script.map.close_info_window
+  #  end
+  #
+  #  link_to_eschaton_script :text => 'Make it green' do |script|
+  #    script.alert('Making the feedback div green')
+  #    script.element(:feedback).set_attribute :style => 'background-color: green'
+  #  end
   def link_to_eschaton_script(options, &block)
     text = options[:text]
     element_id = Eschaton.random_id
-    script = Eschaton.with_global_script(&block)
 
-    link_tag = "<a id='#{element_id}' href='#' onclick='#{script}'>#{text}</a>"
+    link_tag = "<a id='#{element_id}' href='#'>#{text}</a>"
+    
+    link_script = run_javascript(:when_document_ready => true) do |script|
+                    script.element(:id => element_id).when_clicked(&block)
+                  end
 
-    link_tag.html_safe
+    collect link_tag, link_script
   end
 
 end
