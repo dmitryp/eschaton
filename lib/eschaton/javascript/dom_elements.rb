@@ -137,7 +137,7 @@ module Eschaton
     #
     #  Eschaton.element(:feedback).set_style 'background-color' => 'green'
     def set_styles(styles)
-      self << "#{self.variable}.css(#{styles.to_js})"      
+      self << "#{self.variable}.css(#{styles.to_css_styles})"      
     end
 
     alias set_style set_styles

@@ -101,7 +101,11 @@ module Eschaton
   #
   #  selected_elements = Eschaton.element(:css_class => 'selected')
   def self.element(options)
-    Eschaton::DomElements.new(options)
+    dom_elements = Eschaton::DomElements.new(options)
+
+    yield dom_elements if block_given?
+
+    dom_elements
   end
   
   def self.function(options = {}, &block)

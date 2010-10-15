@@ -6,6 +6,18 @@ class DomElementsTest < Test::Unit::TestCase
     @element = Eschaton.element(:feedback)
   end
 
+  def test_element_with_block
+    with_eschaton do
+      assert_eschaton_output 'jQuery(\'#feedback\').html("Updated Marker");
+                              jQuery(\'#feedback\').attr({"class": "updated_feedback"})' do |script|
+        Eschaton.element(:feedback) do |elements|
+          elements.update_html "Updated Marker"
+          elements.set_attributes :class => :updated_feedback
+        end 
+      end
+    end
+  end
+
   def test_calls
     with_eschaton do
       assert_eschaton_output :dom_element_calls do |script|
@@ -114,10 +126,13 @@ class DomElementsTest < Test::Unit::TestCase
   
   def test_set_styles
     with_eschaton do |script|
+      assert_eschaton_output 'jQuery(\'#feedback\').css({"background-color": "green", "border-bottom": "solid 1px black"})' do
+                                @element.set_styles :background_color => :green, :border_bottom => 'solid 1px black'
+                              end
+      
       assert_eschaton_output 'jQuery(\'#feedback\').css({"background-color": "green", "border": "solid 1px black"})' do
                                 @element.set_styles 'background-color' => 'green', :border => 'solid 1px black'
                               end
-      
     end
   end
   

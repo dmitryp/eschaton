@@ -80,8 +80,8 @@ module JavascriptScriptExt
   end
   
   # Alias for Eschaton#element
-  def element(options)
-    Eschaton.element options
+  def element(options, &block)
+    Eschaton.element options, &block
   end
 
 end

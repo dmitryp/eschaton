@@ -27,4 +27,14 @@ class Hash # :nodoc:
     end
   end
 
+  def to_css_styles
+    css_styles = {}
+
+    self.each do |style, value|
+      css_styles[style.to_css_style] = value
+    end
+
+    css_styles.to_js  
+  end
+
 end
