@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/test_helper'
 
-class DomElementsTest < Test::Unit::TestCase
+class JQueryTest < Test::Unit::TestCase
 
   def setup
     @element = jQuery(:feedback)
