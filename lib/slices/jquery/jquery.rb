@@ -51,11 +51,11 @@ module Eschaton
     #    jQuery(:feedback).update_html "The Document is ready"
     #  end 
     def self.ready(&block)
-      Eschaton.global_script do |script|
-        ready_function = javascript.function(&block)
+      self << "jQuery(document).ready(function() {"
 
-        script << "jQuery(document).ready(#{ready_function})"
-      end
+      yield Eschaton.global_script
+      
+      self << "})"
     end
     
     # Updates the html content.

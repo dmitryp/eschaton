@@ -3,12 +3,7 @@ require File.dirname(__FILE__) + '/test_helper'
 class GoogleScriptExtTest < Test::Unit::TestCase
 
   def test_global_map_var    
-    with_eschaton do |script|
-
-      script.google_map_script do
-        map = Google::Map.new :center => :cape_town, :zoom => 9
-      end
-
+    with_eschaton do
       assert_eschaton_output "var map;
                              jQuery(document).ready(function() {
                              window.onunload = GUnload;
@@ -28,39 +23,41 @@ class GoogleScriptExtTest < Test::Unit::TestCase
                              map.addControl(new GLargeMapControl3D());
                              map.addControl(new GMapTypeControl());                             
                              } else { alert('Your browser be old, it cannot run google maps!');}
-                             })", script
+                             })" do |script|
+                             script.google_map_script do
+                               map = Google::Map.new :center => :cape_town, :zoom => 9
+                             end                     
+      end
     end
   end
   
   def test_mapping_scripts
-    generator = Eschaton.script
+    with_eschaton do
+      assert_eschaton_output "/* Before 1 */
+                             /* Before 2 */
+                             jQuery(document).ready(function() {
+                             window.onunload = GUnload;
+                             if (GBrowserIsCompatible()) {
+                             /* Map script */
+                             } else { alert('Your browser be old, it cannot run google maps!');}
+                             })
+                             /* After 1 */
+                             /* After 2 */" do |script|
+                             script.google_map_script do |script|
+                               Google::Scripts.before_map_script do |before_script|
+                                 before_script.comment "Before 1"
+                                 before_script.comment "Before 2"
+                               end
 
-    generator.google_map_script do
+                               Google::Scripts.after_map_script do |after_script|
+                                 after_script.comment "After 1"
+                                 after_script.comment "After 2"
+                               end
 
-      Google::Scripts.before_map_script do |script|
-        script.comment "Before 1"
-        script.comment "Before 2"
+                               script.comment "Map script"
+                             end
       end
-
-      Google::Scripts.after_map_script do |script|
-        script.comment "After 1"
-        script.comment "After 2"
-      end
-
-      generator.comment "Map script"
     end
-
-    assert_eschaton_output "/* Before 1 */
-                           /* Before 2 */
-                           jQuery(document).ready(function() {
-                           window.onunload = GUnload;
-                           if (GBrowserIsCompatible()) {
-                           /* Map script */
-                           } else { alert('Your browser be old, it cannot run google maps!');}
-                           })
-                           /* After 1 */
-                           /* After 2 */",
-                          generator
   end  
   
   

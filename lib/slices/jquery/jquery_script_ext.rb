@@ -6,19 +6,6 @@ module JqueryScriptExt
     self << "jQuery.noConflict();"
   end
   
-  # Any script that is added within the block will execute when the document is ready.
-  #
-  #  when_document_ready do
-  #    script << "var i = 1;"
-  #    script << "alert(i);"
-  #    script.alert('hello world!')
-  #  end
-  def when_document_ready
-    self << "jQuery(document).ready(function() {"
-    yield self
-    self << "})"
-  end
-
   # Makes a get request to the +url+ and yields the +data+ variable in which the contents of the request are stored.
   # See Escahton.url_for_javascript for +url+ options.
   #

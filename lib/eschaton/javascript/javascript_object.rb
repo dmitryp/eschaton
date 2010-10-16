@@ -51,6 +51,10 @@ module Eschaton
     
       javascript
     end
+    
+    def self.<<(javascript)
+      Eschaton.global_script << javascript
+    end
 
     def to_s
       self.variable.to_s
