@@ -122,8 +122,6 @@ module Google # :nodoc:
                        :keyboard_navigation => false
 
       super
-
-      options.assert_valid_keys :center, :controls, :zoom, :type, :keyboard_navigation
       
       Google.current_map = self
       

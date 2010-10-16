@@ -6,12 +6,11 @@ module JqueryViewExt
   # ==== Options:
   # * +avoid_conflicts+ - Optional. Indicates if jQuery should avoid conflicting with existing javascript libraries, defaulted to +true+.
   def include_jquery_javascript(options = {})
-    options.assert_valid_keys :avoid_conflicts
     options.default! :avoid_conflicts => true
 
     conflict_script = if options[:avoid_conflicts] == true
-                        run_javascript do |script|
-                          script.avoid_conflicts!
+                        run_javascript(:when_document_ready => false) do
+                          jQuery.avoid_conflicts!
                         end
                       end
 

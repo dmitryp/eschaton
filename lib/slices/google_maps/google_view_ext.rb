@@ -22,8 +22,6 @@ module GoogleViewExt
   def include_google_javascript(options = {})
     options.default! :key => Google::ApiKey.get(:domain => request.domain), :include_jquery => true
 
-    options.assert_valid_keys :key, :include_jquery
-
     jquery_script = self.include_jquery_javascript if options[:include_jquery] == true
     google_script = "<script src=\"http://maps.google.com/maps?file=api&amp;v=2&amp;key=#{options[:key]}\" type=\"text/javascript\"></script>"
 
@@ -47,9 +45,7 @@ module GoogleViewExt
   #   google_map :width => 600, :height => 650
   #   google_map :width => 600, :height => 650, :style => 'border: 1px dashed black; margin: 10px'
   #   google_map :id => 'my_cool_map'
-  def google_map(options = {})
-    options.assert_valid_keys :id, :fullscreen, :width, :height, :style
-    
+  def google_map(options = {})    
     options[:id] ||= 'map'
     
     map_style = options[:style] || ""

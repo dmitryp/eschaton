@@ -6,8 +6,6 @@ module Google
     def initialize(options = {})
       options.default! :variable => "#{options[:on]}_#{options[:event]}_event"
 
-      options.assert_valid_keys :variable, :on, :event
-
       super
 
       @on = options[:on]
@@ -16,7 +14,6 @@ module Google
     
     def listen_to(options = {})
       options.default! :with => []
-      options.assert_valid_keys :with, :yield_order
 
       with_arguments = options[:with].to_array
       js_arguments = with_arguments.join(', ')

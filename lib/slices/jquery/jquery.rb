@@ -45,6 +45,12 @@ module Eschaton
       yield self if block_given?
     end
     
+    # Gives control of the $ variable back to whichever library first implemented it.
+    # This helps to make sure that jQuery doesn't conflict with the $ object of other libraries
+    def self.avoid_conflicts!
+      self << "jQuery.noConflict();"
+    end    
+    
     # Any script generated within the +block+ will execute when the document is ready.
     #
     #  jQuery.document_ready do
@@ -99,6 +105,22 @@ module Eschaton
     def click(&block)
       self.listen_to :event => :click, &block
     end
+    
+    # When the mouse moves over the element the script generated from the given +block+ will be executed.
+    #
+    # ==== Example
+    #
+    def mouse_over(&block)
+      self.listen_to :event => :mouse_over, &block
+    end
+    
+    # When the mouse leaves the element the script generated from the given +block+ will be executed.
+    #
+    # ==== Example
+    #
+    def mouse_leaves(&block)
+      self.listen_to :event => :mouse_leave, &block
+    end    
     
     # Listen to an +event+ on the elements.
     #

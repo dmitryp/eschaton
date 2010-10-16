@@ -1,10 +1,5 @@
 module JqueryScriptExt
   
-  # Gives control of the $ variable back to whichever library first implemented it.
-  # This helps to make sure that jQuery doesn't conflict with the $ object of other libraries
-  def avoid_conflicts!
-    self << "jQuery.noConflict();"
-  end
   
   # Makes a get request to the +url+ and yields the +data+ variable in which the contents of the request are stored.
   # See Escahton.url_for_javascript for +url+ options.
@@ -31,7 +26,6 @@ module JqueryScriptExt
   # * +params+ - Optional. Parameters to post
   # * +eval_response+ - Optional. Indicates if the response should be evaled and executed client side.
   def post(options)
-    options.assert_valid_keys :url, :form, :params, :eval_response
     options.default! :form => nil, :params => {}, :eval_response => false
 
     if Eschaton.current_view.protect_against_forgery?

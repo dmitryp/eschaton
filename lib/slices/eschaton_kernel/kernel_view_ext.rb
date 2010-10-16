@@ -12,12 +12,17 @@ module KernelViewExt
     Eschaton.with_global_script(&block).to_s.html_safe
   end
 
+  # Runs javascript by creating a script tag that will execute any script generated in the given +block+.
+  # 
+  # ==== Options:
+  #
+  # * +when_document_ready+ - Optional. Indicates if the javascript should run when the document is ready, defaulted to +true+.
   def run_javascript(options = {}, &block)
-    options = options.prepare_options(:defaults => {:when_document_ready => false}) 
+    options = options.prepare_options(:defaults => {:when_document_ready => true}) 
 
     Eschaton.with_global_script do |script|
       script << '<script type="text/javascript">'
-      
+
       if options.when_document_ready?
         jQuery.document_ready(&block)
       else  
@@ -50,7 +55,7 @@ module KernelViewExt
 
     link_tag = "<a id='#{element_id}' href='#'>#{text}</a>"
     
-    link_script = run_javascript(:when_document_ready => true) do |script|
+    link_script = run_javascript do |script|
                     jQuery(:id => element_id).when_clicked(&block)
                   end
 
