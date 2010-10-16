@@ -19,7 +19,7 @@ module KernelViewExt
       script << '<script type="text/javascript">'
       
       if options.when_document_ready?
-        jQuery.ready(&block)
+        jQuery.document_ready(&block)
       else  
         script << Eschaton.script_from(&block)
       end

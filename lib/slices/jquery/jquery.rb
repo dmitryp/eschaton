@@ -47,10 +47,10 @@ module Eschaton
     
     # Any script generated within the +block+ will execute when the document is ready.
     #
-    #  jQuery.ready do
+    #  jQuery.document_ready do
     #    jQuery(:feedback).update_html "The Document is ready"
     #  end 
-    def self.ready(&block)
+    def self.document_ready(&block)
       self << "jQuery(document).ready(function() {"
 
       yield Eschaton.global_script
