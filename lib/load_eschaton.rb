@@ -1,10 +1,12 @@
-require "#{File.dirname(__FILE__)}/eschaton/eschaton"
-require "#{File.dirname(__FILE__)}/frameworks"
-require "#{File.dirname(__FILE__)}/extensions"
-require "#{File.dirname(__FILE__)}/eschaton/script_store"
-require "#{File.dirname(__FILE__)}/eschaton/javascript/javascript_object"
+lib_directory = File.dirname(__FILE__)
 
-Dir["#{File.dirname(__FILE__)}/eschaton/**/*.rb"].each do |file|
+require "#{lib_directory}/eschaton/eschaton"
+require "#{lib_directory}/frameworks"
+require "#{lib_directory}/extensions"
+require "#{lib_directory}/eschaton/script_store"
+require "#{lib_directory}/eschaton/javascript/javascript_object"
+
+Dir["#{lib_directory}/eschaton/**/*.rb"].each do |file|
   Eschaton.dependencies.require file
 end
 
