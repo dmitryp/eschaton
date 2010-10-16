@@ -24,7 +24,7 @@ module Eschaton
   class JavascriptFunction < Eschaton::Script
     attr_accessor :name, :body
     
-    def initialize(options = {}, &block)      
+    def initialize(options = {}, &block)
       super
       
       options = options.prepare_options

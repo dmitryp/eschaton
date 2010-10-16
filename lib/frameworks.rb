@@ -14,7 +14,7 @@ module Eschaton
     end
 
     def self.detect_and_require_slice_files!
-      Eschaton::SliceLoader.slice_paths.each do |slice_path|
+      Eschaton::Slices.slice_paths.each do |slice_path|
         slice_frameworks_path = "#{slice_path}/frameworks"
         if File.exists?(slice_frameworks_path)
           self.frameworks.each do |framework|

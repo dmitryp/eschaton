@@ -1,6 +1,6 @@
 module Eschaton
   
-  class SliceLoader # :nodoc:
+  class Slices # :nodoc:
 
     def self.load!
       self.slice_paths.each do |slice_path|

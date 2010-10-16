@@ -9,4 +9,4 @@ Dir["#{File.dirname(__FILE__)}/eschaton/**/*.rb"].each do |file|
 end
 
 Eschaton::Frameworks.detect_and_require_files!
-Eschaton::SliceLoader.load!
+Eschaton::Slices.load!

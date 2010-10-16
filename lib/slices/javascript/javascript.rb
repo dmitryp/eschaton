@@ -6,7 +6,6 @@ Eschaton::Extensions.make_globally_available do
 
 end
 
-
 module Eschaton
   
   class Javascript
